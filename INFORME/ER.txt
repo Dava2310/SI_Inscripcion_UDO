@@ -1,0 +1,50 @@
+Usuarios
+Estudiantes
+Inscripciones
+Notificaciones
+Documentos
+
+Usuarios = Administrador: 
+	id
+	cedula
+	nombre
+	apellido
+	correo
+	contraseña
+	rol
+
+Documentos: 
+	id
+	estado
+	url
+	observaciones
+
+Notificaciones:
+	id
+	fecha
+	descripcion
+	
+Estudiantes:
+	id
+	cedula
+	nombre
+	apellido
+	correo
+	contraseña
+	telefono
+	direccion
+
+Carreras:
+	id
+	nombre
+	descripcion
+
+Inscripciones:
+	id
+	fecha
+	estado
+	observaciones
+
+
+	
+

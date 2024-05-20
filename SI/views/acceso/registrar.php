@@ -1,19 +1,11 @@
 <?php
-    // Dependencias
-    require_once '../models/autenticacion.php';
+    $_titulo = "Inicio";
+    include('./../templates/registros.php');
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Estudiante</title>
-    <link rel="stylesheet" href="index.css"/>
-</head>
 <body>
     <h1>Registro de Estudiante Universitario</h1>
-    <form action="procesar_registro.php" method="post">
+    <form id="form" action="../../controllers/acceso/registrar.php" method="post">
 
         <!-- Campos estudiante  -->
 
@@ -40,5 +32,7 @@
 
         <input type="submit" value="Registrarse">
     </form>
+
+    <script src="../../assets/js/acceso/registrar.js"></script>
 </body>
 </html>
