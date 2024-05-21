@@ -28,3 +28,27 @@ CREATE TABLE users(
     PRIMARY KEY(ID),
     FOREIGN KEY(idRole) REFERENCES roles(ID)
 );
+
+INSERT INTO users(name, lastName, licenseID, email, idRole, password) VALUES('Daniel', 'Vetencourt', '29517648', 'dvetencourt23@gmail.com', 1, '1234')
+
+-- Creacion de la tabla Estudiante
+DROP TABLE IF EXISTS students;
+CREATE TABLE students(
+    ID INT NOT NULL AUTO_INCREMENT,
+    licenseID varchar(15) NOT NULL,
+    name VARCHAR(50),
+    lastName VARCHAR(50) NOT NULL,
+    email VARCHAR(50),
+    password VARCHAR(50),
+    phoneNumber VARCHAR(20),
+    address VARCHAR(50),
+    state VARCHAR(20) DEFAULT 'Active'
+);
+
+-- Creacion de la tabla Carrera
+DROP TABLE IF EXISTS careers;
+CREATE TABLE careers(
+    ID INT NOT NULL AUTO_INCREMENT, 
+    name VARCHAR(30) NOT NULL,
+    description VARCHAR(200)
+);
