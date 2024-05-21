@@ -21,6 +21,37 @@
             $this->con = Connection::getInstance()->getConnection();
         }
         
+/**
+         * Crear Usuario
+         *
+         * Crea un nuevo usuario en la base de datos con los datos proporcionados.
+         *
+         * @param string $nombre El nombre del usuario.
+         * @param string $apellido El apellido del usuario.
+         * TODO DOCUMENTACION
+         * @return bool Retorna true si el usuario se creó correctamente en la base de datos, de lo contrario retorna false.
+         */
+        public function registerUser($name, $lastName, $licenseID, $email, $idRole, $password) 
+        { 
+            // Preparación de la consulta SQL
+            $stmt = $this->con->prepare("INSERT INTO users (name, lastName, licenseID, email, idRole, password) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssis", $name, $lastName, $licenseID, $email, $idRole, $password);
+
+            // Ejecución y verificación de error de ejecución
+            if (!$stmt->execute()) 
+            {
+                echo json_encode('Error al crear el usuario');
+                exit;
+            }
+
+            // Verificación de filas afectadas para determinar si el usuario se creó correctamente
+            if ($stmt->affected_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
         /**
          * Verificar Email
          *
@@ -138,43 +169,7 @@
             return $row ? true : false;
         }
 
-        /**
-         * Crear Usuario
-         *
-         * Crea un nuevo usuario en la base de datos con los datos proporcionados.
-         *
-         * @param string $nombre El nombre del usuario.
-         * @param string $apellido El apellido del usuario.
-         * @param int $edad La edad del usuario.
-         * @param string $cedula La cédula del usuario.
-         * @param string $telefono El teléfono del usuario.
-         * @param string $email El correo electrónico del usuario.
-         * @param int $idRol El ID del rol del usuario.
-         * @param string $preguntaSeguridad La pregunta de seguridad del usuario.
-         * @param string $claveSeguridad La clave de seguridad del usuario.
-         * @param string $password La contraseña del usuario.
-         * @return bool Retorna true si el usuario se creó correctamente en la base de datos, de lo contrario retorna false.
-         */
-        public function crearUsuario($primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $cedula, $email, $idRol, $password) 
-        { 
-            // Preparación de la consulta SQL
-            $stmt = $this->con->prepare("INSERT INTO usuario (primerNombre, segundoNombre, primerApellido, segundoApellido, cedula, correo, idRol, contrasena) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bind_param("ssssisis", $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $cedula, $email, $idRol, $password);
-
-            // Ejecución y verificación de error de ejecución
-            if (!$stmt->execute()) 
-            {
-                echo json_encode('Error al crear el usuario');
-                exit;
-            }
-
-            // Verificación de filas afectadas para determinar si el usuario se creó correctamente
-            if ($stmt->affected_rows > 0) {
-                return true;
-            } else {
-                return false;
-            }
-        }
+        
 
         
         /**

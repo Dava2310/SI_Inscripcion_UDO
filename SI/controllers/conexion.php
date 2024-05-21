@@ -11,7 +11,7 @@
         private $con;
     
         private function __construct() {
-            $this->con = new mysqli("localhost:3306", "root", "", "inscripcion_estudiantes");
+            $this->con = new mysqli("localhost:3306", "root", "", "studentDB");
         
             // Verificar errores en la conexión
             if ($this->con->connect_errno) {
@@ -32,5 +32,3 @@
             return $this->con;
         }
     }
-
-?>
