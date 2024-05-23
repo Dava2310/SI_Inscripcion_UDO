@@ -12,12 +12,11 @@ CREATE TABLE roles(
 );
 
 INSERT INTO roles VALUES(1, "Administrador", "No descripcion");
-INSERT INTO roles VALUES(2, "Estudiante", "No descripcion");
-INSERT INTO roles VALUES(3, "Asistente", "No Descripcion");
+INSERT INTO roles VALUES(2, "Asistente", "No Descripcion");
 
 -- Creacion de la Tabla Usuario
-DROP TABLE IF EXISTS users;
-CREATE TABLE users(
+DROP TABLE IF EXISTS employees;
+CREATE TABLE employees(
 	ID INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL,
     lastName VARCHAR(40) NOT NULL,
@@ -25,11 +24,13 @@ CREATE TABLE users(
     email varchar(40) NOT NULL,
     idRole INT NOT NULL,
     password VARCHAR(60) NOT NULL,
+    securityQuestion VARCHAR(30),
+    securityAnswer VARCHAR(30),
     PRIMARY KEY(ID),
     FOREIGN KEY(idRole) REFERENCES roles(ID)
 );
 
-INSERT INTO users(name, lastName, licenseID, email, idRole, password) VALUES('Daniel', 'Vetencourt', '29517648', 'dvetencourt23@gmail.com', 1, '1234')
+INSERT INTO employees(name, lastName, licenseID, email, idRole, password) VALUES('Daniel', 'Vetencourt', '29517648', 'dvetencourt23@gmail.com', 1, '1234')
 
 -- Creacion de la tabla Estudiante
 DROP TABLE IF EXISTS students;
@@ -42,7 +43,9 @@ CREATE TABLE students(
     password VARCHAR(50),
     phoneNumber VARCHAR(20),
     address VARCHAR(50),
-    state VARCHAR(20) DEFAULT 'Active'
+    state VARCHAR(20) DEFAULT 'Active',
+    securityQuestion VARCHAR(30),
+    securityAnswer VARCHAR(30)
 );
 
 -- Creacion de la tabla Carrera

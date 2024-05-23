@@ -4,7 +4,10 @@
     <title>Formulario de Inicio de Sesión</title>
     <link rel="stylesheet" href="index.css"/>
 </head>
-<body>
+<>
+
+    <!-- Los unicos datos con los que se valida es el Email y el Passsword -->
+
     <h2>Iniciar Sesión</h2>
     <form id="form" action="../../controllers/acceso/IniciarSesion.php" method="post">
         <label for="cedula">Cedula:</label><br>

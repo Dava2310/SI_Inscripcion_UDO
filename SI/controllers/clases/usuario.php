@@ -35,10 +35,10 @@
          * 
          * @return bool Retorna true si el usuario se creó correctamente en la base de datos, de lo contrario retorna false.
          */
-        public function registerUser($name, $lastName, $licenseID, $email, $idRole, $password) 
+        public function registerEmployees($name, $lastName, $licenseID, $email, $idRole, $password) 
         { 
             // Preparación de la consulta SQL
-            $stmt = $this->con->prepare("INSERT INTO users (name, lastName, licenseID, email, idRole, password) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt = $this->con->prepare("INSERT INTO employees (name, lastName, licenseID, email, idRole, password) VALUES (?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("ssssis", $name, $lastName, $licenseID, $email, $idRole, $password);
 
             // Ejecución y verificación de error de ejecución
@@ -68,11 +68,11 @@
          * @param string $telefono El nuevo teléfono del usuario.
          * @return bool Retorna true si los datos del usuario se actualizaron correctamente, de lo contrario retorna false.
          */
-        public function updateUser($idUsuario, $nombre, $apellido, $edad, $telefono, $email, $cedula)
+        public function updateEmployees($ID, $name, $lastName, $email, $licenseID, $idRole)
         {
             // Preparación de la consulta SQL
-            $stmt = $this->con->prepare("UPDATE usuario SET nombre = ?, apellido = ?, edad = ?, telefono = ?, email = ?, cedula = ? WHERE idUsuario = ?");
-            $stmt->bind_param("ssisssi", $nombre, $apellido, $edad, $telefono, $email, $cedula, $idUsuario);
+            $stmt = $this->con->prepare("UPDATE employees SET name = ?, lastName = ?, email = ?, licenseID = ? WHERE ID = ?");
+            $stmt->bind_param("ssssi", $name, $lastName, $email, $licenseID, $ID);
 
             // Ejecución y verificación de error de ejecución
             if (!$stmt->execute()) {
@@ -95,10 +95,10 @@
          *
          * @return array|bool Retorna un array con los datos de los usuarios si hay registros, de lo contrario retorna false.
          */
-        public function getUsers()
+        public function getEmployees()
         {
             // Preparación de la consulta SQL
-            $stmt = $this->con->prepare("SELECT * FROM usuario");
+            $stmt = $this->con->prepare("SELECT * FROM employees");
             
             // Ejecución y verificación de error de ejecución
             if (!$stmt->execute()) 
@@ -133,10 +133,10 @@
          * @param int $idUsuario El ID del usuario a buscar.
          * @return array|bool Retorna un array con los datos del usuario si se encuentra, de lo contrario retorna false.
          */
-        public function getUserByID($ID)
+        public function getEmployeeByID($ID)
         {
             // Preparación de la consulta SQL
-            $stmt = $this->con->prepare("SELECT * FROM users WHERE ID = ? LIMIT 1");
+            $stmt = $this->con->prepare("SELECT * FROM employees WHERE ID = ? LIMIT 1");
             $stmt->bind_param("i", $ID);
 
             // Ejecución y verificación de error de ejecución
@@ -167,9 +167,9 @@
          * @param string $password La contraseña del usuario.
          * @return int|bool Retorna el número de idRol si las credenciales son válidas, de lo contrario retorna false.
          */
-        public function validateUser($licenseID, $password) {
+        public function validateEmployee($licenseID, $password) {
             // Preparación de la consulta SQL
-            $stmt = $this->con->prepare("SELECT idRole, ID FROM users WHERE licenseID = ? and password = ? LIMIT 1");
+            $stmt = $this->con->prepare("SELECT idRole, ID FROM employees WHERE licenseID = ? and password = ? LIMIT 1");
             $stmt->bind_param("is", $licenseID, $password);
         
             // Ejecución y verificación de error de ejecución

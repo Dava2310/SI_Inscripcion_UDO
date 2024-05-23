@@ -16,13 +16,13 @@
         
         // Registrar estudiante
         $objetoUsuario = new Usuario();
-        $respuesta = $objetoUsuario->registerUser($name, $lastName, $licenseID, $email, $idRole, md5($password));
+        $respuesta = $objetoUsuario->registerEmployees($name, $lastName, $licenseID, $email, $idRole, md5($password));
         
         // Error al registrarse?
         if (!$respuesta) {
             session_destroy();
             http_response_code(401); // Se establece el codigo de estado HTTP 401, que significa 'error'
-            echo json_encode(array('message' => 'Error al registrar un usuario'));
+            echo json_encode(array('message' => 'Error al registrar un empleado'));
             exit;
         }
 
