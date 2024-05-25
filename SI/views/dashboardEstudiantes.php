@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 $_titulo = "Inicio";
 include_once('../controllers/clases/estudiante.php');
 
@@ -47,3 +48,14 @@ include('./templates/encabezadoConfig.php');
 </body>
 
 </html>
+=======
+
+/*
+
+Primero: Validar la Session con el ID que se guarda dentro de ella
+Segundo: Lanzar el menu
+Tercero: El resto del dashboard es netamente, los datos personales
+de ese usuario
+
+/*
+>>>>>>> 902fde0f974c1ed733d65a04c888e6d004643c1c

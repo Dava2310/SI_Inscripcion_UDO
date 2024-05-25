@@ -43,6 +43,7 @@ class Usuario
         $stmt = $this->con->prepare("INSERT INTO users (name, lastName, licenseID, email, idRole, password) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssis", $name, $lastName, $licenseID, $email, $idRole, $password);
 
+<<<<<<< HEAD
         // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
             echo json_encode('Error al crear el usuario');
@@ -56,6 +57,72 @@ class Usuario
             return false;
         }
     }
+=======
+        private $con;
+        
+        /**
+         * Constructor de la clase Usuario
+         * 
+         * Crea una nueva instancia de la clase Usuario y establece la conexión a la base de datos.
+         */
+        public function __construct() {
+            // Incluir la conexion a base de datos
+            $this->con = Connection::getInstance()->getConnection();
+        }
+        
+        /**
+         * Crear Usuario
+         *
+         * Crea un nuevo usuario en la base de datos con los datos proporcionados.
+         *
+         * @param string $name El nombre del usuario.
+         * @param string $lastName El apellido del usuario.
+         * @param string $licenseID El ID de la licencia del usuario.
+         * @param string $email El correo electrónico del usuario.
+         * @param int $idRole El ID del rol del usuario.
+         * @param string $password La contraseña del usuario.
+         * 
+         * @return bool Retorna true si el usuario se creó correctamente en la base de datos, de lo contrario retorna false.
+         */
+        public function registerEmployees($name, $lastName, $licenseID, $email, $idRole, $password) 
+        { 
+            // Preparación de la consulta SQL
+            $stmt = $this->con->prepare("INSERT INTO employees (name, lastName, licenseID, email, idRole, password) VALUES (?, ?, ?, ?, ?, ?)");
+            $stmt->bind_param("ssssis", $name, $lastName, $licenseID, $email, $idRole, $password);
+
+            // Ejecución y verificación de error de ejecución
+            if (!$stmt->execute()) 
+            {
+                echo json_encode('Error al crear el usuario');
+                exit;
+            }
+
+            // Verificación de filas afectadas para determinar si el usuario se creó correctamente
+            if ($stmt->affected_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        /**
+         * Actualizar Datos de Usuario
+         *
+         * Actualiza el nombre, apellido, edad y teléfono de un usuario en la base de datos.
+         *
+         * @param int $idUsuario El ID del usuario a actualizar.
+         * @param string $nombre El nuevo nombre del usuario.
+         * @param string $apellido El nuevo apellido del usuario.
+         * @param int $edad La nueva edad del usuario.
+         * @param string $telefono El nuevo teléfono del usuario.
+         * @return bool Retorna true si los datos del usuario se actualizaron correctamente, de lo contrario retorna false.
+         */
+        public function updateEmployees($ID, $name, $lastName, $email, $licenseID, $idRole)
+        {
+            // Preparación de la consulta SQL
+            $stmt = $this->con->prepare("UPDATE employees SET name = ?, lastName = ?, email = ?, licenseID = ? WHERE ID = ?");
+            $stmt->bind_param("ssssi", $name, $lastName, $email, $licenseID, $ID);
+>>>>>>> 902fde0f974c1ed733d65a04c888e6d004643c1c
 
     /**
      * Actualizar Datos de Usuario
@@ -81,6 +148,7 @@ class Usuario
             exit;
         }
 
+<<<<<<< HEAD
         // Verificación de si se actualizó algún registro
         if ($stmt->affected_rows > 0) {
             return true;
@@ -88,6 +156,26 @@ class Usuario
             return false;
         }
     }
+=======
+        /**
+         * Obtener Usuarios
+         *
+         * Obtiene los datos de todos los usuarios registrados en la base de datos.
+         *
+         * @return array|bool Retorna un array con los datos de los usuarios si hay registros, de lo contrario retorna false.
+         */
+        public function getEmployees()
+        {
+            // Preparación de la consulta SQL
+            $stmt = $this->con->prepare("SELECT * FROM employees");
+            
+            // Ejecución y verificación de error de ejecución
+            if (!$stmt->execute()) 
+            {
+                echo json_encode('Error al obtener los usuarios');
+                exit;
+            }
+>>>>>>> 902fde0f974c1ed733d65a04c888e6d004643c1c
 
     /**
      * Obtener Usuarios
@@ -107,8 +195,24 @@ class Usuario
             exit;
         }
 
+<<<<<<< HEAD
         // Recogiendo los resultados de la query
         $result = $stmt->get_result();
+=======
+        /**
+         * Buscar Usuario por ID
+         *
+         * Busca un usuario en la base de datos según su ID de usuario.
+         *
+         * @param int $idUsuario El ID del usuario a buscar.
+         * @return array|bool Retorna un array con los datos del usuario si se encuentra, de lo contrario retorna false.
+         */
+        public function getEmployeeByID($ID)
+        {
+            // Preparación de la consulta SQL
+            $stmt = $this->con->prepare("SELECT * FROM employees WHERE ID = ? LIMIT 1");
+            $stmt->bind_param("i", $ID);
+>>>>>>> 902fde0f974c1ed733d65a04c888e6d004643c1c
 
         // Verificando si hay registros
         if ($result->num_rows > 0) {
@@ -145,6 +249,7 @@ class Usuario
             exit;
         }
 
+<<<<<<< HEAD
         // Recogiendo el resultado de la consulta
         $result = $stmt->get_result();
 
@@ -176,6 +281,34 @@ class Usuario
         if (!$stmt->execute()) {
             echo json_encode('Error al validar usuario');
             exit;
+=======
+        /**
+         * Validar Usuario
+         * 
+         * Valida las credenciales de un usuario en la base de datos.
+         * 
+         * @param string $email El correo electrónico del usuario.
+         * @param string $password La contraseña del usuario.
+         * @return int|bool Retorna el número de idRol si las credenciales son válidas, de lo contrario retorna false.
+         */
+        public function validateEmployee($licenseID, $password) {
+            // Preparación de la consulta SQL
+            $stmt = $this->con->prepare("SELECT idRole, ID FROM employees WHERE licenseID = ? and password = ? LIMIT 1");
+            $stmt->bind_param("is", $licenseID, $password);
+        
+            // Ejecución y verificación de error de ejecución
+            if (!$stmt->execute()) {
+                echo json_encode('Error al validar usuario');
+                exit;
+            }
+        
+            // Recogiendo los resultados de la consulta
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+        
+            // Se devuelve el array con el valor de idRol y idUsuario si existe una fila con los resultados de la consulta
+            return $row ? array('idRole' => $row['idRole'], 'ID' => $row['ID']) : false;
+>>>>>>> 902fde0f974c1ed733d65a04c888e6d004643c1c
         }
 
         // Recogiendo los resultados de la consulta
