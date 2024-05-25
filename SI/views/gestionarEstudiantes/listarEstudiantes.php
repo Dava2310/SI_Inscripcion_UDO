@@ -1,12 +1,12 @@
 <?php
 // Incluir el archivo con la definición de la clase Student
-include_once('../../controllers/clases/usuario.php');
+include_once('../../controllers/clases/estudiante.php');
 
 // Crear una instancia de la clase Student
-$user = new Usuario();
+$student = new Student();
 
 // Obtener la lista de estudiantes
-$users = $user->getUsers();
+$students = $student->getStudents();
 ?>
 
 <?php
@@ -24,31 +24,32 @@ include('../templates/encabezadoConfig.php');
                 <div class="searchBar">
                     <input id="searchInput" placeholder="Buscar" />
                 </div>
-                <button id="create">Crear empleado</button>
+                
             </div>
-
 
             <table class="table">
                 <thead>
                     <tr>
                         <th>Nombre</th>
                         <th>Apellido</th>
-                        <th>ID de Licencia</th>
+                        <th>Cedula</th>
                         <th>Correo</th>
+                        <th>Estado</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     // Recorrer la lista de estudiantes y mostrar su información en filas de la tabla
-                    foreach ($users as $user) {
+                    foreach ($students as $student) {
                         echo <<<HTML
                         <tr class="dataList">
-                            <td>{$user['name']}</td>
-                            <td>{$user['lastName']}</td>
-                            <td>{$user['licenseID']}</td>
-                            <td>{$user['email']}</td>
-                            <td><a href="modificarUsuarios.php?id={$user['ID']}">Modificar</a></td>
+                            <td>{$student['name']}</td>
+                            <td>{$student['lastName']}</td>
+                            <td>{$student['licenseID']}</td>
+                            <td>{$student['email']}</td>
+                            <td>{$student['state']}</td>
+                            <td><a href="modificarEstudiante.php?id={$student['ID']}">Modificar</a></td>
                         </tr>
                         HTML;
                     }
@@ -57,7 +58,7 @@ include('../templates/encabezadoConfig.php');
             </table>
         </div>
     </div>
-
-    <script src="../../assets/js/gestionarUsuarios/listarUsuarios.js"></script>
+    <script src="../../assets/js/gestionarEstudiantes/listarEstudiantes.js"></script>
 </body>
+
 </html>

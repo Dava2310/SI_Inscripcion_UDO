@@ -1,14 +1,14 @@
 const form = document.getElementById("form")
-const cedula = document.getElementById("cedula")
-const contrasena = document.getElementById("contrasena")
+const email = document.getElementById("email")
+const password = document.getElementById("password")
 
 form.addEventListener("submit", e => {
-    
     e.preventDefault();
+
 
     const formData = new FormData(form);
 
-    fetch('../../../controllers/gestionarAcceso/iniciarSesion.php', {
+    fetch('../../../controllers/gestionarAcceso/registrarEstudiantes.php', {
         method: 'POST',
         body: formData
     })
@@ -17,17 +17,12 @@ form.addEventListener("submit", e => {
         console.log(data.message);
 
         // Si hubo inicio de sesion
-        if (data.message === 'Inicio de Sesion Usuario') {
+        if (data.message === 'Inicio de Sesion') {
             window.alert("Hubo inicio de sesion");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente
-            window.location = '../../../views/dashboardEmpleados.php';
+            window.location = '../../views/dashboardEstudiantes.php';
 
-        } else if (data.message === 'Inicio de Sesion Estudiante') {
-            window.alert("Hubo inicio de sesion");
-            
-            // Se verifica el Rol para mandarlo a la pagina correspondiente
-            window.location = '../../../views/dashboardEstudiantes.php';
         } else {
             alert('Credenciales de inicio de sesion incorrectas');
         }

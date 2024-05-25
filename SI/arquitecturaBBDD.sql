@@ -42,7 +42,8 @@ CREATE TABLE students(
     password VARCHAR(50),
     phoneNumber VARCHAR(20),
     address VARCHAR(50),
-    state VARCHAR(20) DEFAULT 'Active'
+    state VARCHAR(20) DEFAULT 'Active',
+    PRIMARY KEY(ID)
 );
 
 -- Creacion de la tabla Carrera
@@ -50,5 +51,6 @@ DROP TABLE IF EXISTS careers;
 CREATE TABLE careers(
     ID INT NOT NULL AUTO_INCREMENT, 
     name VARCHAR(30) NOT NULL,
-    description VARCHAR(200)
+    description VARCHAR(200),
+    PRIMARY KEY(ID)
 );

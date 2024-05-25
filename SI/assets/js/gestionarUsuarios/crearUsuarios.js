@@ -7,9 +7,8 @@ form.addEventListener("submit", e => {
     e.preventDefault();
 
     const formData = new FormData(form);
-// 
 
-    fetch('../../controllers/gestionarUsuarios/registrar.php', {
+    fetch('../../controllers/gestionarUsuarios/CrearUsuarios.php', {
         method: 'POST',
         body: formData
     })
@@ -17,13 +16,14 @@ form.addEventListener("submit", e => {
     .then(data => {
         console.log(data.message)
         // Si hubo inicio de sesion
-        if (data.message === 'Registro exitoso') {
-            window.alert("Registro exitoso");
+        if (data.message === 'Creacion') {
+            window.alert("Creacion exitosa");
+            window.location = "../../../views/gestionarUsuarios/listarUsuarios.php";
         }
         else
         {
             console.log("hola");
-            alert('Error al registrar usuario');
+            alert('Error al crear usuario');
         }
     })
     .catch(error => {

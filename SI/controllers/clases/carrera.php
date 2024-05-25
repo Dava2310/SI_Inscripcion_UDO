@@ -146,5 +146,36 @@ class Career {
             return false;
         }
     }
+
+    /**
+     * Eliminar Usuario
+     *
+     * Elimina completamente el registro del usuario de la base de datos.
+     *
+     * @param int $id El ID del usuario a eliminar.
+     * @return bool Retorna true si el usuario fue eliminado con éxito, de lo contrario retorna false.
+     */
+    public function deleteCareerById($careerID)
+    {
+
+        // Preparación de la consulta SQL
+        $stmt = $this->con->prepare("DELETE FROM careers WHERE ID = ?");
+        $stmt->bind_param("i", $careerID);
+
+        // Ejecución y verificación de error de ejecución
+        if (!$stmt->execute()) {
+            echo json_encode('Error al eliminar la carrera');
+            exit;
+        }
+
+        // Verificación de si se eliminó algún registro
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    
 }
 

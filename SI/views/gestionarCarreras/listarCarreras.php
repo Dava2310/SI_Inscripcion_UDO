@@ -1,16 +1,16 @@
 <?php
 // Incluir el archivo con la definición de la clase Student
-include_once('../../controllers/clases/usuario.php');
+include_once('../../controllers/clases/carrera.php');
 
 // Crear una instancia de la clase Student
-$user = new Usuario();
+$career = new Career();
 
 // Obtener la lista de estudiantes
-$users = $user->getUsers();
+$careers = $career->getCareers();
 ?>
 
 <?php
-$title = "Panel De Control";
+$title = "Carreras";
 include('../templates/encabezadoConfig.php');
 ?>
 
@@ -24,31 +24,26 @@ include('../templates/encabezadoConfig.php');
                 <div class="searchBar">
                     <input id="searchInput" placeholder="Buscar" />
                 </div>
-                <button id="create">Crear empleado</button>
+                <button id="create">Crear Carrera</button>
             </div>
-
 
             <table class="table">
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>ID de Licencia</th>
-                        <th>Correo</th>
+                        <th>Descripcion</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     // Recorrer la lista de estudiantes y mostrar su información en filas de la tabla
-                    foreach ($users as $user) {
+                    foreach ($careers as $career) {
                         echo <<<HTML
                         <tr class="dataList">
-                            <td>{$user['name']}</td>
-                            <td>{$user['lastName']}</td>
-                            <td>{$user['licenseID']}</td>
-                            <td>{$user['email']}</td>
-                            <td><a href="modificarUsuarios.php?id={$user['ID']}">Modificar</a></td>
+                            <td>{$career['name']}</td>
+                            <td>{$career['description']}</td>
+                            <td><a href="modificarCarreras.php?id={$career['ID']}">Modificar</a></td>
                         </tr>
                         HTML;
                     }
@@ -57,7 +52,7 @@ include('../templates/encabezadoConfig.php');
             </table>
         </div>
     </div>
-
-    <script src="../../assets/js/gestionarUsuarios/listarUsuarios.js"></script>
+    <script src="../../assets/js/gestionarCarreras/listarCarreras.js"></script>
 </body>
+
 </html>
