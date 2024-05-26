@@ -3,7 +3,7 @@
     <ul>
         <li><a href="../../views/gestionarCarreras/listarCarreras.php">Carreras</a></li>
         <li><a href="../../views/gestionarEstudiantes/listarEstudiantes.php">Estudiantes</a></li>
-        <li><a href="../../views/gestionarInscripcciones/listarInscripciones.php">Inscripcciones</a></li>
+        <li><a href="../../views/gestionarInscripciones/listarInscripciones.php">Inscripcciones</a></li>
         <li><a href="../../views/gestionarNotificaciones/listarNotificaciones.php">Notificaciones</a></li>
         <li><a href="../../views/gestionarReportes/listarReportes.php">Reportes</a></li>
         <li><a href="../../views/gestionarUsuarios/listarUsuarios.php">Empleados</a></li>

@@ -1,7 +1,6 @@
 <?php
-<<<<<<< HEAD
 $_titulo = "Inicio";
-include_once('../controllers/clases/estudiante.php');
+include_once('../../controllers/clases/estudiante.php');
 
 // Inicio de la sesion
 session_start();
@@ -35,27 +34,31 @@ $email = $response['email'];
 
 <?php
 $title = "Panel De Control";
-include('./templates/encabezadoConfig.php');
+include('./../templates/encabezadoConfig.php');
 ?>
 
 <body>
-    <?php include("./templates/menus/menuEstudiante.php") ?>
+    <?php include("./../templates/menus/menuEstudiante.php") ?>
     <div class="content">
         <h1>¡Hola <?= $name ?> <?= $lastName ?>!</h1>
         <p>Correo: <?= $email ?> | Cedula: <?= $licenseID ?> | Telefono: <?= $phoneNumber ?></p>
-        <h2>Selecciona una opcion de inscripccion</h2>
+
+        <div class="notification-list">
+            <h2>Notificaciones</h2>
+            <div class="notification">
+                <div class="notification-content">
+                    <h2 class="notification-title">Aviso General: </h2>
+                    <p class="notification-text">Se ha aperturado las inscripcciones, ponte las pilas</p>
+                </div>
+            </div>
+            <div class="notification">
+                <div class="notification-content">
+                    <h2 class="notification-title">Aviso para ti: </h2>
+                    <p class="notification-text">Has sido Aprovado, Revisa "Consultar"</p>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
 </html>
-=======
-
-/*
-
-Primero: Validar la Session con el ID que se guarda dentro de ella
-Segundo: Lanzar el menu
-Tercero: El resto del dashboard es netamente, los datos personales
-de ese usuario
-
-/*
->>>>>>> 902fde0f974c1ed733d65a04c888e6d004643c1c

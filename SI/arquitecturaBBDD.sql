@@ -44,12 +44,7 @@ CREATE TABLE students(
     phoneNumber VARCHAR(20),
     address VARCHAR(50),
     state VARCHAR(20) DEFAULT 'Active',
-<<<<<<< HEAD
     PRIMARY KEY(ID)
-=======
-    securityQuestion VARCHAR(30),
-    securityAnswer VARCHAR(30)
->>>>>>> 902fde0f974c1ed733d65a04c888e6d004643c1c
 );
 
 -- Creacion de la tabla Carrera
@@ -59,4 +54,16 @@ CREATE TABLE careers(
     name VARCHAR(30) NOT NULL,
     description VARCHAR(200),
     PRIMARY KEY(ID)
+);
+
+-- Creacion de la tabla Inscripcciones
+DROP TABLE IF EXISTS inscriptions;
+CREATE TABLE inscriptions(
+    ID INT NOT NULL AUTO_INCREMENT,
+    idStudent INT NOT NULL,
+    insDate DATE,
+    insState varchar(50) DEFAULT 'Unseen',
+    insDescription varchar(200),
+    PRIMARY KEY(ID),
+    FOREIGN KEY(idStudent) REFERENCES students(ID)
 );

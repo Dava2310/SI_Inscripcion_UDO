@@ -21,13 +21,13 @@ form.addEventListener("submit", e => {
             window.alert("Hubo inicio de sesion");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente
-            window.location = '../../../views/dashboardEmpleados.php';
+            window.location = '../../../views/dashboardEmpleados/dashboardEmpleados.php';
 
         } else if (data.message === 'Inicio de Sesion Estudiante') {
             window.alert("Hubo inicio de sesion");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente
-            window.location = '../../../views/dashboardEstudiantes.php';
+            window.location = '../../../views/dashboardEstudiantes/dashboardEstudiantes.php';
         } else {
             alert('Credenciales de inicio de sesion incorrectas');
         }
