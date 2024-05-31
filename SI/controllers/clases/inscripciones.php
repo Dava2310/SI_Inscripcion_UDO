@@ -35,11 +35,11 @@ class Inscription
      * 
      * @return bool Retorna true si la inscripción se creó correctamente en la base de datos, de lo contrario retorna false.
      */
-    public function registerInscription($idStudent, $insDate, $insState, $insDescription)
+    public function registerInscription($idStudent, $insDate, $insState, $idProcess, $insUrl,$insDescription)
     {
         // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("INSERT INTO inscriptions (idStudent, insDate, insState, insDescription) VALUES (?, ?, ?, ?)");
-        $stmt->bind_param("isss", $idStudent, $insDate, $insState, $insDescription);
+        $stmt = $this->con->prepare("INSERT INTO inscriptions (idStudent, date, idState, idProcess, url, description) VALUES (?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isiiss", $idStudent, $insDate, $insState, $idProcess, $insUrl, $insDescription);
 
         // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
@@ -96,7 +96,7 @@ class Inscription
     public function getInscriptions()
     {
         // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * FROM inscriptions");
+        $stmt = $this->con->prepare("SELECT students.name AS studentName, students.lastName, students.licenseID, students.email, inscriptions.ID, inscriptions.date, inscriptionStates.name AS state FROM students JOIN inscriptions ON students.ID = inscriptions.idStudent JOIN inscriptionStates ON inscriptions.idState = inscriptionStates.ID;");
 
         // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
@@ -133,7 +133,7 @@ class Inscription
     public function getInscriptionByID($idInscription)
     {
         // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * FROM inscriptions WHERE ID = ? LIMIT 1");
+        $stmt = $this->con->prepare("SELECT inscriptions.ID AS ID, inscriptions.date, inscriptionProcesses.name AS process, inscriptions.description from inscriptions JOIN inscriptionProcesses ON inscriptions.idProcess = inscriptionProcesses.ID WHERE inscriptions.ID = ? LIMIT 1");
         $stmt->bind_param("i", $idInscription);
 
         // Ejecución y verificación de error de ejecución

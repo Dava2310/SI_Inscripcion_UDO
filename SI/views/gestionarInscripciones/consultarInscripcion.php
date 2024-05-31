@@ -1,31 +1,30 @@
 <?php
 // Incluir el archivo con la definición de la clase Student
-include_once('../../controllers/clases/estudiante.php');
-session_start();
+include_once('../../controllers/clases/inscripciones.php');
 
-// Take StudentID and get data
-$studentID = $_SESSION['ID'];
+// Crear una instancia de la clase Inscription
+$inscription = new Inscription();
 
-$student = new Student();
-$studentDetails = $student->getStudentByID($studentID);
+// Obtener datos de la inscripccion
+$inscriptionId = $_GET['id'];
+$inscription = $inscription->getInscriptionByID($inscriptionId);
 ?>
 
 <?php
-$title = "Crear Inscripcion";
-include('./../templates/encabezadoConfig.php');
+$title = "Panel De Inscripciones";
+include('../templates/encabezadoConfig.php');
 ?>
 
 <body>
-    <?php include("./../templates/menus/menuEstudiante.php") ?>
+    <div class="sidebarBackground">
+        <?php include('../templates/menus/menuAdministrador.php') ?>
+    </div>
     <div class="content">
         <div class="form-inscription">
-            <form action="../../controllers/gestionarInscripciones/crearInscripciones.php?id=<?=$studentID?>" method="post" enctype="multipart/form-data">
+            <form action="../../controllers/gestionarInscripciones/crearInscripciones.php?id=<?= $studentID ?>" method="post" enctype="multipart/form-data">
                 <label for="process" class="formLabel">Selecciona tu proceso de Inscripción:</label>
-                <select id="process" name="process" class="formSelect">
-                    <option value="">Selecciona una opcion</option>
-                    <option value="1">OPSU</option>
-                    <option value="2">RUSI</option>
-                    <option value="3">Convenio</option>
+                <select id="process" name="process" class="formSelect" disabled>
+                    <option value="">Seleccionada: <?=$inscription['process']?></option>
                 </select>
 
                 <h1 class="formHeader">Documentos Recaudados</h1>
@@ -50,7 +49,7 @@ include('./../templates/encabezadoConfig.php');
                                 <button type="button" class="removeFileUpload">Eliminar</button>
                             </div>
                         </label>
-                        <input id="notesUpload" type="file" class="formInput" name="notes"/>
+                        <input id="notesUpload" type="file" class="formInput" name="notes" />
                     </div>
 
                     <div>
@@ -61,7 +60,7 @@ include('./../templates/encabezadoConfig.php');
                                 <button type="button" class="removeFileUpload">Eliminar</button>
                             </div>
                         </label>
-                        <input id="degreeUpload" type="file" class="formInput" name="degree"/>
+                        <input id="degreeUpload" type="file" class="formInput" name="degree" />
                     </div>
 
                     <div>
@@ -72,7 +71,7 @@ include('./../templates/encabezadoConfig.php');
                                 <button type="button" class="removeFileUpload">Eliminar</button>
                             </div>
                         </label>
-                        <input id="birthCertificate" type="file" class="formInput" name="birthCertificate"/>
+                        <input id="birthCertificate" type="file" class="formInput" name="birthCertificate" />
                     </div>
                     <div id="planilla">
                         <label for="spreadsheetOpsuUpload" class="customFileUpload">
@@ -82,7 +81,7 @@ include('./../templates/encabezadoConfig.php');
                                 <button type="button" class="removeFileUpload">Eliminar</button>
                             </div>
                         </label>
-                        <input id="spreadsheetOpsuUpload" type="file" class="formInput" name="spreadsheet"/>
+                        <input id="spreadsheetOpsuUpload" type="file" class="formInput" name="spreadsheet" />
                     </div>
                     <div id="carta">
                         <label for="letterUpload" class="customFileUpload">
@@ -92,13 +91,13 @@ include('./../templates/encabezadoConfig.php');
                                 <button type="button" class="removeFileUpload">Eliminar</button>
                             </div>
                         </label>
-                        <input id="letterUpload" type="file" class="formInput" name="letter"/>
+                        <input id="letterUpload" type="file" class="formInput" name="letter" />
                     </div>
 
                 </div>
                 <div>
                     <h2>Observacion</h2>
-                    <textarea class="description" name="description" placeholder="Escribe una observacion para enviar a control de estudios"></textarea>
+                    <textarea disabled class="description" name="description" placeholder="Escribe una observacion para enviar a control de estudios"><?=$inscription['description']?></textarea>
                 </div>
 
                 <button type="submit" class="formButton">Enviar</button>
@@ -115,8 +114,7 @@ include('./../templates/encabezadoConfig.php');
         </div>
         <button class="modalClose" id="modalClose">Cerrar</button>
     </div>
-
-    <script src="../../assets/js/gestionarInscripciones/crearInscripcion.js"></script>
+    </div>
 </body>
 
 </html>

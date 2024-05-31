@@ -30,24 +30,30 @@ include('../templates/encabezadoConfig.php');
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Nombres</th>
+                        <th>Apellidos</th>
                         <th>Cedula</th>
-                        <th>Apellido</th>
-                        <th>ID de Licencia</th>
                         <th>Correo</th>
+                        <th>Fecha de Inscripccion</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php
                     // Recorrer la lista de estudiantes y mostrar su información en filas de la tabla
-                    foreach ($users as $user) {
+                    if (!($inscriptions)) {
+                        return;
+                    }
+
+                    foreach ($inscriptions as $inscription) {
                         echo <<<HTML
                         <tr class="dataList">
-                            <td>{$inscription['id']}</td>
-                            <td>{$inscription['insDate']}</td>
-                            <td>{$inscription['insState']}</td>
-                            <td>{$inscription['insDescription']}</td>
-                            <!-- <td><a href="modificarUsuarios.php?id={$user['ID']}">Modificar</a></td> -->
+                            <td>{$inscription['studentName']}</td>
+                            <td>{$inscription['lastName']}</td>
+                            <td>{$inscription['licenseID']}</td>
+                            <td>{$inscription['email']}</td>
+                            <td>{$inscription['date']}</td>
+                            <td><a href="consultarInscripcion.php?id={$inscription['ID']}">revisar</a></td>
                         </tr>
                         HTML;
                     }

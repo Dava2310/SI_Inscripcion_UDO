@@ -25,7 +25,7 @@
         <input type="password" id="password" name="password" required>
 
         <label for="idRole">Rol</label>
-        <select class="form-input" id="idRole" name="idRole">
+        <select class="formInput" id="idRole" name="idRole">
             <option value="1">Asistente de Control de Estudios</option>
             <option value="2">Estudiante</option>
         </select>
