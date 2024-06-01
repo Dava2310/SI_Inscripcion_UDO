@@ -9,7 +9,7 @@ $id = $_SESSION['ID'];
 // Si no existe una id en la $_SESSION, es porque no esta autentificado
 if (!(isset($id))) {
     echo "<script> window.alert('No ha iniciado sesion');</script>";
-    echo "<script> window.location='../registros/login.php'; </script>";
+    echo "<script> window.location='../gestionarAcceso/iniciarSesion.php'; </script>";
     die();
 }
 
