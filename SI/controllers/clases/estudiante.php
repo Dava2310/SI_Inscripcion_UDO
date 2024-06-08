@@ -31,21 +31,26 @@ class Student
      * 
      * Crea un nuevo estudiante en la Base de Datos con los datos proporcionados.
      *
-     * @param string $licenseID   El ID de la licencia del estudiante.
-     * @param string $name        El nombre del estudiante.
-     * @param string $lastName    El apellido del estudiante.
-     * @param string $email       El correo electrónico del estudiante.
-     * @param string $password    La contraseña del estudiante.
-     * @param string $phoneNumber El número de teléfono del estudiante.
-     * @param string $address     La dirección del estudiante.
+     * @param string $licenseID       El ID de la licencia del estudiante.
+     * @param string $name            El nombre del estudiante.
+     * @param string $lastName        El apellido del estudiante.
+     * @param string $email           El correo electrónico del estudiante.
+     * @param string $birthday        La fecha de nacimiento del estudiante.
+     * @param string $nationality     La nacionalidad del estudiante.
+     * @param string $phoneNumber     El número de teléfono del estudiante.
+     * @param string $address         La dirección del estudiante.
+     * @param string $state           El estado del estudiante (por defecto: 'Active').
+     * @param string $password        La contraseña del estudiante.
+     * @param string $securityQuestion    La pregunta de seguridad del estudiante.
+     * @param string $securityAnswer  La respuesta de seguridad del estudiante.
      *
      * @return bool Devuelve true si el estudiante se creó correctamente, false en caso contrario.
      */
-    public function registerStudent($licenseID, $name, $lastName, $email, $password, $phoneNumber, $address)
+    public function registerStudent($licenseID, $name, $lastName, $email, $birthday, $nationality, $phoneNumber, $address, $state = 'Active', $password, $securityQuestion, $securityAnswer)
     {
         // Preparacion de la consulta SQL
-        $stmt = $this->con->prepare('INSERT INTO students(licenseID, name, lastName, email, password, phoneNumber, address) VALUES (?,?,?,?,?,?,?)');
-        $stmt->bind_param('sssssss', $licenseID, $name, $lastName, $email, $password, $phoneNumber, $address);
+        $stmt = $this->con->prepare('INSERT INTO students(licenseID, name, lastName, email, birthday, nationality, phoneNumber, address, state, password, securityQuestion, securityAnswer) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)');
+        $stmt->bind_param('ssssssssssss', $licenseID, $name, $lastName, $email, $birthday, $nationality, $phoneNumber, $address, $state, $password, $securityQuestion, $securityAnswer);
 
         // Ejecucion y verificacion de error de ejecucion
         if (!$stmt->execute()) {

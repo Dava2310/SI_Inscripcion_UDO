@@ -37,13 +37,17 @@ DROP TABLE IF EXISTS students;
 CREATE TABLE students(
     ID INT NOT NULL AUTO_INCREMENT,
     licenseID varchar(15) NOT NULL,
-    name VARCHAR(50),
-    lastName VARCHAR(50) NOT NULL,
+    name VARCHAR(40),
+    lastName VARCHAR(40) NOT NULL,
     email VARCHAR(50),
-    password VARCHAR(50),
+    birthday VARCHAR(15),
+    nationality VARCHAR(20),
     phoneNumber VARCHAR(20),
     address VARCHAR(50),
     state VARCHAR(20) DEFAULT 'Active',
+    password VARCHAR(50),
+    securityQuestion VARCHAR(30),
+    securityAnswer VARCHAR(30),
     PRIMARY KEY(ID)
 );
 
