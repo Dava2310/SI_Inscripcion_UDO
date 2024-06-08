@@ -357,4 +357,49 @@ class Student
             return false;
         }
     }
+
+    public function checkEmail($email)
+    {
+
+        // Preparacion de la consulta SQL
+        $stmt = $this->con->prepare('SELECT * FROM students WHERE email = ?');
+        $stmt->bind_param('s', $email);
+
+        // Ejecucion y verificacion de error de ejecucion
+        if (!$stmt->execute()) {
+            echo json_encode('Error al eliminar el estudiante');
+            exit;
+        }
+
+        // Recogiendo el resultado de la consulta
+        $result = $stmt->get_result();
+
+        // Verificando si se encontró el estudiante
+        if ($result->num_rows > 0) {
+            $estudiante = $result->fetch_assoc();
+            return $estudiante;
+        } else {
+            return false;
+        }
+    }
+
+    public function updatePassword($email, $password, $securityAnswer, $securityQuestion, $ID)
+    {   
+        // Preparacion de la consulta SQL
+        $stmt = $this->con->prepare('UPDATE students SET password = ? WHERE email = ? AND securityAnswer = ? AND securityQuestion = ? AND ID = ?');
+        $stmt->bind_param('ssssi', $password, $email, $securityAnswer, $securityQuestion, $ID);
+
+        // Ejecución y verificación de error de ejecución
+        if (!$stmt->execute()) {
+            echo json_encode('Error al actualizar los datos del estudiante');
+            exit;
+        }
+
+        // Verificación de si se actualizó algún registro
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

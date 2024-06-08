@@ -8,23 +8,23 @@ form.addEventListener("submit", e => {
 
     const formData = new FormData(form);
 
-    fetch('../../../controllers/gestionarAcceso/iniciarSesion.php', {
+    fetch('../../controllers/gestionarAcceso/iniciarSesion.php', {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
+    .then(response => response.text())
     .then(data => {
-        console.log(data.message);
+        console.log(data);
 
         // Si hubo inicio de sesion
         if (data.message === 'Inicio de Sesion Usuario') {
-            window.alert("Hubo inicio de sesion");
+            window.alert("Inicio de Sesion Exitoso");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente
             window.location = '../../../views/dashboardEmpleados/dashboardEmpleados.php';
 
         } else if (data.message === 'Inicio de Sesion Estudiante') {
-            window.alert("Hubo inicio de sesion");
+            window.alert("Inicio de Sesion Exitoso");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente
             window.location = '../../../views/dashboardEstudiantes/dashboardEstudiantes.php';

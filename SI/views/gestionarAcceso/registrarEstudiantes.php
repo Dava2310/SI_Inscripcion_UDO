@@ -74,7 +74,10 @@
             </div>
         </div>
         <input type="submit" value="Registrarse">
+        <p>¿Olvidaste tu contraseña?<a href="recuperarPassword.php"> Haz clic aquí</a>.</p>
+        <p>¿Ya tienes una cuenta?<a href="iniciarSesion.php"> Haz clic aquí</a>.</p>
     </form>
+    
 
     <script type="module" src="./../../assets/js/gestionarAcceso/registrarEstudiantes.js"></script>
 </body>
