@@ -9,7 +9,7 @@ $studentID = $_SESSION['ID'];
 // Si no hay usuario registrado
 if (!(isset($studentID))) {
     echo "<script> window.alert('No ha iniciado sesion');</script>";
-    echo "<script> window.location='../registros/login.php'; </script>";
+    echo "<script> window.location='../gestionarAcceso/iniciarSesion.php'; </script>";
     die();
 }
 
@@ -59,6 +59,7 @@ include('./../templates/encabezadoConfig.php');
             </div>
         </div>
     </div>
+    <script src="../../assets/js/dashboardEstudiantes/dashboardEstudiantes.js"></script>
 </body>
 
 </html>

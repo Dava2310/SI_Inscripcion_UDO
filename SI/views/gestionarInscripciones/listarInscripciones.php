@@ -2,6 +2,8 @@
 // Incluir el archivo con la definición de la clase Student
 include_once('../../controllers/clases/inscripciones.php');
 
+session_start();
+
 // Crear una instancia de la clase Student
 $inscription = new Inscription();
 
@@ -34,8 +36,12 @@ include('../templates/encabezadoConfig.php');
                         <th>Apellidos</th>
                         <th>Cedula</th>
                         <th>Correo</th>
-                        <th>Fecha de Inscripccion</th>
+                        <th>Fecha de Registro</th>
+                        <th>Estado</th>
+                        <th>Proceso</th>
+                        <th>Fase de Inscripccion</th>
                         <th>Acciones</th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -46,14 +52,39 @@ include('../templates/encabezadoConfig.php');
                     }
 
                     foreach ($inscriptions as $inscription) {
+                        $file; 
+                        $phase;
+
+                        $name = $inscription['studentName'];
+                        $lastName = $inscription['lastName'];
+                        $licenseId = $inscription['licenseID'];
+                        $email = $inscription['email'];
+                        $date = $inscription['date'];
+                        $state = $inscription['state'];
+                        $process = $inscription['process'] ?? "Ninguno";
+
+                        if ($inscription['inscriptionPhase'] == 1) {
+                            $file = "consultarInscripcionPasoUno.php?id={$inscription['ID']}";
+                            $phase = "Primera";
+                        } else if ($inscription['inscriptionPhase'] == 2) {
+                            $file = "consultarInscripcionPasoDos.php?id={$inscription['ID']}";
+                            $phase = "Segunda";
+                        } else {
+                            $file = "consultarInscripcionPasoTres.php?id={$inscription['ID']}";
+                            $phase = "Tercera";
+                        }
+
                         echo <<<HTML
                         <tr class="dataList">
-                            <td>{$inscription['studentName']}</td>
-                            <td>{$inscription['lastName']}</td>
-                            <td>{$inscription['licenseID']}</td>
-                            <td>{$inscription['email']}</td>
-                            <td>{$inscription['date']}</td>
-                            <td><a href="consultarInscripcion.php?id={$inscription['ID']}">revisar</a></td>
+                            <td>$name</td>
+                            <td>$lastName</td>
+                            <td>$licenseId</td>
+                            <td>$email</td>
+                            <td>$date</td>
+                            <td>$state</td>
+                            <td>$process</td>
+                            <td>$phase</td>
+                            <td><a href=$file>revisar</a></td>
                         </tr>
                         HTML;
                     }
@@ -62,7 +93,5 @@ include('../templates/encabezadoConfig.php');
             </table>
         </div>
     </div>
-
-    <script src="../../assets/js/gestionarUsuarios/listarUsuarios.js"></script>
 </body>
 </html>

@@ -67,13 +67,18 @@ CREATE TABLE inscriptions(
     idStudent INT NOT NULL,
     date varchar(50),
     idState INT NOT NULL,
-    idProcess INT NOT NULL,
-    url varchar(200) NOT NULL,
-    description varchar(200),
+    idProcess INT,
+    opsuCode varchar(50),
+    url varchar(200),
+    gradePointAverage float,
+    degreeCode varchar(50),
+    campusAddress varchar(50),
+    graduationYear varchar(50),
+    degreeTitle varchar(100),
+    inscriptionPhase int DEFAULT 0,
     PRIMARY KEY(ID),
     FOREIGN KEY(idStudent) REFERENCES students(ID),
-    FOREIGN KEY(idState) REFERENCES inscriptionStates(ID),
-    FOREIGN KEY(idProcess) REFERENCES inscriptionprocesses(ID)
+    FOREIGN KEY(idState) REFERENCES inscriptionStates(ID)
 );
 
 -- Creacion de la tabla Estados de las inscripcciones
@@ -97,12 +102,13 @@ CREATE TABLE inscriptionProcesses(
     PRIMARY KEY (ID)
 );
 
+INSERT INTO inscriptionProcesses (name) VALUES ("OPSU");
+INSERT INTO inscriptionProcesses (name) VALUES ("RUSI");
+INSERT INTO inscriptionProcesses (name) VALUES ("CONVENIO");
+
 -- Creacion de la tabla periodos
 DROP TABLE IF EXISTS periods(
     ID INT NOT NULL AUTO_INCREMENT,
     
 );
 
-INSERT INTO inscriptionProcesses (name) VALUES ("OPSU");
-INSERT INTO inscriptionProcesses (name) VALUES ("RUSI");
-INSERT INTO inscriptionProcesses (name) VALUES ("CONVENIO");

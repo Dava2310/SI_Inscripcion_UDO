@@ -7,6 +7,9 @@ var processSelect = document.getElementById('process');
 var planillaDiv = document.getElementById('planilla');
 var cartaDiv = document.getElementById('carta');
 
+var rusiDiv = document.getElementById('rusi');
+var otherDiv = document.getElementById('other');
+
 
 document.addEventListener('DOMContentLoaded', function () {
     fileInputs.forEach(input => {
@@ -65,4 +68,26 @@ document.addEventListener('DOMContentLoaded', function () {
             input.parentElement.firstElementChild.classList.remove('no-pointer');
         });
     });
+});
+
+// Mostrar dependiendo del proceso
+
+rusiDiv.style.display = 'none';
+otherDiv.style.display = 'none';
+
+// Luego, agrega un event listener al elemento select para detectar cambios
+processSelect.addEventListener('change', function (e) {
+    // Oculta todos los divs
+
+    // Muestra el div correspondiente a la opción seleccionada
+    if (e.target.value == '2') { // Si la opción seleccionada es RUSI
+        rusiDiv.style.display = 'block';
+        otherDiv.style.display = 'none';
+    } else if (e.target.value == '3' || e.target.value == '1') { // Si la opción seleccionada es Convenio
+        otherDiv.style.display = 'block';
+        rusiDiv.style.display = 'none';
+    } else {
+        rusiDiv.style.display = 'none';
+        otherDiv.style.display = 'none';
+    }
 });
