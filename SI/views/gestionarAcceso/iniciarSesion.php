@@ -12,6 +12,8 @@
         <label for="password">Contraseña:</label><br>
         <input type="password" id="password" name="password" required><br>
         <input type="submit" value="Iniciar Sesión">
+        <p>¿No tienes una cuenta?<a href="registrarEstudiantes.php"> Haz clic aquí</a>.</p>
+        <p>¿Se te ha olvidado la contraseña?<a href="recuperarPassword.php"> Haz clic aquí</a>.</p>
     </form>
 
     <script src="../../assets/js/gestionarAcceso/iniciarSesion.js"></script>

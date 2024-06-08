@@ -1,20 +1,18 @@
 <?php
-// Incluir el archivo con la definición de la clase Student
-include_once('../../controllers/clases/carrera.php');
 
-// Obtener la ID del estudiante
-$careerID = $_GET['id'];
-
-// Crear una instancia de la clase Student
-$career = new Career();
-
-// Obtener la lista de estudiantes
-$careerDetails = $career->getCareerByID($careerID);
-?>
-
-<?php
 $title = "Modificar Carrera";
 include('../templates/encabezadoConfig.php');
+// Incluir el archivo con la definición de la clase Career
+include_once('../../controllers/clases/carrera.php');
+
+// Obtener la ID de la carrera
+$careerID = $_GET['id'];
+
+// Crear una instancia de la clase Career
+$career = new Career();
+
+// Obtener los detalles de la carrera consultada
+$careerDetails = $career->getCareerByID($careerID);
 ?>
 
 
@@ -27,11 +25,11 @@ include('../templates/encabezadoConfig.php');
         <form id="form" action="../../controllers/gestionarCarreras/modificarCarreras.php?id=<?=$careerID?>" method="post">
             <div class="form-group">
                 <label for="name">Nombre:</label>
-                <input type="text" id="name" name="name" value=<?=$careerDetails['name']?>>
+                <input type="text" id="name" name="name" value="<?=$careerDetails['name']?>">
             </div>
             <div class="form-group">
                 <label for="description">Descripcion:</label>
-                <input type="text" id="description" name="description" value=<?=$careerDetails['description']?>>
+                <input type="text" id="description" name="description" value="<?=$careerDetails['description']?>">
             </div>
             <input type="submit" value="Guardar Cambios">
             <button type="button" id="delete">Eliminar Carrera</button>

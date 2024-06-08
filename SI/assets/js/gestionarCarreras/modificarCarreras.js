@@ -1,6 +1,7 @@
 const form = document.getElementById('form');
 const deleteButton = document.getElementById('delete');
 
+// Modificar Carrera
 form.addEventListener("submit", e => {
     e.preventDefault();
 
@@ -8,21 +9,17 @@ form.addEventListener("submit", e => {
     let params = new URLSearchParams(window.location.search);
     let id = params.get('id');
 
-    fetch('../../../controllers/gestionarCarreras/modificarCarreras.php?id=' + id, {
+    fetch('../../controllers/gestionarCarreras/modificarCarreras.php?id=' + id, {
         method: 'POST',
         body: formData
     })
         .then(response => response.json())
         .then(data => {
             console.log(data.message);
-
-            // Si hubo inicio de sesion
+            
             if (data.message === 'Actualizacion Carrera') {
                 window.alert("Se actualizaron los datos de la Carrera");
-
-                // Se verifica el Rol para mandarlo a la pagina correspondiente
                 window.location = './../../views/gestionarCarreras/listarCarreras.php';
-
             } else {
                 alert('Error al actualizar');
             }
@@ -33,6 +30,7 @@ form.addEventListener("submit", e => {
         });
 });
 
+// Eliminar Carrera
 deleteButton.addEventListener("click", e => {
     let confirmation = window.confirm("¿Seguro que quieres eliminar esta Carrera?");
     if (!confirmation) {
@@ -43,7 +41,7 @@ deleteButton.addEventListener("click", e => {
         let params = new URLSearchParams(window.location.search);
         let id = params.get('id');
 
-        fetch('../../../controllers/gestionarCarreras/eliminarCarreras.php?id=' + id, {
+        fetch('../../controllers/gestionarCarreras/eliminarCarreras.php?id=' + id, {
             method: 'POST',
             body: formData
         })

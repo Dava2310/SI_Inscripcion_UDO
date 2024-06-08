@@ -15,8 +15,8 @@ INSERT INTO roles VALUES(1, "Administrador", "No descripcion");
 INSERT INTO roles VALUES(2, "Asistente", "No Descripcion");
 
 -- Creacion de la Tabla Usuario
-DROP TABLE IF EXISTS employees;
-CREATE TABLE employees(
+DROP TABLE IF EXISTS users;
+CREATE TABLE users(
 	ID INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL,
     lastName VARCHAR(40) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE employees(
     FOREIGN KEY(idRole) REFERENCES roles(ID)
 );
 
-INSERT INTO employees(name, lastName, licenseID, email, idRole, password) VALUES('Daniel', 'Vetencourt', '29517648', 'dvetencourt23@gmail.com', 1, md5('1234'))
+INSERT INTO users(name, lastName, licenseID, email, idRole, password) VALUES('Daniel', 'Vetencourt', '29517648', 'dvetencourt23@gmail.com', 1, md5('1234'));
 
 -- Creacion de la tabla Estudiante
 DROP TABLE IF EXISTS students;
@@ -74,12 +74,14 @@ INSERT INTO inscriptionProcesses (name) VALUES ("RUSI");
 INSERT INTO inscriptionProcesses (name) VALUES ("CONVENIO");
 
 -- Creacion de la tabla periodos
-DROP TABLE IF EXISTS periods(
+DROP TABLE IF EXISTS periods;
+CREATE TABLE periods(
     ID INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(20),
     dateStart VARCHAR(20),
     dateEnd VARCHAR(20),
-    validity BOOLEAN
+    validity BOOLEAN,
+    PRIMARY KEY(ID)
 );
 
 
@@ -125,6 +127,7 @@ CREATE TABLE notifications(
     content VARCHAR(500),
     date VARCHAR(20),
     idStudent INT,
+    PRIMARY KEY(ID),
     FOREIGN KEY(idStudent) REFERENCES students(ID)
 );
 

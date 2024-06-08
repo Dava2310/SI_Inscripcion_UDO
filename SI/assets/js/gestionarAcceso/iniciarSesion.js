@@ -12,7 +12,7 @@ form.addEventListener("submit", e => {
         method: 'POST',
         body: formData
     })
-    .then(response => response.text())
+    .then(response => response.json())
     .then(data => {
         console.log(data);
 
@@ -21,13 +21,13 @@ form.addEventListener("submit", e => {
             window.alert("Inicio de Sesion Exitoso");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente
-            window.location = '../../../views/dashboardEmpleados/dashboardEmpleados.php';
+            window.location = '../../views/dashboardEmpleados/dashboardEmpleados.php';
 
         } else if (data.message === 'Inicio de Sesion Estudiante') {
             window.alert("Inicio de Sesion Exitoso");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente
-            window.location = '../../../views/dashboardEstudiantes/dashboardEstudiantes.php';
+            window.location = '../../views/dashboardEstudiantes/dashboardEstudiantes.php';
         } else {
             alert('Credenciales de inicio de sesion incorrectas');
         }

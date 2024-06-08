@@ -16,7 +16,7 @@ form.addEventListener("submit", e => {
         // Si hubo inicio de sesion
         if (data.message === 'Creacion Carrera') {
             window.alert("Creacion exitosa");
-            window.location = "../../../views/gestionarCarreras/listarCarreras.php";
+            window.location = "../../views/gestionarCarreras/listarCarreras.php";
         }
         else
         {

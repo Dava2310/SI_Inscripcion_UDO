@@ -104,6 +104,9 @@ form.addEventListener("submit", (e) =>
         //se indica que la respuesta obtenida es en formato json
         .then(response => response.json())
         .then(data => {
+
+            console.log(data)
+
             //data contiene la respuesta obtenida de recuperarPassword.php 
             if(data.message == "Modificacion con exito"){
                 alert(data.message);

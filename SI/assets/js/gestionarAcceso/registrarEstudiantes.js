@@ -21,14 +21,14 @@ form.addEventListener("submit", e => {
         })
         .then(response => response.json())
         .then(data => {
-            console.log(data);
+            //console.log(data);
     
             // Si hubo inicio de sesion
-            if (data.message === 'Inicio de Sesion') {
-                window.alert("Hubo inicio de sesion");
+            if (data.message === 'Registro exitoso') {
+                window.alert("Registro de estudiante exitoso");
                 
                 // Se verifica el Rol para mandarlo a la pagina correspondiente
-                window.location = '../../views/dashboardEstudiantes/dashboardEstudiantes.php';
+                window.location = '../../views/gestionarAcceso/iniciarSesion.php';
     
             } else {
                 alert('Credenciales de inicio de sesion incorrectas');

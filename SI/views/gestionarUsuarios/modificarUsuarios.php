@@ -23,7 +23,7 @@ include('../templates/encabezadoConfig.php');
         <?php include('../templates/menus/menuAdministrador.php') ?>
     </div>
     <div class="content">
-        <h2>Modificar Estudiante</h2>
+        <h2>Modificar Empleado</h2>
         <form id="form" action="../../controllers/gestionarUsuarios/modificarUsuarios.php?id=<?=$userID?>" method="post">
             <div class="form-group">
                 <label for="name">Nombre:</label>

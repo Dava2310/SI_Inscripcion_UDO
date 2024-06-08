@@ -1,7 +1,7 @@
 const createUserButton = document.getElementById('create');
 
 createUserButton.addEventListener('click', e => {
-    window.location = "../../../views/gestionarUsuarios/crearUsuarios.php";
+    window.location = "../../views/gestionarUsuarios/crearUsuarios.php";
 });
 
 // Filtro de usuarios

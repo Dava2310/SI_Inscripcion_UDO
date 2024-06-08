@@ -32,21 +32,8 @@
             exit;
         }
 
-        // Iniciar Sesion Usuario
-        $response = $studentObject->validateStudent($email, md5($password));
-
-        // Error al iniciar Sesion?
-        if (!$response) {
-            session_destroy();
-            http_response_code(401); // Se establece el codigo de estado HTTP 401, que significa 'error'
-            echo json_encode(array('message' => 'Error al iniciar sesion'));
-            exit;
-        }
-
-        //Si se encontró al usuario, se le dirige a la página que le corresponde
-        $_SESSION['ID'] = $response['ID'];
         http_response_code(200); // se estable el codigo de estado http 200, que significa 'ok' y que se hizo la solicitud correctamente
-        echo json_encode(array('message' => 'Inicio de Sesion'));
+        echo json_encode(array('message' => 'Registro exitoso'));
     }
 
     header('Content-Type: application/json'); // Establece la cabecera para indicar que se envía una respuesta en formato JSON

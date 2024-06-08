@@ -47,7 +47,6 @@ form.addEventListener("submit", (e) => {
             
             // console.log(data)
 
-            
             if (data.message == "Estudiante verificado con éxito")
             {
                 // Redirigir a la pantalla nueva con el ID como parámetro en la URL

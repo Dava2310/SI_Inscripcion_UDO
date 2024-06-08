@@ -10,7 +10,6 @@ function modificarCarreras()
     $name = $_POST['name'] ?? "";
     $description = $_POST['description'] ?? "";
 
-    // Registrar estudiante
     $career = new Career();
     $response = $career->updateCareer($_GET['id'], $name, $description);
 

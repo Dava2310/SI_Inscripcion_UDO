@@ -1,7 +1,7 @@
 const createCareerButton = document.getElementById('create');
 
 createCareerButton.addEventListener('click', e => {
-    window.location = "../../../views/gestionarCarreras/crearCarreras.php";
+    window.location = "../../views/gestionarCarreras/crearCarreras.php";
 });
 
 // Filtro de Carreras
