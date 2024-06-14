@@ -1,6 +1,4 @@
 const form = document.getElementById("form")
-const cedula = document.getElementById("cedula")
-const contrasena = document.getElementById("contrasena")
 
 form.addEventListener("submit", e => {
     
@@ -17,13 +15,13 @@ form.addEventListener("submit", e => {
         console.log(data);
 
         // Si hubo inicio de sesion
-        if (data.message === 'Inicio de Sesion Usuario') {
+        if (data.message === 'Inicio de Sesión Usuario') {
             window.alert("Inicio de Sesion Exitoso");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente
             window.location = '../../views/dashboardEmpleados/dashboardEmpleados.php';
 
-        } else if (data.message === 'Inicio de Sesion Estudiante') {
+        } else if (data.message === 'Inicio de Sesión Estudiante') {
             window.alert("Inicio de Sesion Exitoso");
             
             // Se verifica el Rol para mandarlo a la pagina correspondiente

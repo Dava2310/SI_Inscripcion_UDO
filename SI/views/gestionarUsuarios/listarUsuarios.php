@@ -1,23 +1,22 @@
 <?php
-// Incluir el archivo con la definición de la clase Student
 include_once('../../controllers/clases/usuario.php');
 
-// Crear una instancia de la clase Student
-$user = new Usuario();
-
-// Obtener la lista de estudiantes
+$user = new User();
 $users = $user->getUsers();
 ?>
 
 <?php
-$title = "Panel De Control";
+$_title = "Lista de Usuarios";
 include('../templates/encabezadoConfig.php');
 ?>
 
 <body>
+    <!-- Barra lateral -->
     <div class="sidebarBackground">
         <?php include('../templates/menus/menuAdministrador.php') ?>
     </div>
+
+    <!-- Contenido principal -->
     <div class="content">
         <div>
             <div class="tools">
@@ -26,7 +25,6 @@ include('../templates/encabezadoConfig.php');
                 </div>
                 <button id="create">Crear empleado</button>
             </div>
-
 
             <table class="table">
                 <thead>
@@ -40,8 +38,12 @@ include('../templates/encabezadoConfig.php');
                 </thead>
                 <tbody>
                     <?php
-                    // Recorrer la lista de estudiantes y mostrar su información en filas de la tabla
                     foreach ($users as $user) {
+
+                        if ($user['idRole'] === 1) {
+                            continue;
+                        }
+
                         echo <<<HTML
                         <tr class="dataList">
                             <td>{$user['name']}</td>

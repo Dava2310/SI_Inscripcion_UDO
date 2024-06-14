@@ -1,64 +1,28 @@
 <?php
 
-/**  
- * Clase Estudiante
- * 
- * Esta clase representa a un estudiante dentro del sistema.
- * Maneja todas las consultas MySQL respecto a esta entidad.
- */
-
 include_once(__DIR__ . '/../conexion.php');
 
 class Student
 {
-
     private $con;
 
-    /**
-     * Constructor de la clase Student
-     * 
-     * Crea una nueva instancia de la clase Student y establece la conexion a la BD
-     */
     public function __construct()
     {
-
-        // Incluir la conexion a la BD
         $this->con = Connection::getInstance()->getConnection();
     }
 
-    /**
-     * Crear Estudiante
-     * 
-     * Crea un nuevo estudiante en la Base de Datos con los datos proporcionados.
-     *
-     * @param string $licenseID       El ID de la licencia del estudiante.
-     * @param string $name            El nombre del estudiante.
-     * @param string $lastName        El apellido del estudiante.
-     * @param string $email           El correo electrónico del estudiante.
-     * @param string $birthday        La fecha de nacimiento del estudiante.
-     * @param string $nationality     La nacionalidad del estudiante.
-     * @param string $phoneNumber     El número de teléfono del estudiante.
-     * @param string $address         La dirección del estudiante.
-     * @param string $state           El estado del estudiante (por defecto: 'Active').
-     * @param string $password        La contraseña del estudiante.
-     * @param string $securityQuestion    La pregunta de seguridad del estudiante.
-     * @param string $securityAnswer  La respuesta de seguridad del estudiante.
-     *
-     * @return bool Devuelve true si el estudiante se creó correctamente, false en caso contrario.
-     */
-    public function registerStudent($licenseID, $name, $lastName, $email, $birthday, $nationality, $phoneNumber, $address, $state = 'Active', $password, $securityQuestion, $securityAnswer)
-    {
-        // Preparacion de la consulta SQL
-        $stmt = $this->con->prepare('INSERT INTO students(licenseID, name, lastName, email, birthday, nationality, phoneNumber, address, state, password, securityQuestion, securityAnswer) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)');
-        $stmt->bind_param('ssssssssssss', $licenseID, $name, $lastName, $email, $birthday, $nationality, $phoneNumber, $address, $state, $password, $securityQuestion, $securityAnswer);
+    // CRUDS // 
 
-        // Ejecucion y verificacion de error de ejecucion
+    // Registrar (Crear)
+    public function registerStudent($licenseID, $name, $lastName, $email, $birthday, $nationality, $phoneNumber, $address, $password, $securityQuestion, $securityAnswer, $state = 'Active')
+    {
+        $stmt = $this->con->prepare('INSERT INTO students(licenseID, name, lastName, email, birthday, nationality, phoneNumber, address, password, securityQuestion, securityAnswer, state) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+        $stmt->bind_param('ssssssssssss', $licenseID, $name, $lastName, $email, $birthday, $nationality, $phoneNumber, $address, $password, $securityQuestion, $securityAnswer, $state);
+
         if (!$stmt->execute()) {
-            echo json_encode('Error al crear el estudiante');
-            exit;
+            throw new Exception('Error al crear el estudiante: ' . $stmt->error);
         }
 
-        // Verificacion de las filas afectadas para determinar si el usuario se creo de forma correcta
         if ($stmt->affected_rows > 0) {
             return true;
         } else {
@@ -66,143 +30,49 @@ class Student
         }
     }
 
-    /**
-     * Validar Usuario
-     * 
-     * Valida las credenciales de un usuario en la base de datos.
-     * 
-     * @param string $email El correo electrónico del usuario.
-     * @param string $password La contraseña del usuario.
-     * @return int|bool Retorna el número de idRol si las credenciales son válidas, de lo contrario retorna false.
-     */
 
-    public function validateStudent($email, $password)
+    // Obtener Estudiante por ID (Leer)
+    public function getStudentByID($id)
     {
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("SELECT ID, name, lastName, email, phoneNumber, address FROM students WHERE email = ? and password = ? LIMIT 1");
-        $stmt->bind_param("ss", $email, $password);
-
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al validar estudiante');
-            exit;
-        }
-
-        // Recogiendo los resultados de la consulta
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        // Se devuelve el array con el valor de idRol y idUsuario si existe una fila con los resultados de la consulta
-        return $row ? array(
-            'ID' => $row['ID'],
-            'name' => $row['name'],
-            'lastName' => $row['lastName'],
-            'email' => $row['email'],
-            'phoneNumber' => $row['phoneNumber'],
-            'address' => $row['address']
-        ) : false;
-    }
-
-    /**
-     * Verificar si un estudiante está activo por LicenseID
-     *
-     * Verifica si un estudiante en la base de datos está activo según su LicenseID.
-     *
-     * @param string $licenseID El LicenseID del estudiante a verificar.
-     * @return bool Retorna true si el estudiante está activo, de lo contrario retorna false.
-     */
-    public function isActiveByLicense($licenseID)
-    {
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("SELECT state FROM students WHERE licenseID = ? LIMIT 1");
-        $stmt->bind_param("s", $licenseID);
-
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al verificar el estado del estudiante por LicenseID');
-            exit;
-        }
-
-        // Recogiendo el resultado de la consulta
-        $result = $stmt->get_result();
-
-        // Verificando si se encontró el estudiante
-        if ($result->num_rows > 0) {
-            $estudiante = $result->fetch_assoc();
-            return $estudiante['state'] === 'Active';
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Verificar si un estudiante está activo por ID
-     *
-     * Verifica si un estudiante en la base de datos está activo según su ID.
-     *
-     * @param int $id El ID del estudiante a verificar.
-     * @return bool Retorna true si el estudiante está activo, de lo contrario retorna false.
-     */
-    public function isActiveByID($id)
-    {
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("SELECT state FROM students WHERE ID = ? LIMIT 1");
-        $stmt->bind_param("i", $id);
-
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al verificar el estado del estudiante por ID');
-            exit;
-        }
-
-        // Recogiendo el resultado de la consulta
-        $result = $stmt->get_result();
-
-        // Verificando si se encontró el estudiante
-        if ($result->num_rows > 0) {
-            $estudiante = $result->fetch_assoc();
-            return $estudiante['state'] === 'Active';
-        } else {
-            return false;
-        }
-    }
-
-
-    /**
-     * Modificar Estudiante
-     *
-     * Modifica los datos de un estudiante en la base de datos.
-     *
-     * @param int $id El ID del estudiante a actualizar.
-     * @param string $licenseID El nuevo ID de la licencia del estudiante.
-     * @param string $name El nuevo nombre del estudiante.
-     * @param string $lastName El nuevo apellido del estudiante.
-     * @param string $email El nuevo correo electrónico del estudiante.
-     * @param string $phoneNumber El nuevo número de teléfono del estudiante.
-     * @param string $address La nueva dirección del estudiante.
-     * @return bool Retorna true si los datos del estudiante se actualizaron correctamente, de lo contrario retorna false.
-     */
-    public function updateStudent($id, $licenseID, $name, $lastName, $email, $phoneNumber, $address)
-    {
-
         if (!($this->isActiveByID($id))) {
-
             echo json_encode('Ocurrio un error. El estudiante no esta activo');
             exit;
         }
 
+        $stmt = $this->con->prepare("SELECT * FROM students WHERE ID = ? LIMIT 1");
+        $stmt->bind_param("i", $id);
 
-        // Preparación de la consulta SQL
+        if (!$stmt->execute()) {
+            echo json_encode('Error al buscar el estudiante por ID');
+            exit;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $estudiante = $result->fetch_assoc();
+            return $estudiante;
+        } else {
+            return false;
+        }
+    }
+
+    // Actualizar Estudiante
+    public function updateStudent($id, $licenseID, $name, $lastName, $email, $phoneNumber, $address)
+    {
+        if (!($this->isActiveByID($id))) {
+            echo json_encode('Ocurrio un error. El estudiante no esta activo');
+            exit;
+        }
+
         $stmt = $this->con->prepare("UPDATE students SET licenseID = ?, name = ?, lastName = ?, email = ?, phoneNumber = ?, address = ? WHERE ID = ?");
         $stmt->bind_param("ssssssi", $licenseID, $name, $lastName, $email, $phoneNumber, $address, $id);
 
-        // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
             echo json_encode('Error al actualizar los datos del estudiante');
             exit;
         }
 
-        // Verificación de si se actualizó algún registro
         if ($stmt->affected_rows > 0) {
             return true;
         } else {
@@ -210,32 +80,39 @@ class Student
         }
     }
 
-    /**
-     * Obtener Estudiantes
-     *
-     * Obtiene los datos de todos los estudiantes registrados en la base de datos.
-     *
-     * @return array|bool Retorna un array con los datos de los estudiantes si hay registros, de lo contrario retorna false.
-     */
+    // Borrar Estudiante
+    public function deleteStudentById($studentID)
+    {
+        $stmt = $this->con->prepare("DELETE FROM students WHERE ID = ?");
+        $stmt->bind_param("i", $studentID);
+
+        if (!$stmt->execute()) {
+            echo json_encode('Error al eliminar el estudiante');
+            exit;
+        }
+
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    // Listar Estudiantes
     public function getStudents()
     {
-        // Preparación de la consulta SQL
         $stmt = $this->con->prepare("SELECT * FROM students");
 
-        // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
             echo json_encode('Error al obtener los estudiantes');
             exit;
         }
 
-        // Recogiendo los resultados de la query
         $result = $stmt->get_result();
 
-        // Verificando si hay registros
         if ($result->num_rows > 0) {
             $estudiantes = array();
 
-            // Obtener los datos de los estudiantes en un array
             while ($row = $result->fetch_assoc()) {
                 $estudiantes[] = $row;
             }
@@ -246,76 +123,92 @@ class Student
         }
     }
 
-    /**
-     * Buscar Estudiante por ID
-     *
-     * Busca un estudiante en la base de datos según su ID.
-     *
-     * @param int $id El ID del estudiante a buscar.
-     * @return array|bool Retorna un array con los datos del estudiante si se encuentra, de lo contrario retorna false.
-     */
-    public function getStudentByID($id)
+    // OTROS //
+
+    // Obtener datos por Credeneciales
+    public function validateStudent($email, $password)
     {
+        $stmt = $this->con->prepare("SELECT ID, name, lastName, email, phoneNumber, address FROM students WHERE email = ? and password = ? LIMIT 1");
+        $stmt->bind_param("ss", $email, $password);
 
-        if (!($this->isActiveByID($id))) {
-
-            echo json_encode('Ocurrio un error. El estudiante no esta activo');
-            exit;
-        }
-
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * FROM students WHERE ID = ? LIMIT 1");
-        $stmt->bind_param("i", $id);
-
-        // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
-            echo json_encode('Error al buscar el estudiante por ID');
+            throw new Exception('Error al validar el estudiante: ' . $stmt->error);
             exit;
         }
 
-        // Recogiendo el resultado de la consulta
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+
+        return $row ? array(
+            'ID' => $row['ID'],
+            'name' => $row['name'],
+            'lastName' => $row['lastName'],
+            'email' => $row['email'],
+            'phoneNumber' => $row['phoneNumber'],
+            'address' => $row['address']
+        ) : false;
+    }
+
+    // Verificar estado por cedula
+    public function isActiveByLicense($licenseID)
+    {
+        $stmt = $this->con->prepare("SELECT state FROM students WHERE licenseID = ? LIMIT 1");
+        $stmt->bind_param("s", $licenseID);
+
+        if (!$stmt->execute()) {
+            echo json_encode('Error al verificar el estado del estudiante por LicenseID');
+            exit;
+        }
+
         $result = $stmt->get_result();
 
-        // Verificando si se encontró el estudiante
         if ($result->num_rows > 0) {
             $estudiante = $result->fetch_assoc();
-            return $estudiante;
+            return $estudiante['state'] === 'Active';
         } else {
             return false;
         }
     }
 
-    /**
-     * Buscar Estudiante por LicenseID
-     *
-     * Busca un estudiante en la base de datos según su LicenseID.
-     *
-     * @param string $licenseID El LicenseID del estudiante a buscar.
-     * @return array|bool Retorna un array con los datos del estudiante si se encuentra, de lo contrario retorna false.
-     */
+    // Verificar Estudiante Activo
+    public function isActiveByID($id)
+    {
+        $stmt = $this->con->prepare("SELECT state FROM students WHERE ID = ? LIMIT 1");
+        $stmt->bind_param("i", $id);
+
+        if (!$stmt->execute()) {
+            echo json_encode('Error al verificar el estado del estudiante por ID');
+            exit;
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            $estudiante = $result->fetch_assoc();
+            return $estudiante['state'] === 'Active';
+        } else {
+            return false;
+        }
+    }
+
+    // Obtener estudiantes por cedula
     public function getStudentByLicense($licenseID)
     {
-
         if (!($this->isActiveByLicense($licenseID))) {
-
             echo json_encode('Ocurrio un error. El estudiante no esta activo');
             exit;
         }
 
-        // Preparación de la consulta SQL
         $stmt = $this->con->prepare("SELECT * FROM students WHERE licenseID = ? LIMIT 1");
         $stmt->bind_param("s", $licenseID);
 
-        // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
             echo json_encode('Error al buscar el estudiante por LicenseID');
             exit;
         }
 
-        // Recogiendo el resultado de la consulta
         $result = $stmt->get_result();
 
-        // Verificando si se encontró el estudiante
         if ($result->num_rows > 0) {
             $estudiante = $result->fetch_assoc();
             return $estudiante;
@@ -324,82 +217,37 @@ class Student
         }
     }
 
-    /**
-     * Eliminar Estudiante
-     *
-     * Elimina completamente el registro del estudiante de la base de datos.
-     *
-     * @param int $id El ID del estudiante a eliminar.
-     * @return bool Retorna true si el estudiante fue eliminado con éxito, de lo contrario retorna false.
-     */
-    public function deleteStudentById($id)
-    {
-        // Verificar si el estudiante está activo
-        if (!($this->isActiveByID($id))) {
-            echo json_encode('Ocurrió un error. El estudiante no está activo');
-            exit;
-        }
-
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("DELETE FROM students WHERE ID = ?");
-        $stmt->bind_param("i", $id);
-
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al eliminar el estudiante');
-            exit;
-        }
-
-        // Verificación de si se eliminó algún registro
-        if ($stmt->affected_rows > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
+    // Comprobar si el email corresponde a un estudiante
     public function checkEmail($email)
     {
-
-        // Preparacion de la consulta SQL
         $stmt = $this->con->prepare('SELECT * FROM students WHERE email = ?');
         $stmt->bind_param('s', $email);
 
-        // Ejecucion y verificacion de error de ejecucion
         if (!$stmt->execute()) {
-            echo json_encode('Error al eliminar el estudiante');
-            exit;
+            throw new Exception('Error al verificar el email');
+            return false;
         }
 
-        // Recogiendo el resultado de la consulta
         $result = $stmt->get_result();
 
-        // Verificando si se encontró el estudiante
         if ($result->num_rows > 0) {
-            $estudiante = $result->fetch_assoc();
-            return $estudiante;
+            $student = $result->fetch_assoc();
+            return $student;
         } else {
             return false;
         }
     }
 
+    // Cambiar Contraseña
     public function updatePassword($email, $password, $securityAnswer, $securityQuestion, $ID)
-    {   
-        // Preparacion de la consulta SQL
+    {
         $stmt = $this->con->prepare('UPDATE students SET password = ? WHERE email = ? AND securityAnswer = ? AND securityQuestion = ? AND ID = ?');
         $stmt->bind_param('ssssi', $password, $email, $securityAnswer, $securityQuestion, $ID);
 
-        // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
-            echo json_encode('Error al actualizar los datos del estudiante');
-            exit;
-        }
-
-        // Verificación de si se actualizó algún registro
-        if ($stmt->affected_rows > 0) {
-            return true;
-        } else {
+            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
             return false;
         }
+        return true;
     }
 }

@@ -5,28 +5,33 @@ include_once("../clases/usuario.php");
 
 function crearUsuarios()
 {
-    // Obteniendo datos del formulario 
     $name = $_POST['name'] ?? "";
     $lastName = $_POST['lastName'] ?? "";
     $email = $_POST['email'] ?? "";
-    $password = $_POST['password'] ?? "";
     $licenseID = $_POST['licenseID'] ?? "";
 
-    // Registrar estudiante
-    $user = new Usuario();
-    $response = $user->registerUser($name, $lastName, $licenseID, $email, 2, md5($password));
-
-    // Error al crear Usuario
-    if (!$response) {
-        session_destroy();
-        http_response_code(401); // Se establece el codigo de estado HTTP 401, que significa 'error'
-        echo json_encode(array('message' => 'Error al crear empleado'));
+    if (empty($name) || empty($lastName) || empty($email) || empty($licenseID)) {
+        http_response_code(400);
+        echo json_encode(array('message' => 'Todos los campos son obligatorios.'));
         exit;
     }
 
-    http_response_code(200); // se estable el codigo de estado http 200, que significa 'ok' y que se hizo la solicitud correctamente
-    echo json_encode(array('message' => 'Creacion'));
+    $user = new User();
+    try {
+        $response = $user->registerUser($name, $lastName, $licenseID, $email, 2, md5($licenseID));
+
+        if ($response) {
+            http_response_code(200);
+            echo json_encode(array('message' => 'Usuario creado exitosamente'));
+        } else {
+            http_response_code(500);
+            echo json_encode(array('message' => 'Error al crear el usuario'));
+        }
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(array('message' => 'Error al crear el usuario: ' . $e->getMessage()));
+    }
 }
 
-header('Content-Type: application/json'); // Establece la cabecera para indicar que se envía una respuesta en formato JSON
+header('Content-Type: application/json');
 crearUsuarios();

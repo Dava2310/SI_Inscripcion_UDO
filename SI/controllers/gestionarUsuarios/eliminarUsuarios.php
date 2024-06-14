@@ -8,7 +8,7 @@ function eliminarUsuarios()
 {
 
     // Eliminar Estudiante
-    $user = new Usuario();
+    $user = new User();
     $response = $user->deleteUserById($_GET['id']);
 
     // Error al eliminar?

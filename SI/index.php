@@ -1,5 +1,5 @@
 <?php
-    $_titulo = "Inicio";
+    $_title = "Inicio";
     include('./views/templates/encabezadoConfig.php');
 ?>
 

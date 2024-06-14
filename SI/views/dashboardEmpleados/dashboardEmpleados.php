@@ -14,7 +14,7 @@ if (!(isset($id))) {
 }
 
 // Recogiendo los datos del usuario
-$user = new Usuario();
+$user = new User();
 $response = $user->getUserByID($id);
 
 // Si no hay datos, se niega la autenticidad
@@ -29,6 +29,18 @@ $name = $response['name'];
 $lastName = $response['lastName'];
 $licenseID = $response['licenseID'];
 $email = $response['email'];
+$idRole = $response['idRole'];
+
+$securityQuestion = $response['securityQuestion'];
+$securityAnswer = $response['securityAnswer'];
+
+// Verificar si no hay una pregunta-respuesta de seguridad
+if (!($securityQuestion) && !($securityAnswer) && $idRole !== 1) {
+    //redirigir a otra pagina
+    echo "<script> window.alert('Antes de comenzar a utilizar el sistema, debe registrar una pregunta de seguridad');</script>";
+    echo "<script> window.location='../gestionarAcceso/crearPreguntaSeguridad.php'; </script>";
+}
+
 ?>
 
 
@@ -42,6 +54,16 @@ include('./../templates/encabezadoConfig.php');
     <div class="content">
         <h1>Hola <?= $name ?> <?= $lastName ?></h1>
         <p>Correo: <?= $email ?> | Cedula: <?= $licenseID ?></p>
+
+
+
+        
+
+
+
+
+
+
     </div>
 </body>
 

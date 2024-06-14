@@ -1,13 +1,13 @@
 <?php
-// Incluir el archivo con la definición de la clase Student
-include_once('../../controllers/clases/inscripciones.php');
+// Incluir el archivo con la definición de la clase Inscription
+include_once('../../controllers/clases/inscripcion.php');
 
 session_start();
 
-// Crear una instancia de la clase Student
+// Crear una instancia de la clase Inscription
 $inscription = new Inscription();
 
-// Obtener la lista de estudiantes
+// Obtener la lista de inscripciones
 $inscriptions = $inscription->getInscriptions();
 ?>
 
@@ -17,9 +17,12 @@ include('../templates/encabezadoConfig.php');
 ?>
 
 <body>
+    <!-- Barra lateral -->
     <div class="sidebarBackground">
         <?php include('../templates/menus/menuAdministrador.php') ?>
     </div>
+
+    <!-- Contenido principal -->
     <div class="content">
         <div>
             <div class="tools">
@@ -28,25 +31,23 @@ include('../templates/encabezadoConfig.php');
                 </div>
             </div>
 
-
             <table class="table">
                 <thead>
                     <tr>
                         <th>Nombres</th>
                         <th>Apellidos</th>
-                        <th>Cedula</th>
+                        <th>Cédula</th>
                         <th>Correo</th>
                         <th>Fecha de Registro</th>
                         <th>Estado</th>
                         <th>Proceso</th>
-                        <th>Fase de Inscripccion</th>
+                        <th>Fase de Inscripción</th>
                         <th>Acciones</th>
-
                     </tr>
                 </thead>
                 <tbody>
                     <?php
-                    // Recorrer la lista de estudiantes y mostrar su información en filas de la tabla
+                    // Recorrer la lista de inscripciones y mostrar su información en filas de la tabla
                     if (!($inscriptions)) {
                         return;
                     }
@@ -55,22 +56,23 @@ include('../templates/encabezadoConfig.php');
                         $file; 
                         $phase;
 
-                        $name = $inscription['studentName'];
+                        if ($inscription['inscriptionPhase'] === 0 || $inscription['inscriptionPhase'] === 1 ){
+                            continue;
+                        }
+
+                        $name = $inscription['name'];
                         $lastName = $inscription['lastName'];
                         $licenseId = $inscription['licenseID'];
                         $email = $inscription['email'];
                         $date = $inscription['date'];
-                        $state = $inscription['state'];
+                        $state = $inscription['state'] == '' ? "Ninguno": $inscription['state'];
                         $process = $inscription['process'] ?? "Ninguno";
 
-                        if ($inscription['inscriptionPhase'] == 1) {
-                            $file = "consultarInscripcionPasoUno.php?id={$inscription['ID']}";
+                        if ($inscription['inscriptionPhase'] === 1) {
                             $phase = "Primera";
-                        } else if ($inscription['inscriptionPhase'] == 2) {
-                            $file = "consultarInscripcionPasoDos.php?id={$inscription['ID']}";
+                        } else if ($inscription['inscriptionPhase'] === 2) {
                             $phase = "Segunda";
-                        } else {
-                            $file = "consultarInscripcionPasoTres.php?id={$inscription['ID']}";
+                        } else if ($inscription['inscriptionPhase'] === 3) {
                             $phase = "Tercera";
                         }
 
@@ -84,7 +86,7 @@ include('../templates/encabezadoConfig.php');
                             <td>$state</td>
                             <td>$process</td>
                             <td>$phase</td>
-                            <td><a href=$file>revisar</a></td>
+                            <td><a href="revisarInscripcionPasoDos.php?id={$inscription['ID']}">Revisar</a></td>
                         </tr>
                         HTML;
                     }
@@ -93,5 +95,7 @@ include('../templates/encabezadoConfig.php');
             </table>
         </div>
     </div>
+    <script src="../../assets/js/gestionarInscripciones/listarInscripciones.js"></script>
 </body>
+
 </html>

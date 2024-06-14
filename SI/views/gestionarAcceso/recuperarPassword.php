@@ -1,10 +1,10 @@
 <?php
     $_title = "Recuperar Contraseña";
-    include('../templates/formularioRegistro.php');
+    include('../templates/encabezadoConfig.php');
 ?>
 
 <body>
-    <form id="form" action="">
+    <form id="form" action="../../controllers/gestionarAcceso/verificarEmail.php" method="post">
     <h1>Recupera tu contraseña</h1>
         <div class="grid-container">
             <div class="form-group">

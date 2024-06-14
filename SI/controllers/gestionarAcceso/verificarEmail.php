@@ -1,40 +1,75 @@
 <?php
 
-    session_start();
+session_start();
 
-    include_once("../clases/estudiante.php");
+include_once("../clases/estudiante.php");
+include_once("../clases/usuario.php");
 
-    function verificarEmail()
-    {
-        // Obtenierndo los datos del formulario
-        $email = $_POST["email"] ?? "";
+function checkAndRetrieveParam($param)
+{
+    if (!isset($_POST[$param])) {
+        http_response_code(400);
+        echo json_encode(array('message' => 'Falta el parámetro: ' . $param));
+        exit;
+    } else {
+        return $_POST[$param];
+    }
+}
 
-        // Creando un objeto de tipo estudiante
-        $studentObject = new Student();
-        $response = $studentObject->checkEmail($email);
+function checkEmailType($email)
+{
+    $studentObject = new Student();
+    $studentResponse = $studentObject->checkEmail($email);
 
-        if (!$response)
-        {
-            session_destroy();
-            http_response_code(401); // Se establece el codigo de estado HTTP 401, que significa 'error'
-            echo json_encode(array('message' => 'Error al registrar estudiante'));
-            exit;
-        }
+    $userObject = new User();
+    $userResponse = $userObject->checkEmail($email);
 
-        $studentID = $response['ID'];
-        $email = $response['email'];
-        $securityQuestion = $response['securityQuestion'];
-        
-         // Respuesta exitosa
-        http_response_code(200); // Código de estado HTTP 200, que significa 'OK'
+    if ($studentResponse) {
+        return $studentResponse;
+    } elseif ($userResponse) {
+        return $userResponse;
+    } else {
+        return 'unknown';
+    }
+}
+
+
+function sendSuccessfullResponse($object)
+{
+    if ($object instanceof Student) {
+        http_response_code(200);
         echo json_encode(array(
             'message' => 'Estudiante verificado con éxito',
-            'student_id' => $studentID,
-            'security_question' => $securityQuestion,
-            'email' => $email
+            'student_id' => $object['ID'],
+            'security_question' => $object['securityQuestion'],
+            'email' => $object['email']
         ));
+    } else {
+        http_response_code(200);
+        echo json_encode(array(
+            'message' => 'Usuario verificado con éxito',
+            'user_id' => $object['ID'],
+            'security_question' => $object['securityQuestion'],
+            'email' => $object['email']
+        ));
+    }
+    exit;
+}
+
+function verificarEmail()
+{
+    $email = checkAndRetrieveParam('email');
+    $object = checkEmailType($email);
+
+    if ($object !== 'unknown') {
+        sendSuccessfullResponse($object);
+    } else {
+        session_destroy();
+        http_response_code(401); // Se establece el codigo de estado HTTP 401, que significa 'error'
+        echo json_encode(array('message' => 'Error al verificar'));
         exit;
     }
+}
 
-    header('Content-Type: application/json'); // Establece la cabecera para indicar que se envía una respuesta en formato JSON
-    verificarEmail();
+header('Content-Type: application/json'); // Establece la cabecera para indicar que se envía una respuesta en formato JSON
+verificarEmail();

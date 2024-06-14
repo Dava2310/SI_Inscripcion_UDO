@@ -3,7 +3,6 @@ const email = document.getElementById("email")
 const pasword = document.getElementById("password")
 
 form.addEventListener("submit", e => {
-    
     e.preventDefault();
 
     const formData = new FormData(form);
@@ -12,17 +11,19 @@ form.addEventListener("submit", e => {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data.message)
-        // Si hubo inicio de sesion
-        if (data.message === 'Creacion') {
-            window.alert("Creacion exitosa");
-            window.location = "../../../views/gestionarUsuarios/listarUsuarios.php";
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.status);
         }
-        else
-        {
-            console.log("hola");
+        return response.json();
+    })
+    .then(data => {
+        if (data.message === 'Usuario creado exitosamente') {
+            const message = "Creación exitosa. La contraseña del empleado es su cédula. Recuerdele al empleado que deberá cambiar su contraseña por una de su preferencia.";
+            window.alert(message);
+            window.location.href = "../../../views/gestionarUsuarios/listarUsuarios.php";
+        } else {
+            console.error(data.message);
             alert('Error al crear usuario');
         }
     })

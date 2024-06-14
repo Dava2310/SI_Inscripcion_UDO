@@ -1,27 +1,22 @@
 const form = document.getElementById("form")
 
 form.addEventListener("submit", e => {
-    
     e.preventDefault();
 
     const formData = new FormData(form);
 
-    fetch('../../controllers/gestionarCarreras/CrearCarreras.php', {
+    fetch('../../controllers/gestionarCarreras/crearCarreras.php', {
         method: 'POST',
         body: formData
     })
     .then(response => response.json())
     .then(data => {
-        console.log(data.message)
-        // Si hubo inicio de sesion
+        console.log(data.message);
         if (data.message === 'Creacion Carrera') {
-            window.alert("Creacion exitosa");
+            window.alert("Carrera creada exitosamente");
             window.location = "../../views/gestionarCarreras/listarCarreras.php";
-        }
-        else
-        {
-            console.log("hola");
-            alert('Error al crear usuario');
+        } else {
+            alert('Error al crear carrera');
         }
     })
     .catch(error => {

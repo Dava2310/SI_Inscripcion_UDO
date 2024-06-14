@@ -1,68 +1,61 @@
-// Formulario de la pagina Recover
 const form = document.getElementById("form");
-
-// Campos a validar
-const email = document.getElementById("email");
-
-//campos de error
-const errorEmail = document.getElementById("errorEmail");
 
 // Expresiones regulares
 const expresiones = {
-	email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+    email: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
 }
 
-// Eventos
-form.addEventListener("submit", (e) => {
-    
-    e.preventDefault();
+function emailIsValid() {
+    const email = document.getElementById("email");
+    const errorEmail = document.getElementById("errorEmail");
 
     let entrar = true;
     let warnings = "";
 
-    if (!expresiones.email.test(email.value)){
+    if (!expresiones.email.test(email.value)) {
         warnings += `El Email electrónico no es válido.\n`;
         entrar = false;
         errorEmail.innerHTML = '<b>¡El Email no es valido! \n Ejemplo de Email valido: xxxx@gmail.com</b>';
-        email.style.borderColor ='red';
+        email.style.borderColor = 'red';
+        return false;
+    }
+    return true;
+}
+
+// Evento de enviar Formulario
+form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    if (!emailIsValid()) {
+        return;
     }
 
-    if (!entrar) {   
-        alert(warnings);
-    }else{
-        
-        //se guardan los datos del formulario en formData
-        const formData = new FormData(form);
-    
-        //usamos la API fetch para enviar datos al recuperarPassword.php 
-        fetch('../../controllers/gestionarAcceso/verificarEmail.php ',{
-            //metodo de envio
-            method : 'POST',
-            //datos enviados
+    const formData = new FormData(form);
+
+    try {
+        const response = await fetch('../../controllers/gestionarAcceso/verificarEmail.php', {
+            method: 'POST',
             body: formData
-        })
-        //se indica que la respuesta obtenida es en formato json
-        .then(response => response.json())
-        .then(data => {
-            
-            // console.log(data)
+        });
 
-            if (data.message == "Estudiante verificado con éxito")
-            {
-                // Redirigir a la pantalla nueva con el ID como parámetro en la URL
-                const id = data.student_id;
-                const securityQuestion = data.security_question;
-                const email = data.email;
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status}`);
+        }
 
-                window.location = `../../views/gestionarAcceso/recuperarPassword2.php?id=${id}&securityQuestion=${securityQuestion}&email=${email}`;
-            }
-            else
-            {
-                alert("No se ha encontrado un estudiante con este correo");
-            }
-            
-        })
-        .catch(error => console.error(error));
+        const data = await response.json();
+        console.log(data);
+
+        const mensajesValidos = ["Estudiante verificado con éxito", "Usuario verificado con éxito"];
+
+        if (mensajesValidos.includes(data.message)) {
+            const id = data.student_id || data.user_id;
+            const { security_question: securityQuestion, email } = data;
+
+            window.location = `../../views/gestionarAcceso/recuperarPassword2.php?id=${id}&securityQuestion=${securityQuestion}&email=${email}`;
+        } else {
+            alert("No se ha encontrado un usuario con este correo");
+        }
+    } catch (error) {
+        console.error('Se ha producido un error:', error);
     }
-
-})
+});

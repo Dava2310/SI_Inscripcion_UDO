@@ -1,349 +1,168 @@
 <?php
 
-/**
- * Clase Usuario
- * 
- * Esta clase representa a un usuario en el sistema.
- */
 include_once(__DIR__ . '/../conexion.php');
 
-class Usuario
+class User
 {
-
     private $con;
 
-    /**
-     * Constructor de la clase Usuario
-     * 
-     * Crea una nueva instancia de la clase Usuario y establece la conexión a la base de datos.
-     */
     public function __construct()
     {
-        // Incluir la conexion a base de datos
         $this->con = Connection::getInstance()->getConnection();
     }
 
-    /**
-     * Crear Usuario
-     *
-     * Crea un nuevo usuario en la base de datos con los datos proporcionados.
-     *
-     * @param string $name El nombre del usuario.
-     * @param string $lastName El apellido del usuario.
-     * @param string $licenseID El ID de la licencia del usuario.
-     * @param string $email El correo electrónico del usuario.
-     * @param int $idRole El ID del rol del usuario.
-     * @param string $password La contraseña del usuario.
-     * 
-     * @return bool Retorna true si el usuario se creó correctamente en la base de datos, de lo contrario retorna false.
-     */
+    // CRUD //
+
+    // Crear
     public function registerUser($name, $lastName, $licenseID, $email, $idRole, $password)
     {
-        // Preparación de la consulta SQL
         $stmt = $this->con->prepare("INSERT INTO users (name, lastName, licenseID, email, idRole, password) VALUES (?, ?, ?, ?, ?, ?)");
         $stmt->bind_param("ssssis", $name, $lastName, $licenseID, $email, $idRole, $password);
 
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al crear el usuario');
-            exit;
-        }
-
-        // Verificación de filas afectadas para determinar si el usuario se creó correctamente
-        if ($stmt->affected_rows > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Actualizar Datos de Usuario
-     *
-     * Actualiza el nombre, apellido, edad y teléfono de un usuario en la base de datos.
-     *
-     * @param int $idUsuario El ID del usuario a actualizar.
-     * @param string $nombre El nuevo nombre del usuario.
-     * @param string $apellido El nuevo apellido del usuario.
-     * @param int $edad La nueva edad del usuario.
-     * @param string $telefono El nuevo teléfono del usuario.
-     * @return bool Retorna true si los datos del usuario se actualizaron correctamente, de lo contrario retorna false.
-     */
-    public function updateUser($userID, $name, $lastName, $email, $licenseID)
-    {
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("UPDATE users SET name = ?, lastName = ?, email = ?, licenseID = ? WHERE ID = ?");
-        $stmt->bind_param("ssssi", $name, $lastName, $email, $licenseID, $userID);
-
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al actualizar los datos del usuario');
-            exit;
-        }
-
-        // Verificación de si se actualizó algún registro
-        if ($stmt->affected_rows > 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Obtener Usuarios
-     *
-     * Obtiene los datos de todos los usuarios registrados en la base de datos.
-     *
-     * @return array|bool Retorna un array con los datos de los usuarios si hay registros, de lo contrario retorna false.
-     */
-    public function getUsers()
-    {
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * FROM users");
-
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al obtener los usuarios');
-            exit;
-        }
-
-        // Recogiendo los resultados de la query
-        $result = $stmt->get_result();
-
-        // Verificando si hay registros
-        if ($result->num_rows > 0) {
-            $usuarios = array();
-
-            // Obtener los datos de los usuarios en un array
-            while ($row = $result->fetch_assoc()) {
-                $usuarios[] = $row;
+        if ($stmt->execute()) {
+            if ($stmt->affected_rows > 0) {
+                return true;
+            } else {
+                throw new Exception('Error: No se pudo crear el usuario.');
             }
-
-            return $usuarios;
         } else {
-            return false;
+            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
         }
     }
 
-    /**
-     * Buscar Usuario por ID
-     *
-     * Busca un usuario en la base de datos según su ID de usuario.
-     *
-     * @param int $idUsuario El ID del usuario a buscar.
-     * @return array|bool Retorna un array con los datos del usuario si se encuentra, de lo contrario retorna false.
-     */
+    // Leer
     public function getUserByID($ID)
     {
-        // Preparación de la consulta SQL
         $stmt = $this->con->prepare("SELECT * FROM users WHERE ID = ? LIMIT 1");
         $stmt->bind_param("i", $ID);
 
-        // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
-            echo json_encode('Error al buscar el usuario por ID');
-            exit;
+            throw new Exception('Error al buscar el usuario por ID: ' . $stmt->error);
         }
 
-        // Recogiendo el resultado de la consulta
         $result = $stmt->get_result();
 
-        // Verificando si se encontró el usuario
         if ($result->num_rows > 0) {
-            $usuario = $result->fetch_assoc();
-            return $usuario;
+            return $result->fetch_assoc();
         } else {
             return false;
         }
     }
 
-    /**
-     * Validar Usuario
-     * 
-     * Valida las credenciales de un usuario en la base de datos.
-     * 
-     * @param string $email El correo electrónico del usuario.
-     * @param string $password La contraseña del usuario.
-     * @return int|bool Retorna el número de idRol si las credenciales son válidas, de lo contrario retorna false.
-     */
+    // Actualizar
+    public function updateUser($userID, $name, $lastName, $email, $licenseID)
+    {
+        $stmt = $this->con->prepare("UPDATE users SET name = ?, lastName = ?, email = ?, licenseID = ? WHERE ID = ?");
+        $stmt->bind_param("ssssi", $name, $lastName, $email, $licenseID, $userID);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al actualizar los datos del usuario: ' . $stmt->error);
+        }
+
+        return $stmt->affected_rows > 0;
+    }
+
+    // Borrar
+    public function deleteUserById($userID)
+    {
+        $stmt = $this->con->prepare("DELETE FROM users WHERE ID = ?");
+        $stmt->bind_param("i", $userID);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al eliminar el empleado: ' . $stmt->error);
+        }
+
+        return $stmt->affected_rows > 0;
+    }
+
+
+    // Listar usuarios
+    public function getUsers()
+    {
+        $stmt = $this->con->prepare("SELECT * FROM users");
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al obtener los usuarios: ' . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+        $usuarios = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $usuarios[] = $row;
+        }
+
+        return $usuarios;
+    }
+
+    // OTROS //
+
+    // Obtener datos por Credeneciales
     public function validateUser($email, $password)
     {
-        // Preparación de la consulta SQL
         $stmt = $this->con->prepare("SELECT idRole, ID FROM users WHERE email = ? and password = ? LIMIT 1");
         $stmt->bind_param("ss", $email, $password);
 
-        // Ejecución y verificación de error de ejecución
         if (!$stmt->execute()) {
-            echo json_encode('Error al validar usuario');
+            throw new Exception('Error al validar el usuario: ' . $stmt->error);
             exit;
         }
 
-        // Recogiendo los resultados de la consulta
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
 
-        // Se devuelve el array con el valor de idRol y idUsuario si existe una fila con los resultados de la consulta
         return $row ? array(
             'idRole' => $row['idRole'],
             'ID' => $row['ID']
         ) : false;
     }
 
-    /*
-        =========================================================================================
-        =========================================================================================
-        =========================================================================================
-        =========================================================================================
-
-                    FUNCIONES EXTRAS A LOS REQUISITOS DE LA CLASE O MODULO DE USUARIO
-        
-        =========================================================================================
-        =========================================================================================
-        =========================================================================================
-        =========================================================================================
-
-        */
-
-    /**
-     * Verificar Email
-     *
-     * Verifica si existe un usuario con el email especificado en la base de datos.
-     *
-     * @param string $email El correo electrónico a verificar.
-     * @return bool Retorna true si el email existe en la base de datos, de lo contrario retorna false.
-     */
-    public function verifyEmail($email)
+    // Verificar si el correo pertenece a un estudiante
+    public function checkEmail($email)
     {
-        // Preparacion de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * FROM usuario WHERE email = ? LIMIT 1");
-        $stmt->bind_param("s", $email);
+        $stmt = $this->con->prepare('SELECT * FROM users WHERE email = ?');
+        $stmt->bind_param('s', $email);
 
-        // Ejecucion y verificacion de error de ejecucion
         if (!$stmt->execute()) {
-            echo json_encode('Error al verificar el email de usuario');
-            exit;
+            throw new Exception('Error al verificar el email');
+            return false;
         }
 
-        // Recogiendo los resultados de la consulta
         $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
 
-        // Se devuelve el valor segun si existe o no una fila con los resultados de la query
-        return $row ? true : false;
-    }
-
-    /**
-     * Verificar Email
-     *
-     * Verifica si existe un usuario con el email especificado en la base de datos.
-     *
-     * @param string $email El correo electrónico a verificar.
-     * @return bool Retorna true si el email existe en la base de datos, de lo contrario retorna false.
-     */
-    public function verificarEmailModificacion($email, $idUsuario)
-    {
-        // Preparacion de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * FROM usuario WHERE email = ? AND idUsuario != ? LIMIT 1");
-        $stmt->bind_param("si", $email, $idUsuario);
-
-        // Ejecucion y verificacion de error de ejecucion
-        if (!$stmt->execute()) {
-            echo json_encode('Error al verificar el email de usuario');
-            exit;
-        }
-
-        // Recogiendo los resultados de la consulta
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        // Se devuelve el valor segun si existe o no una fila con los resultados de la query
-        return $row ? true : false;
-    }
-
-    /**
-     * Verificar Email
-     *
-     * Verifica si existe un usuario con la cedula especificada en la base de datos.
-     *
-     * @param string $cedula La cedula del usuario a verificar.
-     * @return bool Retorna true si la cedula existe en la base de datos, de lo contrario retorna false.
-     */
-    public function verificarCedula($cedula)
-    {
-        // Preparacion de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * FROM usuario WHERE cedula = ? LIMIT 1");
-        $stmt->bind_param("s", $cedula);
-
-        // Ejecucion y verificacion de error de ejecucion
-        if (!$stmt->execute()) {
-            echo json_encode('Error al verificar la cedula de usuario');
-            exit;
-        }
-
-        // Recogiendo los resultados de la consulta
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        // Se devuelve el valor segun si existe o no una fila con los resultados de la query
-        return $row ? true : false;
-    }
-
-    /**
-     * Verificar Email
-     *
-     * Verifica si existe un usuario con la cedula especificada en la base de datos.
-     *
-     * @param string $cedula La cedula del usuario a verificar.
-     * @return bool Retorna true si la cedula existe en la base de datos, de lo contrario retorna false.
-     */
-    public function verificarCedulaModificacion($cedula, $idUsuario)
-    {
-
-        // Preparacion de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * FROM usuario WHERE cedula = ? AND idUsuario != ? LIMIT 1");
-        $stmt->bind_param("si", $cedula, $idUsuario);
-
-        // Ejecucion y verificacion de error de ejecucion
-        if (!$stmt->execute()) {
-            echo json_encode('Error al verificar la cedula de usuario');
-            exit;
-        }
-
-        // Recogiendo los resultados de la consulta
-        $result = $stmt->get_result();
-        $row = $result->fetch_assoc();
-
-        // Se devuelve el valor segun si existe o no una fila con los resultados de la query
-        return $row ? true : false;
-    }
-
-
-    /**
-     * Eliminar Usuario
-     *
-     * Elimina completamente el registro del usuario de la base de datos.
-     *
-     * @param int $id El ID del usuario a eliminar.
-     * @return bool Retorna true si el usuario fue eliminado con éxito, de lo contrario retorna false.
-     */
-    public function deleteUserById($userID)
-    {
-
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("DELETE FROM users WHERE ID = ?");
-        $stmt->bind_param("i", $userID);
-
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al eliminar el empleado');
-            exit;
-        }
-
-        // Verificación de si se eliminó algún registro
-        if ($stmt->affected_rows > 0) {
-            return true;
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            return $user;
         } else {
             return false;
         }
+    }
+
+
+    // Cambiar Contraseña
+    public function updatePassword($email, $password, $securityAnswer, $securityQuestion, $ID)
+    {
+        $stmt = $this->con->prepare('UPDATE users SET password = ? WHERE email = ? AND securityAnswer = ? AND securityQuestion = ? AND ID = ?');
+        $stmt->bind_param('ssssi', $password, $email, $securityAnswer, $securityQuestion, $ID);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
+            return false;
+        }
+        return true;
+    }
+
+    // Crear pregunta Seguridad
+    public function createSecurityQuestion($userID, $securityQuestion, $securityAnswer, $newPassword)
+    {
+        $stmt = $this->con->prepare('UPDATE users SET securityQuestion = ?, securityAnswer = ?, password = ? WHERE ID = ?');
+        $stmt->bind_param('sssi', $securityQuestion, $securityAnswer, $newPassword, $userID);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al actualizar la pregunta de seguridad: ' . $stmt->error);
+            return false;
+        }
+
+        return true;
     }
 }

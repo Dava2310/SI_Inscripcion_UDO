@@ -1,4 +1,4 @@
-<form form action="../../controllers/gestionarInscripciones/crearInscripciones.php?id=<?= $studentID ?>" method="post">
+<form form action="../../controllers/gestionarInscripciones/crearinscripcion.php?id=<?= $studentID ?>" method="post">
                 <div>
                     <h2>Paso 2 de 3: Seleccionar Carreras</h2>
                 </div>

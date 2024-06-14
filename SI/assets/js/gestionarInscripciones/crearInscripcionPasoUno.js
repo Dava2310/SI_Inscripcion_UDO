@@ -1,29 +1,46 @@
-const form = document.getElementById("form")
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById("form");
 
-form.addEventListener("submit", e => {
-    
-    e.preventDefault();
+    // Manejar el evento de envío del formulario
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+        console.log('Formulario enviado');
+        submitForm();
+    });
 
+    // Manejar el evento del botón "Deshacer"
+    document.querySelector('button[type="button"]').addEventListener('click', function (e) {
+        e.preventDefault();
+        console.log('Deshacer todo');
+        form.reset();
+    });
+});
+
+// Función para enviar el formulario
+function submitForm() {
+    const form = document.getElementById("form");
     const formData = new FormData(form);
+    const action = form.action;
 
-    fetch('../../controllers/gestionarInscripciones/crearInscripcionPasoUno.php', {
+    fetch(action, {
         method: 'POST',
         body: formData
     })
-    .then(response => response.json())
-    .then(data => {
-        // Si hubo inicio de sesion
-        if (data.message === 'Proceder') {
-            window.alert("Se ha cargado con exito");
-            window.location = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php";
-        }
-        else
-        {
-            alert('Error al cargar datos');
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        alert('Ha ocurrido un error en la solicitud');
-    });
-});
+        .then(response => response.json())
+        .then(data => {
+            console.log(data.message);
+            if (data.message === 'Inscripción registrada exitosamente') {
+                window.alert("Inscripción registrada con éxito");
+                window.location.href = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php";
+            } else if (data.message === 'Inscripción corregida exitosamente') {
+                window.alert("Inscripción registrada con éxito");
+                window.location.href = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php";
+            } else {
+                window.alert('Error al registrar la inscripción: ' + data.message);
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            window.alert('Ha ocurrido un error en la solicitud');
+        });
+}

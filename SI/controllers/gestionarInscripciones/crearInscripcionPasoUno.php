@@ -1,16 +1,10 @@
 <?php
 session_start();
-include_once("../clases/inscripciones.php");
-include_once("../clases/estudiante.php");
+include_once("../../controllers/clases/inscripcion.php");
+include_once("../../controllers/clases/periodo.php");
 
-
-
-
-function crearInscripciones()
+function crearInscripcionPasoUno()
 {
-    // FASE 1: DATOS BASICOS
-
-    // Tomando datos de la inscripccion 1 de 3
     $opsuCode = $_POST['opsuCode'];
     $degreeCode = $_POST['degreeCode'];
     $campusAddress = $_POST['campusAddress'];
@@ -18,31 +12,60 @@ function crearInscripciones()
     $degreeTitle = $_POST['degreeTitle'];
     $gradePointAverage = $_POST['gradePointAverage'];
 
-    // Creating Date
     $date = new DateTime();
+    $strDate = $date->format('Y-m-d H:i:s');
 
-    // Format date as d/m/Y H:i:s
-    $strDate = $date->format('d/m/Y H:i:s');
-
-    // Getting Student Id
-    $studentId = $_SESSION['ID'];
-
-    // Register first BasicData
-    $inscription = new Inscription();
-    $response = $inscription->registerInscriptionPhaseOne($studentId, $strDate, 1, 1, $opsuCode, $gradePointAverage, $degreeCode, $campusAddress, $graduationYear, $degreeTitle);
-
-    // Inscription failed
-    if (!$response) {
+    if (!isset($_SESSION['ID'])) {
         session_destroy();
-        http_response_code(401); // Se establece el codigo de estado HTTP 401, que significa 'error'
-        echo json_encode(array('message' => 'Error al proceder'));
+        http_response_code(401);
+        echo json_encode(array('message' => 'Usuario no autenticado'));
         exit;
     }
+    $studentId = $_SESSION['ID'];
 
-    http_response_code(200); // se estable el codigo de estado http 200, que significa 'ok' y que se hizo la solicitud correctamente
-    echo json_encode(array('message' => 'Proceder'));
+    $period = new Period();
+    $currentPeriod = $period->getCurrentPeriod();
+    if (!$currentPeriod) {
+        http_response_code(400);
+        echo json_encode(array('message' => 'No se encontró un periodo activo'));
+        exit;
+    }
+    $idPeriod = $currentPeriod['ID'];
+
+
+    $validity = true;
+    $inscription = new Inscription();
+
+    // Verificar si hay ya una inscripcion vigente por corregir
+    $response = $inscription->getInscriptionByStudentId($studentId);
+    if ($response && $response['state'] === "A Corregir") {
+
+        $response = $inscription->updateInscription($response['ID'], $response['date'], $opsuCode, '', $gradePointAverage, $degreeCode, $campusAddress, $graduationYear, $degreeTitle, 1, 'A Corregir', '', $validity, $studentId, null, $idPeriod);
+        
+        if (!$response) {
+            session_destroy();
+            http_response_code(500);
+            echo json_encode(array('message' => 'Error al proceder'));
+            exit;
+        }
+    
+        http_response_code(200);
+        echo json_encode(array('message' => 'Inscripción corregida exitosamente'));
+
+    } else {
+        $response = $inscription->registerInscription($strDate, $opsuCode, '', $gradePointAverage, $degreeCode, $campusAddress, $graduationYear, $degreeTitle, 1, '', '', $validity, $studentId, null, $idPeriod);
+        
+        if (!$response) {
+            session_destroy();
+            http_response_code(500);
+            echo json_encode(array('message' => 'Error al proceder'));
+            exit;
+        }
+    
+        http_response_code(200);
+        echo json_encode(array('message' => 'Inscripción registrada exitosamente'));
+    }
 }
 
-header('Content-Type: application/json'); // Establece la cabecera para indicar que se envía una respuesta en formato JSON
-crearInscripciones();
-?>
+header('Content-Type: application/json');
+crearInscripcionPasoUno();

@@ -4,29 +4,31 @@ session_start();
 
 include_once("../clases/usuario.php");
 
-function modificarUsuario()
+function modificarUser()
 {
-    // Obteniendo datos del formulario 
     $name = $_POST['name'] ?? "";
     $lastName = $_POST['lastName'] ?? "";
     $email = $_POST['email'] ?? "";
     $licenseID = $_POST['licenseID'] ?? "";
 
-    // Registrar estudiante
-    $user = new Usuario();
+    if (empty($name) || empty($lastName) || empty($email) || empty($licenseID)) {
+        http_response_code(400);
+        echo json_encode(array('message' => 'Todos los campos son obligatorios.'));
+        exit;
+    }
+
+    $user = new User();
     $response = $user->updateUser($_GET['id'], $name, $lastName, $email, $licenseID);
 
-    // Error al actualizar?
     if (!$response) {
-        session_destroy();
-        http_response_code(401); // Se establece el codigo de estado HTTP 401, que significa 'error'
+        http_response_code(500);
         echo json_encode(array('message' => 'Error al actualizar empleado'));
         exit;
     }
 
-    http_response_code(200); // se estable el codigo de estado http 200, que significa 'ok' y que se hizo la solicitud correctamente
-    echo json_encode(array('message' => 'Actualizacion'));
+    http_response_code(200);
+    echo json_encode(array('message' => 'Actualización exitosa'));
 }
 
-header('Content-Type: application/json'); // Establece la cabecera para indicar que se envía una respuesta en formato JSON
-modificarUsuario();
+header('Content-Type: application/json');
+modificarUser();
