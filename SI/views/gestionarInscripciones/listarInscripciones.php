@@ -76,6 +76,12 @@ include('../templates/encabezadoConfig.php');
                             $phase = "Tercera";
                         }
 
+                        // Determinar el enlace correcto para la revisión
+                        $reviewLink = "revisarInscripcionPasoDos.php?id={$inscription['ID']}";
+                        if ($inscription['inscriptionPhase'] === 3 && $inscription['state'] === 'En Revision') {
+                            $reviewLink = "revisarInscripcionPasoTres.php?id={$inscription['ID']}";
+                        }
+
                         echo <<<HTML
                         <tr class="dataList">
                             <td>$name</td>
@@ -86,7 +92,7 @@ include('../templates/encabezadoConfig.php');
                             <td>$state</td>
                             <td>$process</td>
                             <td>$phase</td>
-                            <td><a href="revisarInscripcionPasoDos.php?id={$inscription['ID']}">Revisar</a></td>
+                            <td><a href="$reviewLink">Revisar</a></td>
                         </tr>
                         HTML;
                     }

@@ -16,7 +16,7 @@
                         <!-- Submenú con los pasos para crear una inscripción -->
                         <li><a class="submenu-item" href="../../views/gestionarInscripciones/crearInscripcionPasoUno.php">Paso 1: Datos básicos</a></li>
                         <li><a class="submenu-item" href="../../views/gestionarInscripciones/crearInscripcionPasoDos.php">Paso 2: Selección Carrera</a></li>
-                        <li><a class="submenu-item" href="../../views/gestionarInscripciones/crearInscripcionPasoUno.php">Paso 3: Subir Documentos</a></li>
+                        <li><a class="submenu-item" href="../../views/gestionarInscripciones/crearInscripcionPasoTres.php">Paso 3: Subir Documentos</a></li>
                     </div>
                 </ul>
             </li>

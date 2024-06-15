@@ -48,6 +48,7 @@ Inscripcciones
 
 Crea Inscripccion paso uno
     Crear Inscripcion Paso uno /listo
-    Crear Inscripcion Paso dos 
+    Crear Inscripcion Paso dos /listo
+    Crear Inscripcion Paso tres 
     
     
