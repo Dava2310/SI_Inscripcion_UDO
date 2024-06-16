@@ -17,4 +17,3 @@ searchInput.addEventListener('keyup', e => {
         }
     });
 });
-

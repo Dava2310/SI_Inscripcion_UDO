@@ -8,7 +8,7 @@ form.addEventListener("submit", e => {
     let params = new URLSearchParams(window.location.search);
     let id = params.get('id');
 
-    fetch('../../../controllers/gestionarEstudiantes/modificarEstudiante.php?id=' + id, {
+    fetch('../../controllers/gestionarEstudiantes/modificarEstudiante.php?id=' + id, {
         method: 'POST',
         body: formData
     })
@@ -56,7 +56,7 @@ deleteButton.addEventListener("click", e => {
                     window.alert("Se elimino el estudiante");
 
                     // Se verifica el Rol para mandarlo a la pagina correspondiente
-                    window.location = './../../views/listarEstudiantes/listarEstudiantes.php';
+                    window.location = './../../views/gestionarEstudiantes/listarEstudiantes.php';
                 } else {
                     alert('Error al eliminar');
                 }
