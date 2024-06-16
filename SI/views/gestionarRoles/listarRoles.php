@@ -5,7 +5,7 @@ $roles = $role->getRoles();
 ?>
 
 <?php
-$title = "Roles";
+$_title = "Roles";
 include('../templates/encabezadoConfig.php');
 ?>
 

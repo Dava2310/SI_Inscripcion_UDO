@@ -3,7 +3,7 @@ include_once('../../controllers/clases/usuario.php');
 ?>
 
 <?php
-$title = "Crear Usuario";
+$_title = "Crear Usuario";
 include('../templates/encabezadoConfig.php');
 ?>
 

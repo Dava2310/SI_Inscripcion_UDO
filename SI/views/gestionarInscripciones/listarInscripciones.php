@@ -12,7 +12,7 @@ $inscriptions = $inscription->getInscriptions();
 ?>
 
 <?php
-$title = "Panel De Inscripciones";
+$_title = "Panel De Inscripciones";
 include('../templates/encabezadoConfig.php');
 ?>
 
@@ -78,7 +78,7 @@ include('../templates/encabezadoConfig.php');
 
                         // Determinar el enlace correcto para la revisión
                         $reviewLink = "revisarInscripcionPasoDos.php?id={$inscription['ID']}";
-                        if ($inscription['inscriptionPhase'] === 3 && $inscription['state'] === 'En Revision') {
+                        if ($inscription['inscriptionPhase'] === 3 && ($inscription['state'] === 'En Revision' || $inscription['state'] === 'A Corregir' || $inscription['state'] === 'Aprobado')) {
                             $reviewLink = "revisarInscripcionPasoTres.php?id={$inscription['ID']}";
                         }
 

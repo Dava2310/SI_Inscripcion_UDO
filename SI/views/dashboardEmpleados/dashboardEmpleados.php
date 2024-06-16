@@ -45,7 +45,7 @@ if (!($securityQuestion) && !($securityAnswer) && $idRole !== 1) {
 
 
 <?php
-$title = "Panel De Control";
+$_title = "Panel De Control";
 include('./../templates/encabezadoConfig.php');
 ?>
 

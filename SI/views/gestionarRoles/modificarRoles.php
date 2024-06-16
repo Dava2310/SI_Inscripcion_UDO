@@ -6,7 +6,7 @@ $roleDetails = $role->getRoleByID($roleID);
 ?>
 
 <?php
-$title = "Modificar Rol";
+$_title = "Modificar Rol";
 include('../templates/encabezadoConfig.php');
 ?>
 

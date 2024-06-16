@@ -8,7 +8,7 @@ $periodStatus = $periodDetails['validity'];
 ?>
 
 <?php
-$title = "Modificar Periodo";
+$_title = "Modificar Periodo";
 include('../templates/encabezadoConfig.php');
 ?>
 

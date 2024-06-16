@@ -81,9 +81,9 @@ document.addEventListener('DOMContentLoaded', function () {
         }).then(response => response.json())
             .then(data => {
                 console.log(data.message);
-                if (data.message === 'Documentos subidos exitosamente') {
-                    window.alert("Documentos subidos exitosamente");
-                    window.location.href = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php";
+                if (data.message === 'Inscripción aprobada exitosamente' || data.message === 'Inscripción rechazada exitosamente') {
+                    window.alert(data.message);
+                    window.location.href = "../../../views/gestionarInscripciones/listarInscripciones.php";
                 } else {
                     window.alert('Error: ' + data.errors[0]);
                 }

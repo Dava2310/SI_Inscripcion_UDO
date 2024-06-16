@@ -1,5 +1,5 @@
 <?php
-$title = "Panel De Notificaciones";
+$_title = "Panel De Notificaciones";
 include('../templates/encabezadoConfig.php');
 ?>
 

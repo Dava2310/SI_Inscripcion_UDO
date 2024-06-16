@@ -9,7 +9,7 @@ $studentDetails = $student->getStudentByID($studentID);
 ?>
 
 <?php
-$title = "Modificar Estudiante";
+$_title = "Modificar Estudiante";
 include('../templates/encabezadoConfig.php');
 ?>
 

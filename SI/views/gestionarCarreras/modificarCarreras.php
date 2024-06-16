@@ -7,7 +7,7 @@ $careerDetails = $career->getCareerByID($careerID);
 ?>
 
 <?php
-$title = "Modificar Carrera";
+$_title = "Modificar Carrera";
 include('../templates/encabezadoConfig.php');
 ?>
 

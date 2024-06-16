@@ -10,7 +10,7 @@ $students = $student->getStudents();
 ?>
 
 <?php
-$title = "Panel De Control";
+$_title = "Panel De Control";
 include('../templates/encabezadoConfig.php');
 ?>
 

@@ -3,7 +3,7 @@ include_once('../../controllers/clases/carrera.php');
 ?>
 
 <?php
-$title = "Crear Carrera";
+$_title = "Crear Carrera";
 include('../templates/encabezadoConfig.php');
 ?>
 

@@ -1,5 +1,5 @@
 <?php
-$title = "Panel De Reportes";
+$_title = "Panel De Reportes";
 include('../templates/encabezadoConfig.php');
 ?>
 

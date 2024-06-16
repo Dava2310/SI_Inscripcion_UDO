@@ -202,4 +202,60 @@ class Inscription
             throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
         }
     }
+
+    // Rechazar Inscripcion Documento
+    public function rejectInscriptionDocuments($idInscription, $observations, $url)
+    {
+        // Actualizar la fase de la inscripción
+        $stmt = $this->con->prepare('UPDATE inscriptions SET state = "A Corregir", observations = ? WHERE ID = ?');
+        $stmt->bind_param('si', $observations, $idInscription);
+
+        if ($stmt->execute()) {
+            if ($stmt->affected_rows > 0) {
+                // Lista de sufijos de los archivos a eliminar
+                $files = ['birthCertificate', 'degree', 'letter', 'licenseID', 'notes', 'spreadsheet'];
+                $base_path = "../../assets/fs/";
+                // Posibles extensiones de los archivos
+                $extensions = ['.png', '.jpg', '.jpeg', '.pdf'];
+
+                // Intentar eliminar todos los archivos con las posibles extensiones
+                foreach ($files as $suffix) {
+                    foreach ($extensions as $ext) {
+                        $file_path = $base_path . $url . $suffix . $ext;
+                        if (file_exists($file_path)) {
+                            if (!unlink($file_path)) {
+                                throw new Exception('Error: No se pudo eliminar el archivo ' . $file_path);
+                            }
+                        }
+                    }
+                }
+
+                return true;
+            } else {
+                throw new Exception('Error: No se pudo actualizar la fase de la inscripción.');
+            }
+        } else {
+            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
+        }
+    }
+
+
+
+    // Aprobar Inscripcion
+    public function approveInscription($idInscription)
+    {
+        // Actualizar la fase de la inscripción
+        $stmt = $this->con->prepare('UPDATE inscriptions SET state = "Aprobado" WHERE ID = ?');
+        $stmt->bind_param('i', $idInscription);
+
+        if ($stmt->execute()) {
+            if ($stmt->affected_rows > 0) {
+                return true;
+            } else {
+                throw new Exception('Error: No se pudo actualizar la fase de la inscripción.');
+            }
+        } else {
+            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
+        }
+    }
 }
