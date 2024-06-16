@@ -65,7 +65,7 @@ body {
     text-align: center;
     font-weight: bold;
     font-size: 32px;
-    color: #feb800;
+    color: #4c00fe;
 }
 
 h1 {
@@ -177,7 +177,7 @@ button {
     width: 100%;
     padding: 10px;
     margin-top: 10px;
-    background-color: #feb800;
+    background-color: #2561db;
     color: #151515;
     font-size: 16px;
     font-weight: bold;
@@ -188,7 +188,7 @@ button {
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #e8781d;
 }
 
 /* menu */
@@ -196,14 +196,14 @@ button:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #334436;
+    background: linear-gradient(180deg, #2561db, #64a7e1);
     align-items: center;
     padding: 64px 0;
 }
 
 .navbar_container ul {
     padding: 0;
-    margin: 24px 0 0;
+    margin: 12px 0 0;
     list-style: none;
     text-align: center;
     border-top: 2px solid #fafafa;
@@ -215,7 +215,7 @@ button:hover {
 }
 
 .navbar_container ul li:hover {
-    background-color: #feb800;
+    background-color: #ffffff;
 }
 
 .navbar_container a {
@@ -232,7 +232,7 @@ button:hover {
 
 .closeSession_button {
     border-radius: 12px;
-    background: #feb800;
+    background: linear-gradient(to bottom, #2561db, #ffffff);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -339,7 +339,7 @@ table td {
 }
 
 tr.selected {
-    background-color: rgb(254, 184, 0) !important;
+    background-color: rgb(123, 0, 254) !important;
 }
 
 /* estilos para el input de busqueda */
@@ -353,9 +353,10 @@ tr.selected {
     width: 100%;
     display: flex;
     justify-content: space-between;
-    border: 2px solid #feb800;
+    border: 2px solid #5900fe;
     border-radius: 16px;
     padding: 8px 24px;
+    margin-bottom: 30px;
 }
 
 .form-input_search input {
@@ -369,4 +370,12 @@ tr.selected {
 .tablaVisualizacion {
     height: 80%;
 }
+
+.logo {
+    margin-top: -20px;
+    width: 150px;
+    height: 150px;
+    margin-bottom: -50px;
+}
+
 

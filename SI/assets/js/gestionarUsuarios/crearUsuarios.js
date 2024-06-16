@@ -1,6 +1,6 @@
-const form = document.getElementById("form")
-const email = document.getElementById("email")
-const pasword = document.getElementById("password")
+const form = document.getElementById("form");
+const email = document.getElementById("email");
+const password = document.getElementById("password");
 
 form.addEventListener("submit", e => {
     e.preventDefault();
@@ -12,14 +12,16 @@ form.addEventListener("submit", e => {
         body: formData
     })
     .then(response => {
-        if (!response.ok) {
-            throw new Error('Error en la solicitud: ' + response.status);
-        }
-        return response.json();
+        return response.json().then(data => {
+            if (!response.ok) {
+                throw new Error(data.message || 'Error en la solicitud: ' + response.status);
+            }
+            return data;
+        });
     })
     .then(data => {
         if (data.message === 'Usuario creado exitosamente') {
-            const message = "Creación exitosa. La contraseña del empleado es su cédula. Recuerdele al empleado que deberá cambiar su contraseña por una de su preferencia.";
+            const message = "Creación exitosa. La contraseña del empleado es su cédula. Recuérdele al empleado que deberá cambiar su contraseña por una de su preferencia.";
             window.alert(message);
             window.location.href = "../../views/gestionarUsuarios/listarUsuarios.php";
         } else {
@@ -29,6 +31,7 @@ form.addEventListener("submit", e => {
     })
     .catch(error => {
         console.error(error);
-        alert('Ha ocurrido un error en la solicitud');
+        alert(error.message || 'Ha ocurrido un error en la solicitud');
     });
 });
+

@@ -13,7 +13,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
 
-    <title>S.I.M.A. UDO</title>
+    <title>P.R.O.N.E UDO</title>
 
     <!-- slider stylesheet -->
     <link rel="stylesheet" type="text/css"
@@ -58,7 +58,7 @@
                             <a class="nav-link" href="http://dacemonagas.udo.edu.ve/">DACE</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="views/gestionarAcceso/iniciarSesion.php">S.I.G.M.A</a>
+                            <a class="nav-link" href="views/gestionarAcceso/iniciarSesion.php">P.R.O.N.E</a>
                         </li>
                     </ul>
 
@@ -84,12 +84,12 @@
 
                             </h2>
                             <h1>
-                                S.I.G.M.A
+                                P.R.O.N.E
                             </h1>
                         </div>
                         <div class="slider_detail-text">
                             <p>
-                                Sistema de autogestion de inscripción de nuevos ingresos.
+                                Plataforma de Registro de Nuevos Estudiantes
                             </p>
                         </div>
                         <div class="slider_detail-btn">

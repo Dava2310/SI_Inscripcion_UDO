@@ -1,6 +1,6 @@
 <?php
 
-include_once(__DIR__ . '/../conexion.php');
+include_once (__DIR__ . '/../conexion.php');
 
 class Student
 {
@@ -235,6 +235,95 @@ class Student
             return $student;
         } else {
             return false;
+        }
+    }
+
+    public function existsEmail($email)
+    {
+        $stmt = $this->con->prepare('SELECT * FROM students WHERE email = ?');
+        $stmt->bind_param('s', $email);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al verificar el email');
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function existsEmailButNotUserId($email, $userId)
+    {
+        $stmt = $this->con->prepare('SELECT * FROM students WHERE email = ? AND ID != ?');
+        $stmt->bind_param('si', $email, $userId);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al verificar el email');
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return true; // Existe otro usuario con ese email y diferente ID
+        } else {
+            return false; // No existe otro usuario con ese email y diferente ID
+        }
+    }
+
+    public function checkLicenseID($licenseID)
+    {
+        $stmt = $this->con->prepare('SELECT * FROM students WHERE licenseID = ?');
+        $stmt->bind_param('s', $licenseID);
+
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            return $user;
+        } else {
+            return false;
+        }
+    }
+
+    public function existsLicenseID($licenseID)
+    {
+        $stmt = $this->con->prepare('SELECT * FROM students WHERE licenseID = ?');
+        $stmt->bind_param('s', $licenseID);
+
+        if (!$stmt->execute()) {
+            return false;
+        }
+
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function existsLicenseIDButNotUserId($licenseID, $userId)
+    {
+        $stmt = $this->con->prepare('SELECT * FROM students WHERE licenseID = ? AND ID != ?');
+        $stmt->bind_param('si', $licenseID, $userId);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al verificar el licenseID');
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return true; // Existe otro usuario con ese licenseID y diferente ID
+        } else {
+            return false; // No existe otro usuario con ese licenseID y diferente ID
         }
     }
 

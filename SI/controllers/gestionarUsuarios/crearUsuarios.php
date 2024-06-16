@@ -1,7 +1,9 @@
 <?php
 
 session_start();
+
 include_once("../clases/usuario.php");
+include_once("../clases/estudiante.php");
 
 function crearUsuarios()
 {
@@ -16,9 +18,26 @@ function crearUsuarios()
         exit;
     }
 
-    $user = new User();
+    $userObject = new User();
+    $studentObject = new Student();
     try {
-        $response = $user->registerUser($name, $lastName, $licenseID, $email, 2, md5($licenseID));
+
+        // Primero verificar que esta cedula no se repita en ningun otro estudiante o empleado
+        if ($userObject->existsLicenseID( $licenseID ) || $studentObject->existsLicenseID($licenseID)) {
+            
+            // Significa que existe un empleado o correo con dicha cedula
+            throw new Exception('Esta cedula ya existe en otro usuario');
+        }
+
+        // Despues, verificar que el correo no se repita en ningun otro estudiante o empleado
+        if ($userObject->existsEmail( $email ) || $studentObject->existsEmail( $email )) {
+
+            // Significa que existe un empleado o estudiante con dicho correo
+            throw new Exception('Este correo ya existe en otro usuario');
+        }
+
+        // Al pasar ambas verificaciones, se procede a realizarse el registro 
+        $response = $userObject->registerUser($name, $lastName, $licenseID, $email, 2, md5($licenseID));
 
         if ($response) {
             http_response_code(200);

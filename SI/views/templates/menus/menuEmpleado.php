@@ -1,4 +1,7 @@
 <nav class="navbar_container">
+
+    <img class="logo" src="../../assets/img/logo.png" alt="LOGO DEL SISTEMA">
+
     <ul class="navbar_content">
         <li>
             <a href="../../views/dashboardEmpleados/dashboardEmpleados.php">Inicio</a>

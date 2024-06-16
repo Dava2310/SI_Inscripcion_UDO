@@ -1,4 +1,17 @@
-#RewriteEngine On
-#RewriteCond %{REQUEST_FILENAME} !-f
-#RewriteCond %{REQUEST_FILENAME} !-d
-#RewriteRule ^(.*)$ / [L]
+# Activa el motor de reescritura
+RewriteEngine On
+
+# Verifica si el archivo solicitado no existe
+RewriteCond %{REQUEST_FILENAME} !-f
+
+# Verifica si el directorio solicitado no existe
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Redirige cualquier solicitud que no sea un archivo o directorio existente a la raíz del sitio
+RewriteRule ^(.*)$ / [L]
+
+# Especifica el archivo predeterminado para los directorios
+DirectoryIndex index.php
+
+# Desactiva los listados de directorios
+Options -Indexes

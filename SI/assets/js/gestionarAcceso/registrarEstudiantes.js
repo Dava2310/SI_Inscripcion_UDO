@@ -1,6 +1,6 @@
 import { validarDatos } from "../validaciones/estudiante.js";
 
-const form = document.getElementById("form")
+const form = document.getElementById("form");
 
 form.addEventListener("submit", e => {
     e.preventDefault();
@@ -15,24 +15,27 @@ form.addEventListener("submit", e => {
             body: formData
         })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Hubo un problema con la solicitud: ' + response.status);
-            }
-            return response.json();
+            return response.json().then(data => {
+                if (!response.ok) {
+                    throw new Error(data.message || 'Hubo un problema con la solicitud: ' + response.status);
+                }
+                return data;
+            });
         })
         .then(data => {
             if (data.message === 'Registro exitoso') {
                 window.alert("Registro de estudiante exitoso");
                 window.location = '../../views/gestionarAcceso/iniciarSesion.php';
             } else {
-                alert('Error al registrar estudiante');
+                alert(data.message);
             }
         })
         .catch(error => {
             console.error('Error en la solicitud:', error);
-            alert('Ha ocurrido un error en la solicitud');
+            alert(error.message || 'Ha ocurrido un error en la solicitud');
         });
     } else {
         alert(warnings);
     }
 });
+

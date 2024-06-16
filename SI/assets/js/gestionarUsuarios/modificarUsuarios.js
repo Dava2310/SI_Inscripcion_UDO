@@ -15,25 +15,23 @@ form.addEventListener("submit", async (e) => {
       body: formData,
     });
 
+    const data = await response.json();
+
     if (!response.ok) {
-      throw new Error(`Error en la solicitud: ${response.status}`);
+      throw new Error(data.message || `Error en la solicitud: ${response.status}`);
     }
 
-    const data = await response.json();
-    console.log(data);
-
-    if (data.message === "Actualización exitosa") {
+    if (data.message === "Usuario modificado exitosamente") {
       window.alert("Se actualizaron los datos del Empleado");
-      window.location.href = "./../../views/gestionarUsuarios/listarUsuarios.php";
+      window.location.href = "./../../views/gestionarUsuarios/listarUsuarios.php"; // Utiliza window.location.href para redireccionar
     } else {
-      alert("Error al actualizar");
+      alert(data.message || "Error al actualizar");
     }
   } catch (error) {
     console.error(error);
-    alert("Ha ocurrido un error en la solicitud");
+    alert(error.message || "Ha ocurrido un error en la solicitud");
   }
 });
-
 
 // Borrar Empleado
 deleteButton.addEventListener("click", async (e) => {
