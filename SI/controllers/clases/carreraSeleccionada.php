@@ -92,7 +92,7 @@ class SelectedCareer {
 
     // Listar Carreras seleccionadas por idInscription
     public function getSelectedCareersByInscriptionID($idInscription) {
-        $stmt = $this->con->prepare("select * from selectedCareers WHERE idInscription = ?");
+        $stmt = $this->con->prepare("select * from selectedCareers JOIN careers ON idCareer = careers.ID WHERE idInscription = ?");
         $stmt->bind_param("i", $idInscription);
 
         if (!$stmt->execute()) {

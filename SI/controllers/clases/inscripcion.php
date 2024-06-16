@@ -155,6 +155,36 @@ class Inscription
         }
     }
 
+    // Ascender a fase 3 en revision
+    public function levelToInscriptionPhaseThreeForCheck($idInscription, $url)
+    {
+        // Preparar la declaración para actualizar la fase de la inscripción
+        $stmt = $this->con->prepare('UPDATE inscriptions SET state = "En Revision", url = ? WHERE ID = ?');
+
+        if (!$stmt) {
+            throw new Exception('Error al preparar la consulta: ' . $this->con->error);
+        }
+
+        // Enlazar el parámetro
+        $stmt->bind_param('si', $url, $idInscription);
+
+        // Ejecutar la consulta
+        if (!$stmt->execute()) {
+            $stmt->close();
+            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
+        }
+
+        // Verificar si se actualizó alguna fila
+        if ($stmt->affected_rows > 0) {
+            $stmt->close();
+            return true;
+        } else {
+            $stmt->close();
+            throw new Exception('Error: No se pudo actualizar la fase de la inscripción. Es posible que el ID no exista o ya esté en el estado "En Revision".');
+        }
+    }
+
+
     // Rechazar Inscripcion
     public function rejectInscription($idInscription, $observations)
     {
