@@ -1,0 +1,403 @@
+body {
+  font-family: "Open Sans", sans-serif;
+  background-color: #fffcf4;
+}
+
+.layout_padding {
+  padding: 75px 0;
+}
+
+.layout_padding-top {
+  padding-top: 75px;
+}
+
+.layout_padding-bottom {
+  padding-bottom: 75px;
+}
+
+/*header section*/
+
+.header_section {
+  font-family: "Roboto", sans-serif;
+  background-color: #1f233e;
+  color: #fff;
+  max-height: 165px;
+  padding: 1% 0;
+}
+
+.custom_nav-container.navbar-expand-lg .navbar-nav .nav-link {
+  color: #fff;
+  padding-left: 12px;
+  padding-right: 12px;
+}
+
+a,
+a:hover,
+a:focus {
+  text-decoration: none;
+}
+
+.btn,
+.btn:focus {
+  outline: none !important;
+  box-shadow: none;
+}
+
+.custom_nav-container .navbar-toggler {
+  border-color: #fff;
+  outline: none;
+}
+
+.custom_nav-container .navbar-toggler .navbar-toggler-icon {
+  background-image: url(../../img/LANDING/menu.png);
+}
+
+.custom_nav-container .nav_search-btn {
+  background-image: url(../../img/LANDING/search-icon.png);
+
+  background-size: 22px;
+  background-repeat: no-repeat;
+  background-position-y: 7px;
+  width: 35px;
+  height: 35px;
+  padding: 0;
+  border: none;
+}
+
+
+
+.nav-link:hover {
+  color: #fefefe;
+}
+
+.logo_box {
+  width: 250px;
+}
+
+.logo_box img {
+  width: 150px;
+}
+
+.call_to_btn {
+  display: inline-block;
+  color: #fefefe;
+  padding: 10px 35px;
+  background-color: #f6bb08;
+  margin-top: 5%;
+  margin-bottom: 20%;
+  border-radius: 0;
+}
+
+/*end header section*/
+
+
+
+.slider_section .slider_box {
+  display: flex;
+  position: relative;
+  height: calc(100vh - 90px);
+  background-image: url(../../img/LANDING/banner.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.slider_section .slider_box .fixed_company-detail {
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translate(-50%, -50%);
+}
+
+.slider_section .slider_box .fixed_company-detail p {
+  width: 12px;
+  text-align: center;
+  word-break: break-word;
+  color: #000000;
+  text-decoration: solid;
+  text-transform: uppercase;
+  font-style: oblique;
+  font-weight: bolder;
+}
+
+.slider_section .slider_box .slider-detail {
+  color: #f8f8f8;
+  text-shadow: #ffffff;
+  width: 60%;
+  margin-top: 14%;
+  margin-left: 20%;
+  font-style: italic;
+  font-weight: 2000;
+  
+}
+
+.slider_section .slider_box .slider-detail .slider_detail-heading h2 {
+  font-weight: 100;
+  text-transform: uppercase;
+  font-size: 35px;
+}
+
+.slider_section .slider_box .slider-detail .slider_detail-heading h1 {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 35px;
+}
+
+.slider_section .slider_box .slider-detail .slider_detail-text {
+  width: 55%;
+  color: #ffffff;
+  font-weight: 2000;
+  font-size: 30px;
+}
+
+.slider_section .slider_box .slider-detail .slider_detail-btn {
+  display: flex;
+}
+
+.slider_section .slider_box .slider-detail .slider_detail-btn a {
+  margin-top: 28px;
+  padding: 16px 20px;
+  background-color: #2561db;
+  color: #fff;
+}
+
+/* end slider section */
+
+/* welcome section */
+
+
+.welcome_section .col-md-6 {
+  padding: 0 4%;
+}
+
+.welcome_detail {
+  width: 75%;
+}
+
+.welcome_detail h2 {
+  text-transform: uppercase;
+  color: #0c0b09;
+  font-weight: bold;
+}
+
+.welcome_detail h3 {
+  text-transform: uppercase;
+  color: #254a93;
+  position: relative;
+}
+
+.welcome_detail h3::after {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  content: "";
+  height: 1.5px;
+  width: 140px;
+
+}
+
+.welcome_detail h2,
+.welcome_detail p,
+.welcome_detail .welcome_detail-btn {
+  margin-top: 25px;
+}
+
+.welcome_section .welcome_detail-btn a,
+.welcome_section .welcome_detail-btn a:hover {
+  text-transform: uppercase;
+
+  color: #0c0b09;
+}
+
+.welcome_section .welcome_detail-btn a img {
+  width: 25px;
+}
+
+
+/* Seccion de*/
+
+.story_section {
+  padding: 0 4%;
+  margin-bottom: 65px;
+}
+
+.story_section .container-fluid {
+  -webkit-box-shadow: 1px -1px 24px -13px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px -1px 24px -13px rgba(0, 0, 0, 0.75);
+  box-shadow: 1px -1px 24px -13px rgba(0, 0, 0, 0.75);
+}
+
+.story_section .col-md-6 {
+  padding: 0;
+  display: flex;
+  align-items: center;
+  background-color: #fcfcfc;
+}
+.izquierda {
+  margin-left: 20px;
+}
+
+.story_detail {
+  margin-left: 60px;
+}
+
+.story_detail h2 {
+  text-transform: uppercase;
+  color: #0c0b09;
+  font-weight: bold;
+}
+
+.story_detail h3 {
+  text-transform: uppercase;
+  color: #254a93;
+
+  margin: 0;
+}
+
+.story_detail {
+  width: 85%;
+}
+
+.story_detail .story_detail-btn {
+  margin-top: 25px;
+}
+
+.story_section .story_detail-btn a,
+.story_section .story_detail-btn a:hover {
+  text-transform: uppercase;
+
+  color: #0c0b09;
+}
+
+.story_section .story_detail-btn a img {
+  width: 25px;
+}
+
+.contact_form-container {
+  background-image: url(../../img/LANDING/guards.jpg);
+}
+
+.contact_form-container form {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.contact_form-container .contact_box {
+  background-color: #fff;
+  padding: 35px 40px;
+  width: 50%;
+  height: 60%;
+  margin: 100px 50px;
+}
+
+.contact_form-container form input,
+.contact_form-container form input:focus,
+.contact_form-container form input:active {
+  border: none;
+  background-color: transparent;
+  border-bottom: 1px solid #00cc99;
+  width: 85%;
+  margin-top: 12px;
+  outline: none;
+}
+
+.contact_form-container form button {
+  border: none;
+  background-color: #254a93;
+  color: #fff;
+  padding: 8px 20px;
+  margin-top: 15px;
+}
+
+.contact_section .row .col-md-6 {
+  padding: 0;
+}
+
+/* end contact section */
+
+/* info section */
+.info_section {
+  background-color: #000202;
+  font-family: "Roboto", sans-serif;
+}
+
+.info_section .info_detail {
+  display: flex;
+  align-items: center;
+}
+
+.info_section .info_detail p {
+  color: #fff;
+}
+
+.address_link-container {
+  display: block;
+}
+
+.address_link-container a {
+  display: flex;
+  color: #fff;
+  margin: 15px 0;
+  align-items: center;
+}
+
+.address_link-container a img {
+  margin-right: 10px;
+}
+
+.info_section .news_container h3,
+.info_section .address_container h3 {
+  text-transform: uppercase;
+  color: #fff;
+  font-size: 22px;
+}
+
+.info_section .news_container form {
+  margin: 28px 0;
+}
+
+.info_section .news_container form input {
+  border: none;
+  background-color: #fff;
+  width: 70%;
+  padding: 7px 10px;
+}
+
+.info_section .news_container form button {
+  border: none;
+  background-color: #254a93;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 15px;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+
+.info_section .news_container .social_container {
+  width: 50%;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+/* end info section */
+
+/* footer section*/
+
+.footer_section {
+  background-color: #254a93;
+  padding: 20px 0;
+  font-family: "Roboto", sans-serif;
+}
+
+.footer_section p {
+  color: #fff;
+  margin: 0;
+  text-align: center;
+}
+
+.footer_section a {
+  color: #fff;
+}
+
+/* end footer section*/

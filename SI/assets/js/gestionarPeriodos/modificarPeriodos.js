@@ -83,7 +83,7 @@ deleteButton.addEventListener("click", () => {
 
 activateButton.addEventListener("click", () => {
     if (confirm("¿Estás seguro de que deseas empezar este periodo?")) {
-        fetch('../../../controllers/gestionarPeriodos/activarPeriodos.php?id=' + periodID, {
+        fetch('../../controllers/gestionarPeriodos/activarPeriodos.php?id=' + periodID, {
             method: 'POST'
         })
             .then(response => response.json())
@@ -105,7 +105,7 @@ activateButton.addEventListener("click", () => {
 
 finishButton.addEventListener("click", () => {
     if (confirm("¿Estás seguro de que deseas terminar este periodo?")) {
-        fetch('../../../controllers/gestionarPeriodos/terminarPeriodos.php?id=' + periodID, {
+        fetch('../../controllers/gestionarPeriodos/terminarPeriodos.php?id=' + periodID, {
             method: 'POST'
         })
             .then(response => response.json())

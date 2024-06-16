@@ -1,0 +1,372 @@
+body {
+    background-color: #f2f2f2;
+    font-family: "Montserrat", sans-serif;
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.main-login {
+    width: 100%;
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background-image: url(../img/background-login.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.form-container_login {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    width: 700px;
+    text-align: center;
+    justify-items: center;
+    gap: 70px;
+}
+
+.form_login {
+    display: flex;
+    height: auto;
+    width: 342px;
+    flex-direction: column;
+    text-align: initial;
+    gap: 60.172px;
+}
+
+.form_login div {
+    width: 100%;
+}
+
+.form-container_register {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    width: 900px;
+    text-align: center;
+    justify-items: center;
+    /* gap: 70px; */
+}
+
+.form_register {
+    display: flex;
+    height: auto;
+    width: 700px;
+    flex-direction: column;
+    text-align: initial;
+}
+
+.form_register div {
+    width: 100%;
+}
+
+.login-titles h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+    color: #feb800;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+    color: black;
+}
+
+.login-titles p {
+    font-weight: 500;
+    font-size: 24px;
+    color: #151515;
+}
+
+main {
+    background-image: url(../img/background.png);
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow-y: auto;
+}
+
+.info-container {
+    width: 80%;
+    margin: 68px auto;
+}
+
+h2 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 28px;
+    color: black;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+.form-grid_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 48px;
+    row-gap: 24px;
+    margin-top: 20px;
+}
+
+.form-grid_container_register {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 48px;
+    row-gap: 24px;
+    margin-top: 20px;
+}
+
+.form-grid_container_register_one_column {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    column-gap: 48px;
+    row-gap: 24px;
+    margin-top: 20px;
+}
+
+.form-input {
+    display: flex;
+    width: 100%;
+    padding: 12px 16px;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 6.017px;
+    border: 2px solid #2c4eb8;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.form-textArea {
+    display: flex;
+    width: 100%;
+    height: 80px;
+    padding: 12px 16px;
+    align-items: center;
+    align-self: stretch;
+    border-radius: 6.017px;
+    border: 2px solid #2c4eb8;
+    background: #fff;
+    box-sizing: border-box;
+
+    resize: none;
+    /* Evita que el textarea sea redimensionado */
+    overflow: auto;
+}
+
+.group_buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 24px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #feb800;
+    color: #151515;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* menu */
+.navbar_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #334436;
+    align-items: center;
+    padding: 64px 0;
+}
+
+.navbar_container ul {
+    padding: 0;
+    margin: 24px 0 0;
+    list-style: none;
+    text-align: center;
+    border-top: 2px solid #fafafa;
+}
+
+.navbar_container ul li {
+    border-bottom: 2px solid #fafafa;
+    padding: 12px 0px;
+}
+
+.navbar_container ul li:hover {
+    background-color: #feb800;
+}
+
+.navbar_container a {
+    text-decoration: none;
+    color: #e3dac5;
+    font-weight: 600;
+    font-size: 24px;
+    box-sizing: border-box;
+}
+
+.navbar_container ul li:hover a {
+    color: black;
+}
+
+.closeSession_button {
+    border-radius: 12px;
+    background: #feb800;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 208px;
+    height: 37px;
+}
+
+.closeSession_button p {
+    font-size: 14px;
+    color: black;
+}
+
+.closeSession_button figure {
+    display: flex;
+}
+
+/* datos del usuario */
+.main-container {
+    display: grid;
+    grid-template-columns: 260px auto;
+    grid-template-rows: auto;
+    height: 100vh;
+}
+
+ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+ul.navbar li {
+    float: left;
+}
+
+ul.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.navbar li a:hover {
+    background-color: #111;
+}
+
+/* estilos para tablas */
+.tabla-container {
+    height: 190px;
+    /* Ajusta la altura deseada para mostrar 4 filas */
+    overflow-y: auto;
+    /* Habilita el desplazamiento vertical */
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+    table-layout: fixed;
+}
+
+table th,
+table td {
+    padding: 8px;
+    max-width: 200px;
+    /* Ajusta el ancho máximo deseado para cada campo */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+table tr:nth-child(even) {
+    background-color: #f2f2f2;
+    /* Color de fondo para filas pares */
+}
+
+table th,
+table td {
+    border: none;
+    /* Elimina los bordes de las celdas */
+}
+
+.edit_icon_input {
+    padding-left: 30px;
+    /* Ajusta el espaciado para dar cabida a la imagen */
+    background-image: url("../img/edit-icon.png");
+    /* Ruta de la imagen */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20px 20px;
+    /* Tamaño de la imagen */
+    border: none;
+    background-color: transparent;
+}
+
+/* estilos para el grupo de inputs de fecha */
+.group-input-date-container {
+    display: flex;
+    gap: 4px;
+}
+
+tr.selected {
+    background-color: rgb(254, 184, 0) !important;
+}
+
+/* estilos para el input de busqueda */
+.search_container {
+    box-sizing: border-box;
+    width: 60%;
+    margin: 0 auto;
+}
+
+.form-input_search {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border: 2px solid #feb800;
+    border-radius: 16px;
+    padding: 8px 24px;
+}
+
+.form-input_search input {
+    border: none;
+    background: transparent;
+    width: 95%;
+    outline: none;
+    font-weight: bold;
+}
+
+.tablaVisualizacion {
+    height: 80%;
+}
+
