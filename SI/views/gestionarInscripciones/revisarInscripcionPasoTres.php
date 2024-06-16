@@ -1,8 +1,9 @@
 <?php
-$title = "Solicitar Inscripción";
+$_title = "Solicitar Inscripción";
 include('../../controllers/clases/inscripcion.php');
 include('../../controllers/clases/estudiante.php');
 include('../../controllers/clases/carrera.php');
+include_once('../../views/templates/encabezadoConfig.php');
 
 session_start();
 
@@ -16,12 +17,37 @@ $inscriptionObject = new Inscription();
 $inscriptionsDetails = $inscriptionObject->getInscriptionByID($inscriptionId);
 $url = $inscriptionsDetails['url'];
 
-$licenseIdUpload = '/assets/fs/'.$url.'licenseID.png';
-$birthCertificate = '/assets/fs/'.$url.'birthCertificate.png';
-$degree = '/assets/fs/'.$url.'degree.png';
-$letter = '/assets/fs/'.$url.'letter.png';
-$notes = '/assets/fs/'.$url.'notes.png';
-$spreadsheet = '/assets/fs/'.$url.'spreadsheet.png';
+$licenseIdUpload = '/assets/fs/' . $url . 'licenseID.png';
+$birthCertificate = '/assets/fs/' . $url . 'birthCertificate.png';
+$degree = '/assets/fs/' . $url . 'degree.png';
+$letter = '/assets/fs/' . $url . 'letter.png';
+$notes = '/assets/fs/' . $url . 'notes.png';
+$spreadsheet = '/assets/fs/' . $url . 'spreadsheet.png';
+
+
+if ($inscriptionsDetails) {
+    if ($inscriptionsDetails['inscriptionPhase'] === 3) {
+        if ($inscriptionsDetails['state'] === "Aprobado") {
+            echo "<script>
+                window.alert('Ya ha sido aprobado este estudiante');
+                window.location.href='../gestionarInscripciones/listarInscripciones.php';
+              </script>";
+            exit;
+        } else if ($inscriptionsDetails['state'] === "A Corregir") {
+            echo "<script>
+                window.alert('Espere a que el estudiante corrija sus documentos');
+                window.location.href='../gestionarInscripciones/listarInscripciones.php';
+              </script>";
+            exit;
+        } else {
+            echo "<script>
+                window.alert('No esta en esta fase de la inscripcion');
+                window.location.href='../gestionarInscripciones/listarInscripciones.php';
+              </script>";
+        }
+    }
+}
+
 ?>
 
 <html>
@@ -33,7 +59,7 @@ $spreadsheet = '/assets/fs/'.$url.'spreadsheet.png';
 <body>
     <div class="content">
         <div class="form-inscription-documents">
-            <form id="form" method="post" action="../../controllers/gestionarInscripciones/crearInscripcionPasoTres.php" enctype="multipart/form-data">
+            <form id="form" method="post" action="../../controllers/gestionarInscripciones/revisarInscripcionPasoTres.php?id=<?= $inscriptionId ?>" enctype="multipart/form-data">
                 <h1 class="formHeader">Documentos Recaudados</h1>
 
                 <div class="documents">
@@ -45,7 +71,7 @@ $spreadsheet = '/assets/fs/'.$url.'spreadsheet.png';
 
                             </div>
                         </label>
-                        <input id="licenseIdUpload" type="file" class="formInput" name="licenseID"  data-url="<?php echo $licenseIdUpload; ?>" hidden />
+                        <input id="licenseIdUpload" type="file" class="formInput" name="licenseID" data-url="<?php echo $licenseIdUpload; ?>" hidden />
                     </div>
 
                     <div>
@@ -101,10 +127,10 @@ $spreadsheet = '/assets/fs/'.$url.'spreadsheet.png';
 
                 </div>
 
-                
+
                 <!-- Aprobar o Rechazar -->
-                <div>
-                    <label for="decision">Decision</label>
+                <div class="decisionDiv">
+                    <label for="decision">Decision</label><br />
                     <select name="decision" id="decision" required>
                         <option value="">Seleccione la decisión</option>
                         <option value="approve">Aprobar</option>
@@ -112,9 +138,9 @@ $spreadsheet = '/assets/fs/'.$url.'spreadsheet.png';
                     </select>
                 </div>
 
-                <div id="observations" style="display: none;">
-                    <label for="observation">Observaciones</label>
-                    <textarea  class="observation" id="observation" name="observation" placeholder="Escriba aquí la razón del rechazo"></textarea>
+                <div class="observations" id="observations" style="display: none;">
+                    <label for="observation">Observaciones</label><br />
+                    <textarea class="observation" id="observation" name="observation" placeholder="Escriba aquí la razón del rechazo"></textarea>
                 </div>
 
                 <!-- Enviar -->

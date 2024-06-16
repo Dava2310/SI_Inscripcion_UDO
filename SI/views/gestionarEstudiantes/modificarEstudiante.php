@@ -26,6 +26,13 @@ $studentDetails = $student->getStudentByID($studentID);
 
 ?>
 
+<<<<<<< HEAD
+<?php
+$_title = "Modificar Estudiante";
+include('../templates/encabezadoConfig.php');
+?>
+=======
+>>>>>>> e48cc761cc2f6703beac3ede5062b79e55c2b304
 
 
 <body>

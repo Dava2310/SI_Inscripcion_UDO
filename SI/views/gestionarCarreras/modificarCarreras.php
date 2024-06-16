@@ -34,6 +34,10 @@ $career = new Career();
 $careerDetails = $career->getCareerByID($careerID);
 ?>
 
+<?php
+$_title = "Modificar Carrera";
+include('../templates/encabezadoConfig.php');
+?>
 
 <body>
     <div class="main-container">

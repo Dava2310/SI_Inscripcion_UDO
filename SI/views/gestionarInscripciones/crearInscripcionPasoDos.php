@@ -1,5 +1,5 @@
 <?php
-$title = "Solicitar Inscripción";
+$_title = "Solicitar Inscripción";
 include('./../templates/encabezadoConfig.php');
 include('../../controllers/clases/inscripcion.php');
 include('../../controllers/clases/estudiante.php');

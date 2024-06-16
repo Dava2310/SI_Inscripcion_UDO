@@ -44,6 +44,8 @@
         echo "<script> window.location='../gestionarAcceso/crearPreguntaSeguridad.php'; </script>";
     }
 
+$_title = "Panel De Control";
+include('./../templates/encabezadoConfig.php');
 ?>
 
 <body>

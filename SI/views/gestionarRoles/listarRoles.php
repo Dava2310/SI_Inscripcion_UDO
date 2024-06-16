@@ -26,6 +26,12 @@ if ($idRole != 1) {
 // Importando clases
 include_once('../../controllers/clases/rol.php');
 $role = new Role();
+$roles = $role->getRoles();
+?>
+
+<?php
+$_title = "Roles";
+include('../templates/encabezadoConfig.php');
 $roles = $role->getRoles(); // Aqui se reciben en modo de Array la lista de roles
 ?>
 

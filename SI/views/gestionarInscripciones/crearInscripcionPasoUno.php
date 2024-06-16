@@ -1,5 +1,5 @@
 <?php
-$title = "Solicitar Inscripción";
+$_title = "Solicitar Inscripción";
 include('./../templates/encabezadoConfig.php');
 include('../../controllers/clases/inscripcion.php');
 include('../../controllers/clases/estudiante.php');
@@ -49,7 +49,7 @@ $careers = $career->getCareers();
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title><?php echo $title; ?></title>
+    <title><?php echo $_title; ?></title>
     <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>

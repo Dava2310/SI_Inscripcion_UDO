@@ -25,31 +25,25 @@ $inscription = new Inscription();
 $inscriptions = $inscription->getInscriptions();
 ?>
 
+<?php
+$title = "Panel De Inscripciones";
+include('../templates/encabezadoConfig.php');
+?>
+
 <body>
+    <!-- Barra lateral -->
+    <div class="sidebarBackground">
+        <?php include('../templates/menus/menuAdministrador.php') ?>
+    </div>
 
-    <div class="main-container">
-        <!-- CONTENIDO DEL MENU DE NAVEGACION -->
-        <?php
-        if ($idRole === 1) {
-            include ('../templates/menus/menuAdministrador.php');
-        } else {
-            include ('../templates/menus/menuEmpleado.php');
-        }
-
-        ?>
-
-        <main>
-            <div class="info-container">
-                <h1>Busque las Solicitudes de Inscripciones</h1>
-                <form action="">
-
-                    <div class="search_container">
-                        <div class="form-input_search">
-                            <input id="searchInput" placeholder="Buscar" />
-                            <img src="../../assets/img/Union.png" alt="">
-                        </div>
-                    </div>
-                </form>
+    <!-- Contenido principal -->
+    <div class="content">
+        <div>
+            <div class="tools">
+                <div class="searchBar">
+                    <input id="searchInput" placeholder="Buscar" />
+                </div>
+            </div>
 
                 <h1>Lista de Solicitudes</h1>
                 <div class="tabla-container">
@@ -98,11 +92,11 @@ $inscriptions = $inscription->getInscriptions();
                                     $phase = "Tercera";
                                 }
 
-                                // Determinar el enlace correcto para la revisión
-                                $reviewLink = "revisarInscripcionPasoDos.php?id={$inscription['ID']}";
-                                if ($inscription['inscriptionPhase'] === 3 && $inscription['state'] === 'En Revision') {
-                                    $reviewLink = "revisarInscripcionPasoTres.php?id={$inscription['ID']}";
-                                }
+                        // Determinar el enlace correcto para la revisión
+                        $reviewLink = "revisarInscripcionPasoDos.php?id={$inscription['ID']}";
+                        if ($inscription['inscriptionPhase'] === 3 && $inscription['state'] === 'En Revision') {
+                            $reviewLink = "revisarInscripcionPasoTres.php?id={$inscription['ID']}";
+                        }
 
                                 echo <<<HTML
                         <tr class="dataList">

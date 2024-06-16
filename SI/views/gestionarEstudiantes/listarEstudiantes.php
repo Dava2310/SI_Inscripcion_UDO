@@ -25,6 +25,11 @@ $student = new Student();
 $students = $student->getStudents();
 ?>
 
+<?php
+$_title = "Panel De Control";
+include('../templates/encabezadoConfig.php');
+?>
+
 <body>
     <div class="main-container">
         <?php
