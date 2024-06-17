@@ -56,6 +56,7 @@ form.addEventListener("submit", async (e) => {
             alert("No se ha encontrado un usuario con este correo");
         }
     } catch (error) {
+        alert('No se pudo encontrar al usuario');
         console.error('Se ha producido un error:', error);
     }
 });

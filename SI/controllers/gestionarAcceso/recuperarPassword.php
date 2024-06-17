@@ -46,8 +46,10 @@ function updatePassword($objectType, $email, $password, $securityAnswer, $securi
         $student = new Student();
         $response = $student->updatePassword($email, md5($password), md5($securityAnswer), $securityQuestion, $ID);
     } elseif ($objectType === 'user') {
+        error_log("POR AQUI", 0);
         $user = new User();
         $response = $user->updatePassword($email, md5($password), md5($securityAnswer), $securityQuestion, $ID);
+        error_log("Respuesta: $response", 0);
     }
 
     if (!$response) {

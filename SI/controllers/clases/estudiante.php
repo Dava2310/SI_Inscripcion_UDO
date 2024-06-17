@@ -238,12 +238,11 @@ class Student
     // Comprobar si el email corresponde a un estudiante
     public function checkEmail($email)
     {
-        $stmt = $this->con->prepare('SELECT * FROM students WHERE email = ?');
+        $stmt = $this->con->prepare("SELECT * FROM students WHERE email = ? AND state = 'Active' ");
         $stmt->bind_param('s', $email);
 
         if (!$stmt->execute()) {
             throw new Exception('Error al verificar el email');
-            return false;
         }
 
         $result = $stmt->get_result();

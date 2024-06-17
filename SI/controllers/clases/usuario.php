@@ -236,7 +236,14 @@ class User
             throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
             return false;
         }
-        return true;
+
+        if ($stmt->affected_rows > 0) {
+            return true;
+        }
+        else
+        { 
+            return false;
+        }
     }
 
     // Crear pregunta Seguridad
