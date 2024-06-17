@@ -12,25 +12,23 @@ form.addEventListener("submit", e => {
         method: 'POST',
         body: formData
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
+    .then(response => {
+        return response.json();
+    })
+    .then(data => {
+        console.log(data.message);
 
-            // Si hubo inicio de sesion
-            if (data.message === 'Actualizacion') {
-                window.alert("Se actualizaron los datos del estudiante");
-
-                // Se verifica el Rol para mandarlo a la pagina correspondiente
-                window.location = './../../views/gestionarEstudiantes/listarEstudiantes.php';
-
-            } else {
-                alert('Error al actualizar');
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            alert('Ha ocurrido un error en la solicitud');
-        });
+        if (data.message === 'Actualizacion') {
+            window.alert("Se actualizaron los datos del estudiante");
+            window.location = './../../views/gestionarEstudiantes/listarEstudiantes.php';
+        } else {
+            alert(data.message); // Mostrar el mensaje de error del servidor
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert('Ha ocurrido un error en la solicitud');
+    });
 });
 
 deleteButton.addEventListener("click", e => {

@@ -110,7 +110,36 @@
     </div>
 
     <!-- SCRIPT PARA HABILITAR LOS CAMPOS -->
-    <script></script>
+    <script>
+        function enableFields() {
+            var inputs = document.getElementsByTagName('input');
+
+            var btnHabilitar = document.getElementById("btnHabilitar") 
+            var btnGuardar = $("#btnGuardar");
+
+            for (var i = 0; i < inputs.length; i++) {
+                var input = inputs[i];
+                var inputId = input.id;
+            }
+
+            // Habilitar o deshabilitar el botón submit
+            btnGuardar.prop("disabled", !btnGuardar.prop("disabled"));
+
+            var textoActual = btnHabilitar.textContent;
+            var textoNuevo = "";
+
+            if (textoActual.includes("Activados")) {
+                textoNuevo = textoActual.replace("Activados", "Desactivados");
+            } else if (textoActual.includes("Desactivados")) {
+                textoNuevo = textoActual.replace("Desactivados", "Activados");
+            } else {
+                textoNuevo = textoActual + " (Activados)";
+            }
+
+            btnHabilitar.textContent = textoNuevo;
+
+        }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

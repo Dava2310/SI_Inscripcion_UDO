@@ -16,7 +16,7 @@ if (!(isset($id))) {
 }
 
 // Incluir el archivo con la definición de la clase Student
-include_once('../../controllers/clases/estudiante.php');
+include_once ('../../controllers/clases/estudiante.php');
 
 // Crear una instancia de la clase Student
 $student = new Student();
@@ -25,23 +25,16 @@ $student = new Student();
 $students = $student->getStudents();
 ?>
 
-<?php
-$_title = "Panel De Control";
-include('../templates/encabezadoConfig.php');
-?>
 
 <body>
     <div class="main-container">
         <?php
-        
-            if ($idRole === 1)
-            {
-                include('../templates/menus/menuAdministrador.php');    
-            }
-            else
-            {
-                include('../templates/menus/menuEmpleado.php');
-            }
+
+        if ($idRole === 1) {
+            include ('../templates/menus/menuAdministrador.php');
+        } else {
+            include ('../templates/menus/menuEmpleado.php');
+        }
         ?>
 
         <main>
@@ -72,18 +65,22 @@ include('../templates/encabezadoConfig.php');
                         </thead>
                         <tbody>
                             <?php
-                            // Recorrer la lista de estudiantes y mostrar su información en filas de la tabla
-                            foreach ($students as $student) {
-                                echo <<<HTML
-                                <tr class="dataList">
-                                    <td>{$student['name']}</td>
-                                    <td>{$student['lastName']}</td>
-                                    <td>{$student['licenseID']}</td>
-                                    <td>{$student['email']}</td>
-                                    <td>{$student['state']}</td>
-                                    <td><a href="modificarEstudiante.php?id={$student['ID']}">Modificar</a></td>
-                                </tr>
-                                HTML;
+                            if (!($students)) {
+                                echo "<tr><td colspan='6'>No hay estudiantes disponibles</td></tr>";
+                            } else {
+                                // Recorrer la lista de estudiantes y mostrar su información en filas de la tabla
+                                foreach ($students as $student) {
+                                    echo <<<HTML
+                                    <tr class="dataList">
+                                        <td>{$student['name']}</td>
+                                        <td>{$student['lastName']}</td>
+                                        <td>{$student['licenseID']}</td>
+                                        <td>{$student['email']}</td>
+                                        <td>{$student['state']}</td>
+                                        <td><a href="modificarEstudiante.php?id={$student['ID']}">Modificar</a></td>
+                                    </tr>
+                                    HTML;
+                                }
                             }
                             ?>
                         </tbody>
@@ -92,8 +89,9 @@ include('../templates/encabezadoConfig.php');
             </div>
         </main>
     </div>
-    
+
     <script src="../../assets/js/gestionarEstudiantes/listarEstudiantes.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
+
 </html>

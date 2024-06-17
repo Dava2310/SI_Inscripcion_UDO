@@ -34,11 +34,6 @@ $role = new Role();
 $roleDetails = $role->getRoleByID($roleID);
 ?>
 
-<?php
-$_title = "Modificar Rol";
-include('../templates/encabezadoConfig.php');
-?>
-
 <body>
 
     <div class="main-container">

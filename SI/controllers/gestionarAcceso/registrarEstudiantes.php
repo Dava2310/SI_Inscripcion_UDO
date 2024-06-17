@@ -39,7 +39,7 @@ function registrarEstudiantes() {
         }
 
         // Al pasar ambas verificaciones, se procede a realizarse el registro        
-        $response = $studentObject->registerStudent($licenseID, $name, $lastName, $email, $date, $nationality, $phoneNumber, $address, md5($password), $securityQuestion, $securityAnswer);
+        $response = $studentObject->registerStudent($licenseID, $name, $lastName, $email, $date, $nationality, $phoneNumber, $address, md5($password), $securityQuestion, md5($securityAnswer));
 
         // Error al registrarse?
         if (!$response) {

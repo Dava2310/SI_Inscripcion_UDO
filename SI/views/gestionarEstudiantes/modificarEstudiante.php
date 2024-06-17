@@ -55,6 +55,10 @@ $studentDetails = $student->getStudentByID($studentID);
                             <label for="email">Correo Electrónico:</label>
                             <input class="form-input" type="email" id="email" name="email" value="<?= $studentDetails['email'] ?>">
                         </div>
+                        <div class="form-group_control">
+                            <label for="birthday">Fecha:</label>
+                            <input value="<?=$studentDetails['birthday']?>" class="form-input" type="date" id="birthday" name="birthday" required>
+                        </div>
                         <!-- Cédula -->
                         <div class="form-group_control">
                             <label for="licenseID">Cédula:</label>

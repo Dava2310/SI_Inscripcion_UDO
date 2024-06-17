@@ -29,11 +29,6 @@ $role = new Role();
 $roles = $role->getRoles();
 ?>
 
-<?php
-$_title = "Roles";
-include('../templates/encabezadoConfig.php');
-$roles = $role->getRoles(); // Aqui se reciben en modo de Array la lista de roles
-?>
 
 <body>
     <div class="main-container">

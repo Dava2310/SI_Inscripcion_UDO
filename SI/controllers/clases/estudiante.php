@@ -58,22 +58,40 @@ class Student
     }
 
     // Actualizar Estudiante
-    public function updateStudent($id, $licenseID, $name, $lastName, $email, $phoneNumber, $address)
+    public function updateStudent($id, $licenseID, $name, $lastName, $email, $birthday, $phoneNumber, $address)
     {
+        // error_log("Actualizando", 0);
+
+        // Verificar si el estudiante está activo
         if (!($this->isActiveByID($id))) {
-            echo json_encode('Ocurrio un error. El estudiante no esta activo');
+            echo json_encode(array('message' => 'Ocurrió un error. El estudiante no está activo'));
             exit;
         }
 
-        $stmt = $this->con->prepare("UPDATE students SET licenseID = ?, name = ?, lastName = ?, email = ?, phoneNumber = ?, address = ? WHERE ID = ?");
-        $stmt->bind_param("ssssssi", $licenseID, $name, $lastName, $email, $phoneNumber, $address, $id);
+        // Preparar la consulta para actualizar los datos del estudiante
+        $stmt = $this->con->prepare("
+        UPDATE students 
+        SET 
+            licenseID = ?, 
+            name = ?, 
+            lastName = ?, 
+            email = ?, 
+            birthday = ?, 
+            phoneNumber = ?, 
+            address = ? 
+        WHERE 
+            ID = ?
+    ");
+        $stmt->bind_param("sssssssi", $licenseID, $name, $lastName, $email, $birthday, $phoneNumber, $address, $id);
 
+        // Ejecutar la consulta y manejar el resultado
         if (!$stmt->execute()) {
-            echo json_encode('Error al actualizar los datos del estudiante');
+            echo json_encode(array('message' => 'Error al actualizar los datos del estudiante'));
             exit;
         }
 
         if ($stmt->affected_rows > 0) {
+            // error_log("Actualizado correctmaente", 0);
             return true;
         } else {
             return false;
@@ -83,7 +101,7 @@ class Student
     // Borrar Estudiante
     public function deleteStudentById($studentID)
     {
-        $stmt = $this->con->prepare("DELETE FROM students WHERE ID = ?");
+        $stmt = $this->con->prepare("UPDATE students SET state = 'Inactive' WHERE ID = ?");
         $stmt->bind_param("i", $studentID);
 
         if (!$stmt->execute()) {
@@ -101,7 +119,7 @@ class Student
     // Listar Estudiantes
     public function getStudents()
     {
-        $stmt = $this->con->prepare("SELECT * FROM students");
+        $stmt = $this->con->prepare("SELECT * FROM students WHERE state = 'Active'");
 
         if (!$stmt->execute()) {
             echo json_encode('Error al obtener los estudiantes');
@@ -133,7 +151,6 @@ class Student
 
         if (!$stmt->execute()) {
             throw new Exception('Error al validar el estudiante: ' . $stmt->error);
-            exit;
         }
 
         $result = $stmt->get_result();
@@ -189,6 +206,7 @@ class Student
         } else {
             return false;
         }
+
     }
 
     // Obtener estudiantes por cedula
@@ -330,6 +348,13 @@ class Student
     // Cambiar Contraseña
     public function updatePassword($email, $password, $securityAnswer, $securityQuestion, $ID)
     {
+
+        // error_log("ID: $ID", 0);
+        // error_log("Email: $email", 0);
+        // error_log("securityAnswer: $securityAnswer", 0);
+        // error_log("securityQuestion: $securityQuestion", 0);
+        // error_log("password: $password", 0);
+
         $stmt = $this->con->prepare('UPDATE students SET password = ? WHERE email = ? AND securityAnswer = ? AND securityQuestion = ? AND ID = ?');
         $stmt->bind_param('ssssi', $password, $email, $securityAnswer, $securityQuestion, $ID);
 
@@ -337,6 +362,34 @@ class Student
             throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
             return false;
         }
-        return true;
+
+        if ($stmt->affected_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function verifyPassword($password, $ID)
+    {
+
+        error_log("ID = $ID", 0);
+        error_log("Password = $password", 0);
+
+        $stmt = $this->con->prepare('SELECT * FROM students WHERE ID = ? AND password = ?');
+        $stmt->bind_param('is', $ID, $password);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al ejecutar la consulta: ' . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+
+        // Si existe el estudiante con dicha password se devuelve verdadero, de lo contrario falso
+        if ($result->num_rows > 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

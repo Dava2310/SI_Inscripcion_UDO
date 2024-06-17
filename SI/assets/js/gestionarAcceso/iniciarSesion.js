@@ -27,7 +27,7 @@ form.addEventListener("submit", e => {
             // Se verifica el Rol para mandarlo a la pagina correspondiente
             window.location = '../../views/dashboardEstudiantes/dashboardEstudiantes.php';
         } else {
-            alert('Credenciales de inicio de sesion incorrectas');
+            alert(data.message);
         }
     })
     .catch(error => {

@@ -1,6 +1,6 @@
 <?php
 $_title = "Panel De Reportes";
-include('../templates/encabezadoConfig.php');
+include('../templates/head.php');
 ?>
 
 <body>

@@ -38,7 +38,7 @@ $email = $response['email'];
 $birthday = $response['birthday'];
 $nationality = $response['nationality'];
 $address = $response['address'];
-
+$ID = $response['ID'];
 
 // Recogiendo los datos de las notificaiones del estudiante
 $notificationObject = new Notification();
@@ -71,38 +71,40 @@ if ($inscriptionDetails) {
                 <form id="form" action="">
                     <div class="form-grid_container">
 
-                        <div class="form-group_control">
+                    <div class="form-group_control">
                             <label for="name">Nombre:</label>
-                            <input class="form-input" value="<?= $name ?>" readOnly class="form-control" type="text"
+                            <input class="form-input" value="<?= $name ?>" disabled class="form-control" type="text"
                                 name="name" id="name">
                         </div>
 
+                        <input hidden disabled name="ID" id="ID" type="text" value="<?=$ID?>">
+
                         <div class="form-group_control">
-                            <label for="Lastname">Apellido:</label>
-                            <input class="form-input" value="<?= $lastName ?>" readOnly class="form-control" type="text"
-                                name="Lastname" id="Lastname">
+                            <label for="lastName">Apellido:</label>
+                            <input class="form-input" value="<?= $lastName ?>" disabled class="form-control" type="text"
+                                name="lastName" id="lastName">
                         </div>
 
                         <div class="form-group_control">
                             <label for="licenseID">Cedula:</label>
-                            <input class="form-input" value="<?= $licenseID ?>" readOnly class="form-control"
-                                type="text" licenseID="licenseID" id="licenseID">
+                            <input class="form-input" value="<?= $licenseID ?>" disabled class="form-control"
+                                type="text" name="licenseID" id="licenseID">
                         </div>
 
                         <div class="form-group_control">
                             <label for="email">Correo:</label>
-                            <input class="form-input" value="<?= $email ?>" readOnly class="form-control" type="text"
+                            <input class="form-input" value="<?= $email ?>" disabled class="form-control" type="text"
                                 name="email" id="email">
                         </div>
 
                         <div class="form-group_control">
-                            <label for="date">Fecha:</label>
-                            <input readonly value="<?=$birthday?>" class="form-input" type="date" id="date" name="date" required>
+                            <label for="birthday">Fecha:</label>
+                            <input disabled value="<?=$birthday?>" class="form-input" type="date" id="birthday" name="birthday" required>
                         </div>
 
                         <div class="form-group_control">
                             <label for="nationality">Nacionalidad:</label>
-                            <select readonly value="<?=$nationality?>" class="form-input" id="nationality" name="nationality" required>
+                            <select disabled value="<?=$nationality?>" class="form-input" id="nationality" name="nationality" required>
                                 <option value="venezolano">Venezolano</option>
                                 <option value="extranjero">Extranjero</option>
                             </select>
@@ -110,27 +112,22 @@ if ($inscriptionDetails) {
 
                         <div class="form-group_control">
                             <label for="address">Direccion:</label>
-                            <input readonly value="<?=$address?>" class="form-input" type="text" id="address" name="address" required style="width: 100%;">
+                            <input disabled value="<?=$address?>" class="form-input" type="text" id="address" name="address" required style="width: 100%;">
                             <p id="errorAddress"></p>
                         </div>
 
                         <div class="form-group_control">
                             <label for="phoneNumber">Telefono:</label>
-                            <input readonly value="<?=$phoneNumber?>" class="form-input" type="text" id="phoneNumber" name="phoneNumber" required>
+                            <input disabled value="<?=$phoneNumber?>" class="form-input" type="text" id="phoneNumber" name="phoneNumber" required>
                             <p id="errorPhoneNumber"></p>
                         </div>
 
                         <div class="form-group_control">
                             <label for="password">Contraseña:</label>
-                            <input class="form-input" class="form-control" type="text" password="password"
+                            <input disabled class="form-input" class="form-control" type="password" name="password"
                                 id="password">
                         </div>
 
-                        <div class="form-group_control">
-                            <label for="rePassword">Confirme su Contraseña:</label>
-                            <input class="form-input" class="form-control" type="text" name="rePassword"
-                                id="rePassword">
-                        </div>
 
                         <div class="group_buttons">
                             <button id="btnHabilitar" type="button" onclick="enableFields()">Habilitar Campos
@@ -144,41 +141,41 @@ if ($inscriptionDetails) {
     </div>
 
     <!-- SCRIPT PARA HABILITAR LOS CAMPOS -->
-    <script></script>
+    <script>
+        function enableFields() {
+            var inputs = document.getElementsByTagName('input');
+
+            var btnHabilitar = document.getElementById("btnHabilitar") 
+            var btnGuardar = $("#btnGuardar");
+
+            for (var i = 0; i < inputs.length; i++) {
+                var input = inputs[i];
+                var inputId = input.id;
+
+                input.disabled = !input.disabled;
+            }
+
+            // Habilitar o deshabilitar el botón submit
+            btnGuardar.prop("disabled", !btnGuardar.prop("disabled"));
+
+            var textoActual = btnHabilitar.textContent;
+            var textoNuevo = "";
+
+            if (textoActual.includes("Activados")) {
+                textoNuevo = textoActual.replace("Activados", "Desactivados");
+            } else if (textoActual.includes("Desactivados")) {
+                textoNuevo = textoActual.replace("Desactivados", "Activados");
+            } else {
+                textoNuevo = textoActual + " (Activados)";
+            }
+
+            btnHabilitar.textContent = textoNuevo;
+
+        }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
     <!-- SCRIPT PARA EL ENVIO DE LOS DATOS -->
-
-    <!-- <div class="content">
-        
-        <div class="notification-list">
-            <h2>Notificaciones</h2>
-
-            <?php
-
-
-
-            // foreach ($notifications as $notification) {
-            
-            //     $notificationType = "Aviso General:";
-            
-            //     if ($notification['idStudent']) {
-            //         $notificationType = "Para ti:";
-            //     }
-            
-            //     echo <<<HTML
-            //         <div class="notification">
-            //             <div  class="notification-content">
-            //                 <h2 class="notification-title">{$notificationType}</h2>
-            //                 <p class="notification-text">{$notification['content']}</p>
-            //             </div>
-            //         </div>
-            //     HTML;
-            // }
-            ?>
-        </div>
-    </div> -->
     <script src="../../assets/js/dashboardEstudiantes/dashboardEstudiantes.js"></script>
 </body>
 
