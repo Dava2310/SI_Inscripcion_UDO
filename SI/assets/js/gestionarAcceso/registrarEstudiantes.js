@@ -1,9 +1,27 @@
 import { validarDatos } from "../validaciones/estudiante.js";
 
+// Añadir todas las validaciones con respecto a estudiante
+import { validarCedula } from "../validaciones/validacion_campos.js";
+
 const form = document.getElementById("form");
+
+// Agarrando los campos
+const licenseID = document.getElementById("licenseID");
 
 form.addEventListener("submit", e => {
     e.preventDefault();
+
+    // SI LA VALIDACION FUNCIONA, PASA TODO ESTO
+    respuesta = verificar();
+
+    if (respuesta == true)
+    {
+        // Pasa todo
+    }
+    else
+    {
+        // No pasa nada
+    }
 
     const [validacion, warnings] = validarDatos();
 
@@ -38,4 +56,12 @@ form.addEventListener("submit", e => {
         alert(warnings);
     }
 });
+
+function verificar(){
+    cedula = validarCedula(licenseID)
+    // Para cada campo
+
+    return true;
+
+}
 
