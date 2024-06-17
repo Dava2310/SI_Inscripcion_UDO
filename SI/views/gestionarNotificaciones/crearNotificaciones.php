@@ -1,7 +1,7 @@
 <?php
 
 $_title = "Crear Notificacion";
-include('../templates/head.php');
+include_once('../templates/head.php');
 
 session_start();
 $id = $_SESSION['ID'];
@@ -26,7 +26,7 @@ if ($idRole != 1) {
 
     <div class="main-container">
         <?php
-        include('../templates/menus/menuAdministrador.php');
+        include_once('../templates/menus/menuAdministrador.php');
         ?>
 
         <main>

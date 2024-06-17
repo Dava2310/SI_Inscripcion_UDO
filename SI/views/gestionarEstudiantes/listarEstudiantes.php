@@ -1,7 +1,7 @@
 <?php
 
 $_title = "Gestion de Estudiantes";
-include ('./../templates/head.php');
+include_once('./../templates/head.php');
 
 // Inicio de la Sesion
 session_start();

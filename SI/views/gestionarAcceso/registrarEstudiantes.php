@@ -1,6 +1,6 @@
 <?php
     $_title = "Registro de Estudiante";
-    include('../templates/head.php');
+    include_once('../templates/head.php');
 ?>
 
 <body>
@@ -44,7 +44,7 @@
 
                     <div>
                         <label for="date">Fecha:</label>
-                        <input class="form-input" type="date" id="date" name="date" required>
+                        <input class="form-input" type="date" id="date" name="date" max="2008-06-17" required>
                     </div>
 
                     <div>

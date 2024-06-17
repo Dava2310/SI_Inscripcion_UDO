@@ -63,7 +63,7 @@ MODULO DE ESTUDIANTES
 
 RF - 010 Consultar Estudiantes
 
-Verifiques si los datos se envian correctamente a la pantalla de consultar / modificar
+Verificar si los datos se envian correctamente a la pantalla de consultar / modificar
 
 RF - 011 Modificar Estudiantes
 

@@ -32,7 +32,7 @@ $studentDetails = $student->getStudentByID($studentID);
         <?php
         // No hacemos la verificación de qué menú desplegar
         // Ya que esta pantalla solo debería ser visible para un Administrador
-        include('../templates/menus/menuAdministrador.php');
+        include_once('../templates/menus/menuAdministrador.php');
         ?>
 
         <main>

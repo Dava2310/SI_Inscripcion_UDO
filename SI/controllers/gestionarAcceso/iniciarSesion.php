@@ -1,9 +1,9 @@
 <?php
 
 session_start();
-include("../clases/usuario.php");
-include("../clases/estudiante.php");
-include("../clases/logica.php");
+include_once("../clases/usuario.php");
+include_once("../clases/estudiante.php");
+include_once("../clases/logica.php");
 
 function iniciarSesion()
 {

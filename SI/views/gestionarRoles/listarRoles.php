@@ -1,6 +1,6 @@
 <?php
     $_title = "Roles";
-    include('../templates/head.php');
+    include_once('../templates/head.php');
 
 // Inicio de la Sesion
 session_start();
@@ -32,7 +32,7 @@ $roles = $role->getRoles();
 
 <body>
     <div class="main-container">
-        <?php include('../templates/menus/menuAdministrador.php') ?>
+        <?php include_once('../templates/menus/menuAdministrador.php') ?>
 
         <main>
             <div class="info-container">

@@ -1,41 +1,55 @@
-const form = document.getElementById("form")
+const registrationForm = document.getElementById("registrationForm");
 
-form.addEventListener("submit", e => {
+registrationForm.addEventListener("submit", async e => {
     e.preventDefault();
 
-    const password = document.getElementById("password").value;
-    const repassword = document.getElementById("repassword").value;
+    const isInvalidFrontEndData = validateFrontEndData();
 
-    if (password !== repassword) {
-        return alert("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");
+    if (isInvalidFrontEndData) {
+        return alert(isInvalidFrontEndData.message);
     }
 
-    const formData = new FormData(form);
+    const formData = new FormData(registrationForm);
 
-    fetch('../../controllers/gestionarAcceso/crearPreguntaSeguridad.php', {
+    try {
+        const data = await sendRegistrationRequest(formData, '../../controllers/gestionarAcceso/registrarUsuario.php');
+        handleQuestionRegistrationResponse(data);
+    } catch (error) {
+        handleError(error);
+    }
+});
+
+function validateFrontEndData() {
+    return false;
+}
+
+async function sendRequest(formData, url) {
+    const response = await fetch(url, {
         method: 'POST',
         body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error(`Error en la solicitud: ${response.status}`);
-        }
-        return response.json();
-    })
-    .then(data => {
-        console.log(data);
-
-
-        if (data.message === 'Pregunta de seguridad creada exitosamente') {
-
-            window.alert("Pregunta de seguridad creada exitosamente");
-            window.location = '../../views/dashboardEmpleados/dashboardEmpleados.php';
-        } else {
-            alert('Error al crear la pregunta de seguridad');
-        }
-    })
-    .catch(error => {
-        console.error(error);
-        alert('Ha ocurrido un error en la solicitud');
     });
-});
+    return handleResponse(response);
+}
+
+async function handleResponse(response) {
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message || 'Hubo un problema con la solicitud: ' + response.status);
+    }
+    return data;
+}
+
+function handleQuestionRegistrationResponse(data) {
+    // Handle the response specific to registration
+    if (data.success) {
+        window.alert("Registro Exitoso");
+        window.location = '../../views/dashboardNuevoUsuario/dashboardNuevoUsuario.php'; // Redirect to a new user dashboard
+    } else {
+        alert(data.message); // Show error message from server
+    }
+}
+
+function handleError(error) {
+    console.error('Error en la solicitud:', error);
+    alert(error.message || 'Ha ocurrido un error en la solicitud');
+}

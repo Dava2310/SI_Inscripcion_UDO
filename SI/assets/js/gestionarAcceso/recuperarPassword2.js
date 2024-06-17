@@ -7,9 +7,7 @@ const ID = document.getElementById("ID");
 const errorPassword = document.getElementById("errorPassword");
 const errorRepassword = document.getElementById("errorRepassword");
 
-
 const passwordRegex = /^.{10,}$/;
-
 
 function showError(element, message) {
     element.style.borderColor = 'red';
@@ -43,32 +41,57 @@ function validateForm() {
         clearError(repassword);
     }
 
-    if (isValid) {
-        // Los datos del formulario son válidos, enviar formulario
-        const formData = new FormData(form);
-        fetch('../../controllers/gestionarAcceso/recuperarPassword.php', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data);
-            if (data.message === "Modificación con éxito") {
-                alert(data.message);
-                window.location.href = "../../views/gestionarAcceso/iniciarSesion.php";
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => console.error(error));
+    return isValid ? null : { message: warnings };
+}
+
+async function sendRequest(formData, url) {
+    const response = await fetch(url, {
+        method: 'POST',
+        body: formData
+    });
+    return handleResponse(response);
+}
+
+async function handleResponse(response) {
+    const data = await response.json();
+    if (!response.ok) {
+        throw new Error(data.message || 'Hubo un problema con la solicitud: ' + response.status);
+    }
+    return data;
+}
+
+function handlePasswordRecoveryResponse(data) {
+    // Handle the response specific to password recovery
+    if (data.message === "Modificación con éxito") {
+        alert(data.message);
+        window.location.href = "../../views/gestionarAcceso/iniciarSesion.php"; // Redirect to login page
     } else {
-        alert(warnings);
+        alert(data.message); // Show error message from server
     }
 }
 
-form.addEventListener("submit", (e) => {
+function handleError(error) {
+    console.error('Error en la solicitud:', error);
+    alert(error.message || 'Ha ocurrido un error en la solicitud');
+}
+
+form.addEventListener("submit", async e => {
     e.preventDefault();
-    validateForm();
+
+    const isInvalidFrontEndData = validateForm();
+
+    if (isInvalidFrontEndData) {
+        return alert(isInvalidFrontEndData.message);
+    }
+
+    const formData = new FormData(form);
+
+    try {
+        const data = await sendRequest(formData, '../../controllers/gestionarAcceso/recuperarPassword.php');
+        handlePasswordRecoveryResponse(data);
+    } catch (error) {
+        handleError(error);
+    }
 });
 
 window.addEventListener('DOMContentLoaded', () => {

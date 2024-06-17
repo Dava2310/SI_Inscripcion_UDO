@@ -1,7 +1,7 @@
 <?php
 
 $_title = "Gestión de Notificaciones";
-include('./../templates/head.php');
+include_once('./../templates/head.php');
 
 // Inicio de la Sesión
 session_start();
@@ -27,7 +27,7 @@ $idRole = $_SESSION['ID_ROLE'] ?? null;
 
 <?php
 $_title = "Panel De Control";
-include('../templates/head.php');
+include_once('../templates/head.php');
 ?>
 
 <body>
@@ -37,12 +37,12 @@ include('../templates/head.php');
 
         if ($idRole) {
             if ($idRole === 1) {
-                include('../templates/menus/menuAdministrador.php');
+                include_once('../templates/menus/menuAdministrador.php');
             } else {
-                include('../templates/menus/menuEmpleado.php');
+                include_once('../templates/menus/menuEmpleado.php');
             }
         } else {
-            include('../templates/menus/menuEstudiante.php');
+            include_once('../templates/menus/menuEstudiante.php');
         }
 
         ?>

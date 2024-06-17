@@ -1,7 +1,7 @@
 <?php
 
     $_title = "Panel De Control";
-    include('./../templates/head.php');
+    include_once('./../templates/head.php');
 
     // Importando clases
     include_once('../../controllers/clases/usuario.php');
@@ -53,11 +53,11 @@
         <?php
             if ($idRole === 1)
             {
-                include('../templates/menus/menuAdministrador.php');    
+                include_once('../templates/menus/menuAdministrador.php');    
             }
             else
             {
-                include('../templates/menus/menuEmpleado.php');
+                include_once('../templates/menus/menuEmpleado.php');
             }
             
         ?>

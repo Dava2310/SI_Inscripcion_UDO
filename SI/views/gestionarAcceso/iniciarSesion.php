@@ -1,6 +1,6 @@
 <?php
 $_title = "Iniciar Sesion";
-include('../templates/head.php');
+include_once('../templates/head.php');
 ?>
 
 <body>
