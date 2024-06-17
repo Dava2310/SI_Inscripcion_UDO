@@ -2,6 +2,7 @@
 
 session_start();
 include_once("../clases/periodo.php");
+include_once("../clases/notificaciones.php");
 
 function crearPeriodos()
 {
@@ -20,6 +21,9 @@ function crearPeriodos()
 
     http_response_code(200);
     echo json_encode(array('message' => 'Creacion Periodo'));
+
+    $notificationsObject = new Notification();
+    $notificationsObject->deleteAllNotifications();
 }
 
 header('Content-Type: application/json');

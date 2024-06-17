@@ -1,5 +1,6 @@
 // Filtro de Notificaciones
 const searchInput = document.getElementById('searchInput');
+const createNotificationButton = document.getElementById('create');
 
 searchInput.addEventListener('keyup', e => {
     let searchTerm = e.target.value.toLowerCase();
@@ -17,3 +18,11 @@ searchInput.addEventListener('keyup', e => {
         }
     });
 });
+
+if (createNotificationButton) {
+    createNotificationButton.addEventListener('click', e => {
+        window.location = "../../views/gestionarNotificaciones/crearNotificaciones.php";
+    });
+}
+
+

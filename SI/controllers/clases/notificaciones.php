@@ -27,28 +27,53 @@ class Notification
 
     public function sendNotificationByStudentId($idStudent, $content, $date)
     {
-        // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("INSERT INTO notifications (content, idStudent, date) VALUES (?, ?, ?)");
-        $stmt->bind_param("sis", $content, $idStudent, $date);
 
-        // Ejecución y verificación de error de ejecución
-        if (!$stmt->execute()) {
-            echo json_encode('Error al crear la inscripción');
-            exit;
-        }
+        $stmt = null;
 
-        // Verificación de filas afectadas para determinar si la inscripción se creó correctamente
-        if ($stmt->affected_rows > 0) {
-            return true;
+        // Notificacion global
+        if (!$idStudent) {
+            $stmt = $this->con->prepare("INSERT INTO notifications (content, date) VALUES (?, ?)");
+
+            // Preparación de la consulta SQL
+            $stmt->bind_param("ss", $content, $date);
+
+            // Ejecución y verificación de error de ejecución
+            if (!$stmt->execute()) {
+                echo json_encode('Error al crear la inscripción');
+                exit;
+            }
+
+            // Verificación de filas afectadas para determinar si la inscripción se creó correctamente
+            if ($stmt->affected_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            $stmt = $this->con->prepare("INSERT INTO notifications (content, idStudent, date) VALUES (?, ?, ?)");
+
+            // Preparación de la consulta SQL
+            $stmt->bind_param("sis", $content, $idStudent, $date);
+
+            // Ejecución y verificación de error de ejecución
+            if (!$stmt->execute()) {
+                echo json_encode('Error al crear la inscripción');
+                exit;
+            }
+
+            // Verificación de filas afectadas para determinar si la inscripción se creó correctamente
+            if ($stmt->affected_rows > 0) {
+                return true;
+            } else {
+                return false;
+            }
         }
     }
 
     public function getNotificationsById($idStudent)
     {
         // Preparación de la consulta SQL
-        $stmt = $this->con->prepare("SELECT * from notifications WHERE idStudent = ? OR idStudent = NULL");
+        $stmt = $this->con->prepare("SELECT * from notifications WHERE idStudent = ? OR idStudent IS NULL");
         $stmt->bind_param("i", $idStudent);
 
         // Ejecución y verificación de error de ejecución
@@ -73,5 +98,19 @@ class Notification
         } else {
             return false;
         }
+    }
+
+    public function deleteAllNotifications()
+    {
+        // Preparación de la consulta SQL
+        $stmt = $this->con->prepare("DELETE FROM notifications");
+
+        // Ejecución y verificación de error de ejecución
+        if (!$stmt->execute()) {
+            throw new Exception('Error al eliminar las notificaciones: ' . $stmt->error);
+        }
+
+        // Verificación de filas afectadas para determinar si las notificaciones fueron eliminadas
+        return $stmt->affected_rows >= 0;
     }
 }

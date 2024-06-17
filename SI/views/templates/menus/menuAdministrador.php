@@ -24,6 +24,9 @@
         <li>
             <a href="../../views/gestionarUsuarios/listarUsuarios.php">Empleados</a>  
         </li>
+        <li>
+            <a href="../../views/gestionarNotificaciones/listarNotificaciones.php">Notificaciones</a>  
+        </li>
     </ul>
 
     <a class="closeSession_button" href="../../controllers/gestionarAcceso/cerrarSesion.php">
