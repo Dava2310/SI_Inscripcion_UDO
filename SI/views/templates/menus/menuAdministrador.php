@@ -27,6 +27,9 @@
         <li>
             <a href="../../views/gestionarNotificaciones/listarNotificaciones.php">Notificaciones</a>  
         </li>
+        <li>
+            <a href="../../views/gestionarReportes/listarReportes.php">Reportes</a>  
+        </li>
     </ul>
 
     <a class="closeSession_button" href="../../controllers/gestionarAcceso/cerrarSesion.php">

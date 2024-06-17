@@ -1,37 +1,59 @@
 <?php
 $_title = "Panel De Reportes";
-include('../templates/head.php');
+include ('../templates/head.php');
+
+// Inicio de la sesion
+session_start();
+$id = $_SESSION['ID'];
+$idRole = $_SESSION['ID_ROLE'];
+
+// Si no existe una id en la $_SESSION, es porque no esta autentificado
+if (!(isset($id))) {
+    echo "<script> window.alert('No ha iniciado sesion');</script>";
+    echo "<script> window.location='../gestionarAcceso/iniciarSesion.php'; </script>";
+    die();
+}
+
+// Como la funcionalidad de carreras solo está permitida para el administrador
+// No se debe permitir a empleados que no tengan un rol de Administrador
+if ($idRole != 1) {
+    echo "<script> window.alert('Usted no tienen permiso para acceder a esta funcionalidad');</script>";
+    session_destroy();
+    echo "<script> window.location='../gestionarAcceso/iniciarSesion.php'; </script>";
+    die();
+}
+
+// IMPORTANDO CLASES
 ?>
 
 <body>
-    <div class="sidebarBackground">
-        <?php include('../templates/menus/menuAdministrador.php') ?>
+
+    <div class="main-container">
+        <?php
+        include ('../templates/menus/menuAdministrador.php');
+        ?>
+
+        <main>
+            <div class="info-container">
+                <h1>Seleccione el Reporte a Generar</h1>
+
+                <form id="formSolicitudes" method="post" target="_blank" action="">
+
+                    <button type="submit">Generar Reporte de Solicitudes de Inscripciones</button>
+
+                </form>
+
+                <form id="formEstudiantes" method="post" target="_blank" action="">
+
+                    <button type="submit">Generar Reporte de Estudiantes</button>
+
+                </form>
+            </div>
+        </main>
     </div>
 
-    <div class="content">
-        <div class="card-grid">
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="card-title">Título 1</h2>
-                    <p class="card-text">Descripción 1</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="card-title">Título 2</h2>
-                    <p class="card-text">Descripción 2</p>
-                </div>
-            </div>
-            <div class="card">
-                <div class="card-content">
-                    <h2 class="card-title">Título 3</h2>
-                    <p class="card-text">Descripción 3</p>
-                </div>
-            </div>
-            <!-- Agrega más tarjetas según sea necesario -->
-        </div>
-    </div>
 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 
 </html>
