@@ -7,7 +7,6 @@ include_once("../../controllers/clases/notificaciones.php");
 
 function respondWithError($message)
 {
-    session_destroy();
     http_response_code(500);
     echo json_encode(['message' => $message]);
     exit;
@@ -119,7 +118,7 @@ function inscriptionsOpsuConventionUpdate($idInscription, $selectedCareers, $sin
                 throw new Exception('Error al actualizar la carrera seleccionada.');
             }
 
-            $response = $inscriptionObject->levelToInscriptionPhaseTwo($idInscription, 2);
+            $response = $inscriptionObject->levelToInscriptionPhaseTwo($idInscription, $_POST['inscriptionProcess']);
             if (!$response) {
                 throw new Exception('Error al actualizar la fase de inscripción.');
             }
@@ -174,7 +173,7 @@ function inscriptionsOpsuConvention()
             throw new Exception('Error al registrar la carrera seleccionada.');
         }
 
-        $response = $inscriptionObject->levelToInscriptionPhaseTwo($idInscription, 2);
+        $response = $inscriptionObject->levelToInscriptionPhaseTwo($idInscription, $_POST['inscriptionProcess']);
         if (!$response) {
             throw new Exception('Error al actualizar la fase de inscripción.');
         }
@@ -199,11 +198,14 @@ function crearInscripcionPasoDos()
 {
     try {
         $inscriptionProcess = $_POST['inscriptionProcess'];
+        error_log("Proceso: $inscriptionProcess");
 
         if ($inscriptionProcess == '2') {
             inscriptionsRUSI();
+            error_log("Se metio aqui 2");
         } else {
             inscriptionsOpsuConvention();
+            error_log("Se metio aqui 1 o 3");
         }
     } catch (Exception $e) {
         respondWithError('Error en el proceso de inscripción: ' . $e->getMessage());

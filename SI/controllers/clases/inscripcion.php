@@ -78,7 +78,7 @@ class Inscription
     // Listar inscripciones
     public function getInscriptions()
     {
-        $stmt = $this->con->prepare("SELECT students.lastName, students.licenseID, students.email, inscriptions.date, inscriptions.state, inscriptions.ID, inscriptions.inscriptionPhase, inscriptionProcesses.name AS process, students.name AS name FROM inscriptions JOIN students ON idStudent = students.ID JOIN inscriptionProcesses ON idProcess = inscriptionProcesses.ID");
+        $stmt = $this->con->prepare("SELECT inscriptions.idStudent, inscriptions.idProcess, inscriptions.idPeriod, students.lastName, students.licenseID, students.email, inscriptions.date, inscriptions.state, inscriptions.ID, inscriptions.inscriptionPhase, inscriptionProcesses.name AS process, students.name AS name FROM inscriptions JOIN students ON idStudent = students.ID JOIN inscriptionProcesses ON idProcess = inscriptionProcesses.ID");
 
         if (!$stmt->execute()) {
             throw new Exception('Error al obtener las inscripciones: ' . $stmt->error);

@@ -37,13 +37,13 @@ if ($idRole != 1) {
             <div class="info-container">
                 <h1>Seleccione el Reporte a Generar</h1>
 
-                <form id="formSolicitudes" method="post" target="_blank" action="">
+                <form id="formSolicitudes" method="post" target="_blank" action="../libreriaPDF/reporteInscripciones.php">
 
                     <button type="submit">Generar Reporte de Solicitudes de Inscripciones</button>
 
                 </form>
 
-                <form id="formEstudiantes" method="post" target="_blank" action="">
+                <form id="formEstudiantes" method="post" target="_blank" action="../libreriaPDF/reporteEstudiantes.php">
 
                     <button type="submit">Generar Reporte de Estudiantes</button>
 
