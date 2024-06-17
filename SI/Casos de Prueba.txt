@@ -1,0 +1,128 @@
+MODULO DE ACCESO
+
+RF - 001 Iniciar Sesion
+
+Iniciar Sesion con las credenciales correctas: LISTO
+Iniciar Sesion con las credenciales Incorrectas: LISTO
+Iniciar Sesion con campos vacios: LISTO
+Iniciar Sesion con un correo inexistente: LISTO
+Iniciar Sesión con un estudiante Inactivo: LISTO
+
+RF - 002 Registrar Estudiante
+
+Registrar Estudiante con datos validos: LISTO
+Registrar estudiante con campos vacios: LISTO
+Registrar estudiante con correo y/o cedula de otro empleado / estudiante: LISTO
+
+RF - 003 Recuperar Contraseña
+
+Recuperar Contraseña con un correo de Estudiante
+	Datos Invalidos: LISTO
+	Datos Validos e Iniciar Sesion Despues: LISTO
+Recuperar Contraseña con un correo de Empleado
+	Datos Validos: LISTO
+	Datos Invalidos: LISTO
+Recupera Contraseña con un Estudiante Inactivo: LISTO PERO CON MEJORAS POR LOS MENSAJES DE ERROR
+
+RF - 004 Cerrar Sesion
+
+Cerrar Sesion con un Estudiante: LISTO
+Cerrar Sesion con un Empleado: LISTO
+
+==================================================================================================================================
+
+MODULO DE EMPLEADOS
+
+RF - 005 Registrar Empleados
+
+Registrar un Empleado con Datos Validos: LISTO
+Registrar un Empleado con Cedula o Correo de otros empleados / estudiantes: LISTO
+
+RF - 006 Consultar Empleados
+
+Poder Visualizar los Datos de un Empleado: LISTO
+
+RF - 007 Modificar Empleados
+
+Modificar los Datos de un Empleado con Datos Validos: LISTO
+Modificar los Dtos con Cedulas o Correos de Otros Empleados - Estudiantes: LISTO
+
+RF - 008 Eliminar Empleados
+
+Eliminar a un Empleado y no volverlo a ver en la lista de empleados y aceptar la solicitud: LISTO
+Intentar eliminar a un empleado pero no aceptar la solicitud: LISTO
+
+RF - 009 Listar Empleados
+
+Ser Capaz de Visualizar los Datos de los Empleados en una lista: LISTO
+No Ver el Usuario de Administrador en la Lista: LISTO
+
+==================================================================================================================================
+
+MODULO DE ESTUDIANTES
+
+RF - 010 Consultar Estudiantes
+
+Verifiques si los datos se envian correctamente a la pantalla de consultar / modificar
+
+RF - 011 Modificar Estudiantes
+
+Modificar datos de un estudiante con datos validos
+Modificar datos de un estudiante con correo y cedula de empleados y estudiantes
+
+RF - 012 Eliminar Estudiantes
+
+Que ya no sea visible en la lista de estudiantes
+
+RF - 013 Listar Estudiantes
+
+Ser capaz de visualizar los datos de los estudiantes activos unicamente
+
+==================================================================================================================================
+
+MODULO DE INSCRIPCIONES
+
+RF 014 Abrir Periodo de Inscripcion
+
+Abrir un periodo de inscripcion y que aparezca activo
+Intentar abrir un periodo de inscripcion con uno ya abierto
+
+RF 015 Crear Inscripcion
+
+PROBAR CADA UNO DE LOS PASOS
+	
+	Paso 2
+	No se puede en RUSI asignar carreras iguales
+
+RF 016 Modificar Inscripcion
+RF 017 Consultar Inscripcion
+RF 018 Definir Estado de Inscripcion
+RF 019 Listar Inscripciones
+RF 020 Cerrar Inscripciones Pendientes 
+
+	(SE BUSCA CERRAR LAS INSCRIPCIONES QUE QUEDARON DEL PERIODO QUE NO HAYAN SIDO APROBADAS)
+
+==================================================================================================================================
+
+MODULO DE NOTIFICACIONES
+
+RF 021 Crear Notificacion
+RF 022 Modificar Notificacion
+RF 023 Consultar Notificaciones
+RF 024 Definir Estado de Notificacion
+RF 025 Eliminar Notificacion
+
+==================================================================================================================================
+
+MODULO DE CARRERAS
+
+RF 026 CREAR CARRERAS
+
+	Crear una carrera con un codigo de otra carrera
+
+RF 027 Consultar Carreras
+RF 028 Modificar Carreras
+
+	Modificar una carrera y poner un codigo de otra carrera
+
+RF 029 Listar Carreras
