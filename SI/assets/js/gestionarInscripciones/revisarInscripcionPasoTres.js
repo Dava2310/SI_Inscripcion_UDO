@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         const formData = new FormData(form);
 
-        fetch('../../../controllers/gestionarInscripciones/crearInscripcionPasoTres.php', {
+        fetch('../../controllers/gestionarInscripciones/revisarInscripcionPasoTres.php', {
             method: 'POST',
             body: formData
         }).then(response => response.json())
@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.log(data.message);
                 if (data.message === 'Inscripción aprobada exitosamente' || data.message === 'Inscripción rechazada exitosamente') {
                     window.alert(data.message);
-                    window.location.href = "../../../views/gestionarInscripciones/listarInscripciones.php";
+                    window.location.href = "../../views/gestionarInscripciones/listarInscripciones.php";
                 } else {
                     window.alert('Error: ' + data.errors[0]);
                 }
@@ -93,16 +93,6 @@ document.addEventListener('DOMContentLoaded', function () {
                 window.alert('Ha ocurrido un error en la solicitud');
             });
     });
-
-    // Evento para resetear el formulario
-    resetButton.addEventListener('click', function () {
-        fileInputs.forEach(input => {
-            clearInput(input);
-        });
-    });  
-    
-    
-
 });
 
 

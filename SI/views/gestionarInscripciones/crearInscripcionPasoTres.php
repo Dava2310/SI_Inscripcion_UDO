@@ -138,18 +138,11 @@ try {
                     </div>
                     <div class="buttonActions">
                         <button type="submit">Enviar</button>
-                        <button type="button">Deshacer todo</button>
                     </div>
 
                 </form>
             </div>
         </main>
-    </div>
-
-    <div class="content">
-        <div class="form-inscription-documents">
-
-        </div>
     </div>
 
     <div id="modal" class="modal">
@@ -163,5 +156,4 @@ try {
     </div>
     <script src="../../assets/js/gestionarInscripciones/crearInscripcionPasoTres.js"></script>
 </body>
-
 </html>
