@@ -25,25 +25,32 @@ $inscription = new Inscription();
 $inscriptions = $inscription->getInscriptions();
 ?>
 
-<?php
-$title = "Panel De Inscripciones";
-include('../templates/encabezadoConfig.php');
-?>
 
 <body>
-    <!-- Barra lateral -->
-    <div class="sidebarBackground">
-        <?php include('../templates/menus/menuAdministrador.php') ?>
-    </div>
 
-    <!-- Contenido principal -->
-    <div class="content">
-        <div>
-            <div class="tools">
-                <div class="searchBar">
-                    <input id="searchInput" placeholder="Buscar" />
-                </div>
-            </div>
+    <div class="main-container">
+        <!-- CONTENIDO DEL MENU DE NAVEGACION -->
+        <?php
+        if ($idRole === 1) {
+            include ('../templates/menus/menuAdministrador.php');
+        } else {
+            include ('../templates/menus/menuEmpleado.php');
+        }
+
+        ?>
+
+        <main>
+            <div class="info-container">
+                <h1>Busque la Solicitud</h1>
+
+                <form action="">
+                    <div class="search_container">
+                        <div class="form-input_search">
+                            <input id="searchInput" placeholder="Buscar" />
+                            <img src="../../assets/img/Union.png" alt="">
+                        </div>
+                    </div>
+                </form>
 
                 <h1>Lista de Solicitudes</h1>
                 <div class="tabla-container">
@@ -67,6 +74,8 @@ include('../templates/encabezadoConfig.php');
                             if (!($inscriptions)) {
                                 return;
                             }
+
+                            $condicion = true;
 
                             foreach ($inscriptions as $inscription) {
                                 $file;
@@ -92,11 +101,19 @@ include('../templates/encabezadoConfig.php');
                                     $phase = "Tercera";
                                 }
 
-                        // Determinar el enlace correcto para la revisión
-                        $reviewLink = "revisarInscripcionPasoDos.php?id={$inscription['ID']}";
-                        if ($inscription['inscriptionPhase'] === 3 && $inscription['state'] === 'En Revision') {
-                            $reviewLink = "revisarInscripcionPasoTres.php?id={$inscription['ID']}";
-                        }
+                                if ($inscription['state'] === 'A Corregir' || $inscription['state'] === '') {
+                                    $condicion = false;
+                                } else {
+
+                                    // Determinar el enlace correcto para la revisión
+                                    $reviewLink = "revisarInscripcionPasoDos.php?id={$inscription['ID']}";
+
+                                    if ($inscription['inscriptionPhase'] === 3 && $inscription['state'] === 'En Revision') {
+                                        $reviewLink = "revisarInscripcionPasoTres.php?id={$inscription['ID']}";
+                                    }
+                                    
+                                    $condicion = true;
+                                }
 
                                 echo <<<HTML
                         <tr class="dataList">
@@ -108,7 +125,18 @@ include('../templates/encabezadoConfig.php');
                             <td>$state</td>
                             <td>$process</td>
                             <td>$phase</td>
-                            <td><a href="$reviewLink">Revisar</a></td>
+                        HTML;
+
+                                if ($condicion) {
+                                    echo <<<HTML
+                                    <td><a href="$reviewLink">Revisar</a></td>
+                                HTML;
+                                } else {
+                                    echo <<<HTML
+                                    <td>Ninguna</td>
+                                HTML;
+                                }
+                                echo <<<HTML
                         </tr>
                         HTML;
                             }
@@ -123,4 +151,5 @@ include('../templates/encabezadoConfig.php');
     <script src="../../assets/js/gestionarInscripciones/listarInscripciones.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
+
 </html>

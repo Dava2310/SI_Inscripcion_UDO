@@ -1,14 +1,21 @@
 <?php
+
 $_title = "Solicitar Inscripción";
-include('../../controllers/clases/inscripcion.php');
-include('../../controllers/clases/estudiante.php');
-include('../../controllers/clases/carrera.php');
+include ('./../templates/headFiles.php');
 
+include ('../../controllers/clases/inscripcion.php');
+include ('../../controllers/clases/estudiante.php');
+include ('../../controllers/clases/carrera.php');
+
+// Inicio de la sesion
 session_start();
+$studentID = $_SESSION['ID'];
 
-if (!isset($_SESSION['ID'])) {
-    header('Location: ../login.php');
-    exit;
+// Si no hay estudiante registrado
+if (!(isset($studentID))) {
+    echo "<script> window.alert('No ha iniciado sesion');</script>";
+    echo "<script> window.location='../gestionarAcceso/iniciarSesion.php'; </script>";
+    die();
 }
 
 $studentId = $_SESSION['ID'];
@@ -47,90 +54,101 @@ try {
 }
 ?>
 
-<html>
-
-<head>
-    <link rel="stylesheet" href="../../assets/css/filesUpload.css" />
-</head>
-
 <body>
+
+    <div class="main-container">
+        <!-- MENU DE NAVEGACION -->
+        <?php
+        include ("./../templates/menus/menuEstudiante.php");
+        ?>
+
+        <main>
+            <div class="info-container">
+                <h1>Paso 3 de 3: Subir Documentos</h1>
+
+                <form id="form" method="post"
+                    action="../../controllers/gestionarInscripciones/crearInscripcionPasoTres.php"
+                    enctype="multipart/form-data">
+
+                    <div class="documents">
+                        <div>
+                            <label for="licenseIdUpload" class="customFileUpload">
+                                <p class="fileTitle">Subir Cédula</p>
+                                <div class="fileOptions">
+                                    <button type="button" class="seeFileUpload">Ver</button>
+                                    <button type="button" class="removeFileUpload">Eliminar</button>
+                                </div>
+                            </label>
+                            <input id="licenseIdUpload" type="file" class="formInput" name="licenseID" hidden />
+                        </div>
+
+                        <div>
+                            <label for="notesUpload" class="customFileUpload">
+                                <p class="fileTitle">Subir Notas Certificadas</p>
+                                <div class="fileOptions">
+                                    <button type="button" class="seeFileUpload">Ver</button>
+                                    <button type="button" class="removeFileUpload">Eliminar</button>
+                                </div>
+                            </label>
+                            <input id="notesUpload" type="file" class="formInput" name="notes" hidden />
+                        </div>
+
+                        <div>
+                            <label for="degreeUpload" class="customFileUpload">
+                                <p class="fileTitle">Subir Título de Bachiller</p>
+                                <div class="fileOptions">
+                                    <button type="button" class="seeFileUpload">Ver</button>
+                                    <button type="button" class="removeFileUpload">Eliminar</button>
+                                </div>
+                            </label>
+                            <input id="degreeUpload" type="file" class="formInput" name="degree" hidden />
+                        </div>
+
+                        <div>
+                            <label for="birthCertificate" class="customFileUpload">
+                                <p class="fileTitle">Subir Partida de Nacimiento</p>
+                                <div class="fileOptions">
+                                    <button type="button" class="seeFileUpload">Ver</button>
+                                    <button type="button" class="removeFileUpload">Eliminar</button>
+                                </div>
+                            </label>
+                            <input id="birthCertificate" type="file" class="formInput" name="birthCertificate" hidden />
+                        </div>
+                        <div id="planilla">
+                            <label for="spreadsheetOpsuUpload" class="customFileUpload">
+                                <p class="fileTitle">Subir Planilla OPSU</p>
+                                <div class="fileOptions">
+                                    <button type="button" class="seeFileUpload">Ver</button>
+                                    <button type="button" class="removeFileUpload">Eliminar</button>
+                                </div>
+                            </label>
+                            <input id="spreadsheetOpsuUpload" type="file" class="formInput" name="spreadsheet" hidden />
+                        </div>
+                        <div id="carta">
+                            <label for="letterUpload" class="customFileUpload">
+                                <p class="fileTitle">Subir Carta</p>
+                                <div class="fileOptions">
+                                    <button type="button" class="seeFileUpload">Ver</button>
+                                    <button type="button" class="removeFileUpload">Eliminar</button>
+                                </div>
+                            </label>
+                            <input id="letterUpload" type="file" class="formInput" name="letter" hidden />
+                        </div>
+
+                    </div>
+                    <div class="buttonActions">
+                        <button type="submit">Enviar</button>
+                        <button type="button">Deshacer todo</button>
+                    </div>
+
+                </form>
+            </div>
+        </main>
+    </div>
+
     <div class="content">
         <div class="form-inscription-documents">
-            <form id="form" method="post" action="../../controllers/gestionarInscripciones/crearInscripcionPasoTres.php" enctype="multipart/form-data">
-                <h1 class="formHeader">Documentos Recaudados</h1>
 
-                <div class="documents">
-                    <div>
-                        <label for="licenseIdUpload" class="customFileUpload">
-                            <p class="fileTitle">Subir Cédula</p>
-                            <div class="fileOptions">
-                                <button type="button" class="seeFileUpload">Ver</button>
-                                <button type="button" class="removeFileUpload">Eliminar</button>
-                            </div>
-                        </label>
-                        <input id="licenseIdUpload" type="file" class="formInput" name="licenseID" hidden />
-                    </div>
-
-                    <div>
-                        <label for="notesUpload" class="customFileUpload">
-                            <p class="fileTitle">Subir Notas Certificadas</p>
-                            <div class="fileOptions">
-                                <button type="button" class="seeFileUploadd">Ver</button>
-                                <button type="button" class="removeFileUpload">Eliminar</button>
-                            </div>
-                        </label>
-                        <input id="notesUpload" type="file" class="formInput" name="notes" hidden />
-                    </div>
-
-                    <div>
-                        <label for="degreeUpload" class="customFileUpload">
-                            <p class="fileTitle">Subir Título de Bachiller</p>
-                            <div class="fileOptions">
-                                <button type="button" class="seeFileUpload">Ver</button>
-                                <button type="button" class="removeFileUpload">Eliminar</button>
-                            </div>
-                        </label>
-                        <input id="degreeUpload" type="file" class="formInput" name="degree" hidden />
-                    </div>
-
-                    <div>
-                        <label for="birthCertificate" class="customFileUpload">
-                            <p class="fileTitle">Subir Partida de Nacimiento</p>
-                            <div class="fileOptions">
-                                <button type="button" class="seeFileUpload">Ver</button>
-                                <button type="button" class="removeFileUpload">Eliminar</button>
-                            </div>
-                        </label>
-                        <input id="birthCertificate" type="file" class="formInput" name="birthCertificate" hidden />
-                    </div>
-                    <div id="planilla">
-                        <label for="spreadsheetOpsuUpload" class="customFileUpload">
-                            <p class="fileTitle">Subir Planilla OPSU</p>
-                            <div class="fileOptions">
-                                <button type="button" class="seeFileUpload">Ver</button>
-                                <button type="button" class="removeFileUpload">Eliminar</button>
-                            </div>
-                        </label>
-                        <input id="spreadsheetOpsuUpload" type="file" class="formInput" name="spreadsheet" hidden />
-                    </div>
-                    <div id="carta">
-                        <label for="letterUpload" class="customFileUpload">
-                            <p class="fileTitle">Subir Carta</p>
-                            <div class="fileOptions">
-                                <button type="button" class="seeFileUpload">Ver</button>
-                                <button type="button" class="removeFileUpload">Eliminar</button>
-                            </div>
-                        </label>
-                        <input id="letterUpload" type="file" class="formInput" name="letter" hidden />
-                    </div>
-
-                </div>
-                <div class="buttonActions">
-                    <button type="submit">Enviar</button>
-                    <button type="button">Deshacer todo</button>
-                </div>
-
-            </form>
         </div>
     </div>
 

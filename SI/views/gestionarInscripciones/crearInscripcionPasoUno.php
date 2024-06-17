@@ -1,16 +1,20 @@
 <?php
-$_title = "Solicitar Inscripción";
-include('./../templates/encabezadoConfig.php');
-include('../../controllers/clases/inscripcion.php');
-include('../../controllers/clases/estudiante.php');
-include('../../controllers/clases/carrera.php'); // Incluimos la clase de Carrera
 
+$_title = "Solicitar Inscripción - Datos Basicos";
+include ('./../templates/head.php');
+include ('../../controllers/clases/inscripcion.php');
+include ('../../controllers/clases/estudiante.php');
+include ('../../controllers/clases/carrera.php'); // Incluimos la clase de Carrera
+
+// Inicio de la sesion
 session_start();
+$studentID = $_SESSION['ID'];
 
-// Verificar si el usuario está autenticado
-if (!isset($_SESSION['ID'])) {
-    header('Location: ../login.php');
-    exit;
+// Si no hay estudiante registrado
+if (!(isset($studentID))) {
+    echo "<script> window.alert('No ha iniciado sesion');</script>";
+    echo "<script> window.location='../gestionarAcceso/iniciarSesion.php'; </script>";
+    die();
 }
 
 // Obtener datos de la inscripción
@@ -39,71 +43,75 @@ try {
     exit;
 }
 
-// Creamos una instancia de la clase Career
-$career = new Career();
-// Obtenemos las carreras
-$careers = $career->getCareers();
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title><?php echo $_title; ?></title>
-    <link rel="stylesheet" href="../assets/css/styles.css">
-</head>
 <body>
-    <div class="content">
-        <div class="form-inscription">
-            <form id="form" action="../../controllers/gestionarInscripciones/crearInscripcionPasoUno.php" method="post">
-                <div>
-                    <h2>Paso 1 de 3: Datos básicos</h2>
-                </div>
 
-                <!-- Codigo Opsu -->
-                <div>
-                    <label for="opsuCode">Codigo de Opsu</label>
-                    <input type="text" name="opsuCode" required />
-                </div>
+    <div class="main-container">
+        <!-- MENU DE NAVEGACION -->
+        <?php
+        include ("./../templates/menus/menuEstudiante.php");
+        ?>
 
-                <!-- Codigo Titulo -->
-                <div>
-                    <label for="degreeCode">Codigo de título</label>
-                    <input type="text" name="degreeCode" required />
-                </div>
+        <main>
+            <div class="info-container">
+                <h1>Paso 1 de 3: Datos Básicos de la Solicitud</h1>
 
-                <!-- Direccion Plantel -->
-                <div>
-                    <label for="campusAddress">Direccion Plantel</label>
-                    <input type="text" name="campusAddress" required />
-                </div>
+                <form id="form" action="../../controllers/gestionarInscripciones/crearInscripcionPasoUno.php"
+                    method="post">
 
-                <!-- Año Graduacion -->
-                <div>
-                    <label for="graduationYear">Año de graduación</label>
-                    <input type="date" name="graduationYear" required />
-                </div>
+                    <div class="form-grid_container">
 
-                <!-- Nombre Titulo -->
-                <div>
-                    <label for="degreeTitle">Nombre del título</label>
-                    <input type="text" name="degreeTitle" required />
-                </div>
+                        <!-- Codigo Opsu -->
+                        <div class="form-group_control">
+                            <label for="opsuCode">Codigo de Opsu</label>
+                            <input class="form-input" type="text" name="opsuCode" required />
+                        </div>
 
-                <!-- Promedio -->
-                <div>
-                    <label for="gradePointAverage">Promedio</label>
-                    <input type="number" name="gradePointAverage" placeholder="0.000" required />
-                </div>
+                        <!-- Codigo Titulo -->
+                        <div class="form-group_control">
+                            <label for="degreeCode">Codigo de título</label>
+                            <input class="form-input" type="text" name="degreeCode" required />
+                        </div>
 
-                <!-- Enviar -->
-                <button type="submit" class="formButton">Enviar</button>
+                        <!-- Direccion Plantel -->
+                        <div class="form-group_control">
+                            <label for="campusAddress">Direccion Plantel</label>
+                            <input class="form-input" type="text" name="campusAddress" required />
+                        </div>
 
-                <!-- Deshacer -->
-                <button type="button" class="formButton">Deshacer todo</button>
-            </form>
-        </div>
+                        <!-- Año Graduacion -->
+                        <div class="form-group_control">
+                            <label for="graduationYear">Año de graduación</label>
+                            <input class="form-input" type="date" name="graduationYear" required />
+                        </div>
+
+                        <!-- Nombre Titulo -->
+                        <div class="form-group_control">
+                            <label for="degreeTitle">Nombre del título</label>
+                            <input class="form-input" type="text" name="degreeTitle" required />
+                        </div>
+
+                        <!-- Promedio -->
+                        <div class="form-group_control">
+                            <label for="gradePointAverage">Promedio</label>
+                            <input class="form-input" type="number" name="gradePointAverage" placeholder="0.000" step="0.001"
+                                required />
+                        </div>
+
+                        <div class="group_buttons">
+                            <!-- Enviar -->
+                            <button type="submit" class="formButton">Enviar</button>
+
+                            <!-- Deshacer -->
+                            <button type="button" class="formButton">Deshacer todo</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../../assets/js/gestionarInscripciones/crearInscripcionPasoUno.js"></script>
 </body>
 </html>

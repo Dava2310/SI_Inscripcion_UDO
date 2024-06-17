@@ -6,22 +6,28 @@ function showCareers() {
     if (inscriptionProcess === "2") {
         careersSelection.style.display = "block";
         singleCareersSelection.style.display = "none";
+        // Agregar required a los campos de carreras múltiples
+        document.getElementById("career1").setAttribute("required", "true");
+        document.getElementById("career2").setAttribute("required", "true");
+        document.getElementById("career3").setAttribute("required", "true");
+        // Remover required del campo de carrera única
+        document.getElementById("singleCareer").removeAttribute("required");
     } else {
         careersSelection.style.display = "none";
         singleCareersSelection.style.display = "block";
-       
+        // Remover required a los campos de carreras múltiples
+        document.getElementById("career1").removeAttribute("required");
+        document.getElementById("career2").removeAttribute("required");
+        document.getElementById("career3").removeAttribute("required");
+        // Agregar required al campo de carrera única
+        document.getElementById("singleCareer").setAttribute("required", "true");
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    const form = document.getElementById("form");
-
-    // Manejar el evento de envío del formulario
-    form.addEventListener('submit', function (e) {
-        e.preventDefault();
-        console.log('Formulario enviado');
-        submitForm();
-    });
+document.getElementById("form").addEventListener("submit", function(e) {
+    // Asegurar que los campos requeridos estén configurados correctamente
+    showCareers();
+    submitForm();
 });
 
 // Función para enviar el formulario
@@ -39,10 +45,10 @@ function submitForm() {
             console.log(data.message);
             if (data.message === 'Inscripción registrada exitosamente') {
                 window.alert("Inscripción registrada con éxito");
-                window.location.href = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php";
+                window.location.href = "../../views/dashboardEstudiantes/dashboardEstudiantes.php";
             } else if (data.message === 'Inscripción actualizada exitosamente') {
                 window.alert("Inscripción actualizada con éxito");
-                window.location.href = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php"; 
+                window.location.href = "../../views/dashboardEstudiantes/dashboardEstudiantes.php"; 
             } else {
                 window.alert('Error al registrar la inscripción: ' + data.message);
             }

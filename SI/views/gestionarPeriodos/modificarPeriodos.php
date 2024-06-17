@@ -35,11 +35,6 @@ $periodDetails = $period->getPeriodByID($periodID);
 $periodStatus = $periodDetails['validity'];
 ?>
 
-<?php
-$_title = "Modificar Periodo";
-include('../templates/encabezadoConfig.php');
-?>
-
 <body>
     <div class="main-container">
         <?php include ('../templates/menus/menuAdministrador.php') ?>

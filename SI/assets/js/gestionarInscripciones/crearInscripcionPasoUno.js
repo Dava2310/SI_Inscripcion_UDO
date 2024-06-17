@@ -31,10 +31,10 @@ function submitForm() {
             console.log(data.message);
             if (data.message === 'Inscripción registrada exitosamente') {
                 window.alert("Inscripción registrada con éxito");
-                window.location.href = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php";
+                window.location.href = "../../views/dashboardEstudiantes/dashboardEstudiantes.php";
             } else if (data.message === 'Inscripción corregida exitosamente') {
                 window.alert("Inscripción registrada con éxito");
-                window.location.href = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php";
+                window.location.href = "../../views/dashboardEstudiantes/dashboardEstudiantes.php";
             } else {
                 window.alert('Error al registrar la inscripción: ' + data.message);
             }

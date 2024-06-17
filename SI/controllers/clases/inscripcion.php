@@ -99,6 +99,8 @@ class Inscription
     // Leer por ID de estudiante
     public function getInscriptionByStudentId($studentId)
     {
+        //error_log($studentId, 3);
+
         $stmt = $this->con->prepare("SELECT * FROM inscriptions WHERE idStudent = ? ORDER BY date DESC LIMIT 1");
         $stmt->bind_param("i", $studentId);
 

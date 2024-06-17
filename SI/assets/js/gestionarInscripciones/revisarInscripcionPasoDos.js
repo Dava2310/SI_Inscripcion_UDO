@@ -32,10 +32,10 @@ function submitForm() {
             console.log(data.message);
             if (data.message === 'Inscripción aprobada exitosamente') {
                 window.alert("Inscripción aprobada con éxito");
-                window.location.href = "../../../views/gestionarInscripciones/listarInscripciones.php";
+                window.location.href = "../../views/gestionarInscripciones/listarInscripciones.php";
             } else if (data.message === 'Inscripción rechazada exitosamente') {
                 window.alert("Inscripción rechazada con éxito");
-                window.location.href = "../../../views/gestionarInscripciones/listarInscripciones.php";
+                window.location.href = "../../views/gestionarInscripciones/listarInscripciones.php";
             } else {
                 window.alert('Error al aprobar la inscripción: ' + data.message);
             }
