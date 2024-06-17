@@ -117,6 +117,26 @@ class Inscription
         }
     }
 
+    // Leer idStudent por ID de inscripcion
+    public function getStudentByInscriptionId($idInscription)
+    {
+        $stmt = $this->con->prepare("SELECT s.* FROM students s INNER JOIN inscriptions i ON s.ID = i.idStudent WHERE i.ID = ? LIMIT 1");
+        $stmt->bind_param("i", $idInscription);
+
+        if (!$stmt->execute()) {
+            throw new Exception('Error al buscar el estudiante por ID de inscripción: ' . $stmt->error);
+        }
+
+        $result = $stmt->get_result();
+
+        if ($result->num_rows > 0) {
+            return $result->fetch_assoc();
+        } else {
+            return false;
+        }
+    }
+
+
     // Ascender a fase 2
     public function levelToInscriptionPhaseTwo($idInscription, $idProcess)
     {

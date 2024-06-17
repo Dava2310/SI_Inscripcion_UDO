@@ -3,6 +3,7 @@ session_start();
 include_once("../../controllers/clases/inscripcion.php");
 include_once("../../controllers/clases/periodo.php");
 include_once("../../controllers/clases/carreraSeleccionada.php");
+include_once("../../controllers/clases/notificaciones.php");
 
 function revisarInscripcionPasoDos()
 {
@@ -25,6 +26,15 @@ function revisarInscripcionPasoDos()
         http_response_code(200);
         echo json_encode(array('message' => 'Inscripción aprobada exitosamente'));
 
+        // Enviar Notificacion al estudiante
+        $idStudent = $inscriptionObject->getStudentByInscriptionId($inscriptionId)["ID"];
+        $date = new DateTime();
+        $strDate = $date->format('d/m/Y H:i:s');
+        $content = 'Se ha aprobado correctamente los datos, puede continuar con la subida de los documentos';
+
+        $notificationObject = new Notification();
+        $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
+
     } else if ($desicion == "reject") {
         $inscriptionObject = new Inscription();
         $response = $inscriptionObject->rejectInscription($inscriptionId, $observation);
@@ -38,6 +48,15 @@ function revisarInscripcionPasoDos()
 
         http_response_code(200);
         echo json_encode(array('message' => 'Inscripción rechazada exitosamente'));
+
+        // Enviar Notificacion al estudiante
+        $idStudent = $inscriptionObject->getStudentByInscriptionId($inscriptionId)["ID"];
+        $date = new DateTime();
+        $strDate = $date->format('d/m/Y H:i:s');
+        $content = 'Se ha rechazado los datos, vuelva a repetir los pasos para corregir, la observacion del empleado fue la siguiente: '. $observation;
+
+        $notificationObject = new Notification();
+        $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
     }
 }
 

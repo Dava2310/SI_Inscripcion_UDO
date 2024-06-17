@@ -3,6 +3,7 @@ session_start();
 include_once("../../controllers/clases/inscripcion.php");
 include_once("../../controllers/clases/periodo.php");
 include_once("../../controllers/clases/carreraSeleccionada.php");
+include_once("../../controllers/clases/notificaciones.php");
 
 function respondWithError($message)
 {
@@ -16,7 +17,8 @@ function inscriptionsRUSIUpdate($idInscription, $selectedCareers, $careerOne, $c
 {
     $selectedCareerObject = new SelectedCareer();
     $inscriptionObject = new Inscription();
-    
+    $idStudent = $_SESSION['ID'];
+
     try {
         $responseOne = $selectedCareerObject->updateSelectedCareerById($selectedCareers[0]['ID'], $careerOne);
         $responseTwo = $selectedCareerObject->updateSelectedCareerById($selectedCareers[1]['ID'], $careerTwo);
@@ -34,6 +36,14 @@ function inscriptionsRUSIUpdate($idInscription, $selectedCareers, $careerOne, $c
 
         http_response_code(200);
         echo json_encode(['message' => 'Inscripción actualizada exitosamente']);
+
+        //Enviar Notificacion
+        $date = new DateTime();
+        $strDate = $date->format('d/m/Y H:i:s');
+        $content = 'Se ha actualizado correctamente los datos, ahora debe esperar a que el personal revise sus datos en horas laborales. Sea paciente';
+
+        $notificationObject = new Notification();
+        $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
     } catch (Exception $e) {
         respondWithError($e->getMessage());
     }
@@ -81,6 +91,17 @@ function inscriptionsRUSI()
 
         http_response_code(200);
         echo json_encode(['message' => 'Inscripción registrada exitosamente']);
+
+
+
+        //Enviar Notificacion
+        $idStudent = $_SESSION['ID'];
+        $date = new DateTime();
+        $strDate = $date->format('d/m/Y H:i:s');
+        $content = 'Se ha cargado correctamente los datos, ahora debe esperar a que el personal revise sus datos en horas laborales. Sea paciente';
+
+        $notificationObject = new Notification();
+        $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
     } catch (Exception $e) {
         respondWithError($e->getMessage());
     }
@@ -105,6 +126,15 @@ function inscriptionsOpsuConventionUpdate($idInscription, $selectedCareers, $sin
 
             http_response_code(200);
             echo json_encode(['message' => 'Inscripción actualizada exitosamente']);
+
+            //Enviar Notificacion
+            $idStudent = $_SESSION['ID'];
+            $date = new DateTime();
+            $strDate = $date->format('d/m/Y H:i:s');
+            $content = 'Se ha Actualizado correctamente los datos, ahora debe esperar a que el personal revise sus datos en horas laborales. Sea paciente';
+
+            $notificationObject = new Notification();
+            $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
             return;
         } else {
             throw new Exception('Número de carreras seleccionadas inconsistente.');
@@ -151,6 +181,15 @@ function inscriptionsOpsuConvention()
 
         http_response_code(200);
         echo json_encode(['message' => 'Inscripción registrada exitosamente']);
+
+        //Enviar Notificacion
+        $idStudent = $_SESSION['ID'];
+        $date = new DateTime();
+        $strDate = $date->format('d/m/Y H:i:s');
+        $content = 'Se ha cargado correctamente los datos, ahora debe esperar a que el personal revise sus datos en horas laborales. Sea paciente';
+
+        $notificationObject = new Notification();
+        $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
     } catch (Exception $e) {
         respondWithError($e->getMessage());
     }
@@ -173,4 +212,3 @@ function crearInscripcionPasoDos()
 
 header('Content-Type: application/json');
 crearInscripcionPasoDos();
-?>

@@ -49,7 +49,6 @@
 
 .modalContent {
     background-color: #fefefe;
-    padding: 20px;
     border: 1px solid #888;
     width: 80%;
 }
@@ -85,7 +84,6 @@
 .fileContent {
     width: 100%;
     height: 720px;
-    margin-bottom: 2rem;
 }
 
 .description {

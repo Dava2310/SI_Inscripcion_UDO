@@ -1,6 +1,8 @@
 <?php
 session_start();
 include_once("../../controllers/clases/inscripcion.php");
+include_once("../../controllers/clases/notificaciones.php");
+
 
 function revisarInscripcionPasoTres()
 {
@@ -41,6 +43,15 @@ function revisarInscripcionPasoTres()
         http_response_code(200); // Aprobado exitosamente
         echo json_encode(array('message' => 'Inscripción aprobada exitosamente'));
 
+        // Enviar Notificacion al estudiante
+        $idStudent = $inscriptionObject->getStudentByInscriptionId($inscriptionId)["ID"];
+        $date = new DateTime();
+        $strDate = $date->format('d/m/Y H:i:s');
+        $content = 'Se ha aprobado los documentos. Entregue los documentos en fisico el dia especificado para formalizar su inscripcion';
+
+        $notificationObject = new Notification();
+        $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
+
     } else if ($decision == "reject") {
         $response = $inscriptionObject->rejectInscriptionDocuments($inscriptionId, $observation, $inscriptionDetails['url']);
 
@@ -53,6 +64,14 @@ function revisarInscripcionPasoTres()
         http_response_code(200); // Rechazado exitosamente
         echo json_encode(array('message' => 'Inscripción rechazada exitosamente'));
 
+        // Enviar Notificacion al estudiante
+        $idStudent = $inscriptionObject->getStudentByInscriptionId($inscriptionId)["ID"];
+        $date = new DateTime();
+        $strDate = $date->format('d/m/Y H:i:s');
+        $content = 'Se ha rechazado los documentos, vuelva a subirlos. La observacion fue la siguiente: '. $observation;
+
+        $notificationObject = new Notification();
+        $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
     } else {
         http_response_code(400); // Solicitud incorrecta
         echo json_encode(array('message' => 'Decisión inválida'));

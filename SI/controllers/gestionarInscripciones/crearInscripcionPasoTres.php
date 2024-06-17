@@ -3,6 +3,7 @@ session_start();
 include_once("../clases/inscripcion.php");
 include_once("../clases/estudiante.php");
 include_once("../clases/periodo.php");
+include_once("../clases/notificaciones.php");
 
 function crearInscripcionPasoTres()
 {
@@ -11,7 +12,7 @@ function crearInscripcionPasoTres()
     $studentId = $_SESSION['ID'];
     $student = new Student();
     $studentDetails = $student->getStudentByID($studentId);
-    
+
     // Obtener el proceso de inscripción del estudiante
     $inscriptionObject = new Inscription();
     $inscriptionDetails = $inscriptionObject->getInscriptionByStudentId($studentId);
@@ -43,7 +44,7 @@ function crearInscripcionPasoTres()
     // Verificar si todos los archivos requeridos están presentes
     foreach ($requiredFields as $field) {
         if ($process !== 2 && $process !== 3 && $field === 'letter') {
-            continue; 
+            continue;
         }
 
         if (!isset($_FILES[$field]) || empty($_FILES[$field]['name'])) {
@@ -63,7 +64,7 @@ function crearInscripcionPasoTres()
     // Si no hay errores, proceder a subir los archivos
     foreach ($requiredFields as $field) {
         if ($process !== 2 && $process !== 3 && $field === 'letter') {
-            continue; 
+            continue;
         }
 
         $extension = pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION);
@@ -84,7 +85,7 @@ function crearInscripcionPasoTres()
 
     // Si no hay errores, todo se subió correctamente y se debe cambiar al estado "En Revision"
     $response = $inscriptionObject->levelToInscriptionPhaseThreeForCheck($inscriptionDetails['ID'], $studentDetails['ID'] . '-' . $time . '-');
-    
+
     if (!$response) {
         session_destroy();
         http_response_code(500);
@@ -94,8 +95,18 @@ function crearInscripcionPasoTres()
 
     http_response_code(200);
     echo json_encode(array('message' => 'Documentos subidos exitosamente'));
+
+
+
+    //Enviar Notificacion
+    $idStudent = $_SESSION['ID'];
+    $date = new DateTime();
+    $strDate = $date->format('d/m/Y H:i:s');
+    $content = 'Se ha cargado correctamente los documentos, ahora debe esperar a que el personal revise sus datos en horas laborales. Sea paciente';
+
+    $notificationObject = new Notification();
+    $response = $notificationObject->sendNotificationByStudentId($idStudent, $content, $strDate);
 }
 
 header('Content-Type: application/json');
 crearInscripcionPasoTres();
-?>

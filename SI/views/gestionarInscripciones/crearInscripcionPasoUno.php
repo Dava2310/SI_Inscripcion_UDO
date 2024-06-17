@@ -65,38 +65,37 @@ try {
                         <!-- Codigo Opsu -->
                         <div class="form-group_control">
                             <label for="opsuCode">Codigo de Opsu</label>
-                            <input class="form-input" type="text" name="opsuCode" required />
+                            <input class="form-input" type="text" name="opsuCode" value="<?= isset($inscriptionDetails['opsuCode']) ? htmlspecialchars($inscriptionDetails['opsuCode']) : '' ?>" required />
                         </div>
 
                         <!-- Codigo Titulo -->
                         <div class="form-group_control">
                             <label for="degreeCode">Codigo de título</label>
-                            <input class="form-input" type="text" name="degreeCode" required />
+                            <input class="form-input" type="text" name="degreeCode" value="<?= isset($inscriptionDetails['degreeCode']) ? htmlspecialchars($inscriptionDetails['degreeCode']) : '' ?>" required />
                         </div>
 
                         <!-- Direccion Plantel -->
                         <div class="form-group_control">
                             <label for="campusAddress">Direccion Plantel</label>
-                            <input class="form-input" type="text" name="campusAddress" required />
+                            <input class="form-input" type="text" name="campusAddress" value="<?= isset($inscriptionDetails['campusAddress']) ? htmlspecialchars($inscriptionDetails['campusAddress']) : '' ?>" required />
                         </div>
 
                         <!-- Año Graduacion -->
                         <div class="form-group_control">
                             <label for="graduationYear">Año de graduación</label>
-                            <input class="form-input" type="date" name="graduationYear" required />
+                            <input class="form-input" type="date" name="graduationYear" value="<?= isset($inscriptionDetails['graduationYear']) ? htmlspecialchars($inscriptionDetails['graduationYear']) : '' ?>" required />
                         </div>
 
                         <!-- Nombre Titulo -->
                         <div class="form-group_control">
                             <label for="degreeTitle">Nombre del título</label>
-                            <input class="form-input" type="text" name="degreeTitle" required />
+                            <input class="form-input" type="text" name="degreeTitle" value="<?= isset($inscriptionDetails['degreeTitle']) ? htmlspecialchars($inscriptionDetails['degreeTitle']) : '' ?>" required />
                         </div>
 
                         <!-- Promedio -->
                         <div class="form-group_control">
                             <label for="gradePointAverage">Promedio</label>
-                            <input class="form-input" type="number" name="gradePointAverage" placeholder="0.000" step="0.001"
-                                required />
+                            <input class="form-input" type="number" name="gradePointAverage" placeholder="0.000" step="0.001" value="<?= isset($inscriptionDetails['gradePointAverage']) ? htmlspecialchars($inscriptionDetails['gradePointAverage']) : '' ?>" required />
                         </div>
 
                         <div class="group_buttons">

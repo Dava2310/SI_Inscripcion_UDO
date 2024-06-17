@@ -21,6 +21,9 @@
         <li>
             <a href="../../views/gestionarInscripciones/verInscripcion.php">Ver Inscripcion</a>
         </li>
+        <li>
+            <a href="../../views/gestionarNotificaciones/listarNotificaciones.php">Ver Notificaciones</a>
+        </li>
     </ul>
 
     <a class="closeSession_button" href="../../controllers/gestionarAcceso/cerrarSesion.php">

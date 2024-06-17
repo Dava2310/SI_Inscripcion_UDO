@@ -138,7 +138,6 @@ try {
                     </div>
                     <div class="buttonActions">
                         <button type="submit">Enviar</button>
-                        <button type="button">Deshacer todo</button>
                     </div>
 
                 </form>

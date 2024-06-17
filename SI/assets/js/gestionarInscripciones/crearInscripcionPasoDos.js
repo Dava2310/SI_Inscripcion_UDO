@@ -24,10 +24,31 @@ function showCareers() {
     }
 }
 
+function validateCareers() {
+    var inscriptionProcess = document.getElementById("inscriptionProcess").value;
+
+    if (inscriptionProcess === "2") {
+        var career1 = document.getElementById("career1").value;
+        var career2 = document.getElementById("career2").value;
+        var career3 = document.getElementById("career3").value;
+
+        if (career1 === career2 || career1 === career3 || career2 === career3) {
+            alert("Las carreras seleccionadas no deben ser iguales.");
+            return false; // Evita que el formulario sea enviado
+        }
+    }
+    return true; // Permite que el formulario sea enviado
+}
+
 document.getElementById("form").addEventListener("submit", function(e) {
     // Asegurar que los campos requeridos estén configurados correctamente
     showCareers();
-    submitForm();
+
+    if (!validateCareers()) {
+        e.preventDefault(); // Evita que el formulario sea enviado
+    } else {
+        submitForm();
+    }
 });
 
 // Función para enviar el formulario
@@ -40,21 +61,21 @@ function submitForm() {
         method: 'POST',
         body: formData
     })
-        .then(response => response.json())
-        .then(data => {
-            console.log(data.message);
-            if (data.message === 'Inscripción registrada exitosamente') {
-                window.alert("Inscripción registrada con éxito");
-                window.location.href = "../../views/dashboardEstudiantes/dashboardEstudiantes.php";
-            } else if (data.message === 'Inscripción actualizada exitosamente') {
-                window.alert("Inscripción actualizada con éxito");
-                window.location.href = "../../views/dashboardEstudiantes/dashboardEstudiantes.php"; 
-            } else {
-                window.alert('Error al registrar la inscripción: ' + data.message);
-            }
-        })
-        .catch(error => {
-            console.error(error);
-            window.alert('Ha ocurrido un error en la solicitud');
-        });
+    .then(response => response.json())
+    .then(data => {
+        console.log(data.message);
+        if (data.message === 'Inscripción registrada exitosamente') {
+            window.alert("Inscripción registrada con éxito");
+            window.location.href = "../../views/dashboardEstudiantes/dashboardEstudiantes.php";
+        } else if (data.message === 'Inscripción actualizada exitosamente') {
+            window.alert("Inscripción actualizada con éxito");
+            window.location.href = "../../views/dashboardEstudiantes/dashboardEstudiantes.php"; 
+        } else {
+            window.alert('Error al registrar la inscripción: ' + data.message);
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        window.alert('Ha ocurrido un error en la solicitud');
+    });
 }
