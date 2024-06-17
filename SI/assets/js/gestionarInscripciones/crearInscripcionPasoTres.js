@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 reader.readAsDataURL(file);
                 input.previousElementSibling.style.backgroundColor = '#4dca81';
                 input.parentElement.firstElementChild.classList.add('fileUploaded');
-                input.parentElement.firstElementChild.lastElementChild.style.display = 'block';
+                input.parentElement.firstElementChild.lastElementChild.style.display = 'flex';
                 input.parentElement.firstElementChild.classList.remove('pointerCursor');
                 input.parentElement.firstElementChild.addEventListener('click', disable);
             }

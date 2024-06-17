@@ -1,6 +1,6 @@
 <?php
-    $_title = "Iniciar Sesion";
-    include('../templates/head.php');
+$_title = "Iniciar Sesion";
+include('../templates/head.php');
 ?>
 
 <body>
@@ -21,7 +21,7 @@
                     <label for="email">Correo:</label><br>
                     <input class="form-input" type="text" id="email" name="email" required><br>
                 </div>
-                
+
                 <div>
                     <label for="password">Contraseña:</label><br>
                     <input class="form-input" type="password" id="password" name="password" required><br>
@@ -30,10 +30,12 @@
                 <div>
                     <button name="submit" type="submit">Iniciar Sesion</button>
                 </div>
-                
-                <p><b>¿No tienes una cuenta?<a href="registrarEstudiantes.php"> Haz clic aquí</a>.</b></p>
-                <p><b>¿Se te ha olvidado la contraseña?<a href="recuperarPassword.php"> Haz clic aquí</a>.</b></p>
-                <p><b><a href="../../index.php">Volver a Home</a>.</b></p>
+
+                <div>
+                    <p><b>¿No tienes una cuenta?<a href="registrarEstudiantes.php"> Haz clic aquí</a>.</b></p>
+                    <p><b>¿Se te ha olvidado la contraseña?<a href="recuperarPassword.php"> Haz clic aquí</a>.</b></p>
+                    <p><b><a href="../../index.php">Volver a Home</a>.</b></p>
+                </div>
             </form>
 
         </div>
@@ -41,4 +43,5 @@
 
     <script src="../../assets/js/gestionarAcceso/iniciarSesion.js"></script>
 </body>
+
 </html>
