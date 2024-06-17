@@ -90,7 +90,7 @@ $inscriptions = $inscription->getInscriptions();
                                 $licenseId = $inscription['licenseID'];
                                 $email = $inscription['email'];
                                 $date = $inscription['date'];
-                                $state = $inscription['state'] == '' ? "Ninguno" : $inscription['state'];
+                                $state = ($inscription['state'] == '')? "Ninguno" : $inscription['state'];
                                 $process = $inscription['process'] ?? "Ninguno";
 
                                 if ($inscription['inscriptionPhase'] === 1) {
@@ -101,7 +101,7 @@ $inscriptions = $inscription->getInscriptions();
                                     $phase = "Tercera";
                                 }
 
-                                if ($inscription['state'] === 'A Corregir' || $inscription['state'] === '') {
+                                if ($inscription['state'] === 'A Corregir' || $inscription['state'] === '' || $inscription['state'] === 'Aprobado') {
                                     $condicion = false;
                                 } else {
 
@@ -148,7 +148,7 @@ $inscriptions = $inscription->getInscriptions();
         </main>
     </div>
 
-    <script src="../../assets/js/gestionarInscripciones/listarInscripciones.js"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
 

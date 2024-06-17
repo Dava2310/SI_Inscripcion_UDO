@@ -6,6 +6,16 @@ include_once("../../controllers/clases/notificaciones.php");
 
 function revisarInscripcionPasoTres()
 {
+
+    // Obtener valores del formulario
+    $decision = $_POST['decision'];
+    $observation = $_POST['observation'];
+    $inscriptionId = $_POST['ID'];
+
+    error_log("La decision es: $decision", 0);
+    error_log("Las observaciones son: $observation", 0);
+    error_log("El ID de la Inscripcion es: $inscriptionId", 0);
+
     // Verificar que la solicitud sea POST
     if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         http_response_code(405); // Método no permitido
@@ -14,16 +24,13 @@ function revisarInscripcionPasoTres()
     }
 
     // Verificar que todos los campos necesarios estén presentes
-    if (!isset($_POST['decision']) || !isset($_POST['observation']) || !isset($_GET['id'])) {
+    if (!isset($_POST['decision']) || !isset($_POST['ID'])) {
         http_response_code(400); // Solicitud incorrecta
         echo json_encode(array('message' => 'Datos incompletos'));
         exit;
     }
 
-    // Obtener valores del formulario
-    $decision = $_POST['decision'];
-    $observation = $_POST['observation'];
-    $inscriptionId = $_GET['id'];
+    
     
 
     // Instanciar objeto de inscripción

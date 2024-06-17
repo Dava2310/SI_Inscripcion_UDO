@@ -145,12 +145,6 @@ try {
         </main>
     </div>
 
-    <div class="content">
-        <div class="form-inscription-documents">
-
-        </div>
-    </div>
-
     <div id="modal" class="modal">
         <div class="modalContent">
             <object class="fileContent" id="fileContent" type="application/pdf">
@@ -162,5 +156,4 @@ try {
     </div>
     <script src="../../assets/js/gestionarInscripciones/crearInscripcionPasoTres.js"></script>
 </body>
-
 </html>
