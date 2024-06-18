@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
     $_title = "Panel De Control";
     include_once('./../templates/head.php');
 
@@ -7,7 +7,7 @@
     include_once('../../controllers/clases/usuario.php');
 
     // Inicio de la sesion
-    session_start();
+    
     $id = $_SESSION['ID'];
     $idRole = $_SESSION['ID_ROLE'];
 

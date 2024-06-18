@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $_title = "Solicitar Inscripción - Asignar Carrera";
 include ('./../templates/head.php');
 include ('../../controllers/clases/inscripcion.php');
@@ -7,7 +7,7 @@ include ('../../controllers/clases/estudiante.php');
 include ('../../controllers/clases/carrera.php'); // Incluimos la clase de Carrera
 
 // Inicio de la sesion
-session_start();
+
 $studentID = $_SESSION['ID'];
 
 // Si no hay estudiante registrado

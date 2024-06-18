@@ -1,10 +1,10 @@
 <?php
-
+session_start();
 $_title = "Gestión de Notificaciones";
 include_once('./../templates/head.php');
 
 // Inicio de la Sesión
-session_start();
+
 $id = $_SESSION['ID'];
 
 // Si no existe una id en la $_SESSION, es porque no está autentificado

@@ -1,4 +1,5 @@
 <?php
+session_start();
 $_title = "Gestion de Carreras";
 include ('./../templates/head.php');
 
@@ -8,7 +9,6 @@ $career = new Career();
 $careers = $career->getCareers();
 
 // Inicio de la sesion
-session_start();
 $id = $_SESSION['ID'];
 $idRole = $_SESSION['ID_ROLE'];
 

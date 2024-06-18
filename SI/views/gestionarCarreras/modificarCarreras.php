@@ -4,7 +4,6 @@ $_title = "Modificar Carrera";
 include ("../templates/head.php");
 
 // Inicio de la Sesion
-session_start();
 $id = $_SESSION['ID'];
 $idRole = $_SESSION['ID_ROLE'];
 

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $_title = "Revision Inscripcion";
 include ('../templates/headFiles.php');
 
@@ -8,7 +8,7 @@ include ('../../controllers/clases/estudiante.php');
 include ('../../controllers/clases/carrera.php');
 
 // Inicio de la sesion
-session_start();
+
 $userID = $_SESSION['ID'];
 $idRole = $_SESSION['ID_ROLE'];
 

@@ -1,9 +1,9 @@
 <?php
-
+session_start();
 $_title = "Crear Notificacion";
 include_once('../templates/head.php');
 
-session_start();
+
 $id = $_SESSION['ID'];
 $idRole = $_SESSION['ID_ROLE'];
 

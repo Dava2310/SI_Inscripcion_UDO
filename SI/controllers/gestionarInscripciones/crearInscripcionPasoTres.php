@@ -18,12 +18,6 @@ function crearInscripcionPasoTres()
     $inscriptionDetails = $inscriptionObject->getInscriptionByStudentId($studentId);
     $process = $inscriptionDetails['idProcess'];
 
-    if (!in_array($process, $allowedProcesses)) {
-        http_response_code(403);
-        echo json_encode(array('error' => 'El proceso actual no permite subir carta.'));
-        exit;
-    }
-
     // Definir los campos requeridos
     $requiredFields = ['licenseID', 'notes', 'degree', 'birthCertificate', 'spreadsheet', 'letter'];
 

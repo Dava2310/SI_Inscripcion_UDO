@@ -1,9 +1,9 @@
 <?php
-    $_title = "Roles";
-    include_once('../templates/head.php');
+session_start();
+$_title = "Roles";
+include_once('../templates/head.php');
 
 // Inicio de la Sesion
-session_start();
 $id = $_SESSION['ID'];
 $idRole = $_SESSION['ID_ROLE'];
 
@@ -37,7 +37,7 @@ $roles = $role->getRoles();
         <main>
             <div class="info-container">
                 <h1>Lista de Roles</h1>
-                
+
                 <table>
                     <thead>
                         <tr>
@@ -64,6 +64,7 @@ $roles = $role->getRoles();
         </main>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </body>
+
 </html>

@@ -93,7 +93,7 @@
                             </p>
                         </div>
                         <div class="slider_detail-btn">
-                            <a href="login/login.html">
+                            <a href="/views/gestionarAcceso/iniciarSesion.php">
                                 <span>
                                     Iniciar sesión
                                 </span>
@@ -132,7 +132,7 @@
                         </p>
                         <div class="welcome_detail-btn">
                             <!-- INGRESAR LINK AL LOGIN -->
-                            <a href="">
+                            <a href="/views/gestionarAcceso/iniciarSesion.php">
                                 <span>
                                     Iniciar sesión
                                 </span>
@@ -167,7 +167,7 @@
                         </p>
                         <div class="story_detail-btn">
                             <!-- INGRESAR LINK AL LOGIN -->
-                            <a href="">
+                            <a href="/views/gestionarAcceso/iniciarSesion.php">
                                 <span>
                                     Iniciar sesión
                                 </span>

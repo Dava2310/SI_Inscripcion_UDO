@@ -84,7 +84,7 @@ document.addEventListener('DOMContentLoaded', function () {
                     window.alert("Documentos subidos exitosamente");
                     window.location.href = "../../../views/dashboardEstudiantes/dashboardEstudiantes.php";
                 } else {
-                    window.alert('Error: ' + data.errors[0]);
+                    window.alert('Error: ' + data.error);
                 }
             })
             .catch(error => {

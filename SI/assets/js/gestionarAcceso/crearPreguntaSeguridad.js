@@ -12,7 +12,7 @@ registrationForm.addEventListener("submit", async e => {
     const formData = new FormData(registrationForm);
 
     try {
-        const data = await sendRegistrationRequest(formData, '../../controllers/gestionarAcceso/registrarUsuario.php');
+        const data = await sendRegistrationRequest(formData, '../../controllers/gestionarAcceso/crearPreguntaSeguridad.php');
         handleQuestionRegistrationResponse(data);
     } catch (error) {
         handleError(error);
@@ -43,7 +43,7 @@ function handleQuestionRegistrationResponse(data) {
     // Handle the response specific to registration
     if (data.success) {
         window.alert("Registro Exitoso");
-        window.location = '../../views/dashboardNuevoUsuario/dashboardNuevoUsuario.php'; // Redirect to a new user dashboard
+        window.location = '../../views/dashboardEmpleados/dashboardEmpleados.php'; // Redirect to a new user dashboard
     } else {
         alert(data.message); // Show error message from server
     }

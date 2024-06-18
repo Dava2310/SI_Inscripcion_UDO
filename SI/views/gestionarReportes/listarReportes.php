@@ -1,9 +1,10 @@
 <?php
+session_start();
 $_title = "Panel De Reportes";
 include ('../templates/head.php');
 
 // Inicio de la sesion
-session_start();
+
 $id = $_SESSION['ID'];
 $idRole = $_SESSION['ID_ROLE'];
 

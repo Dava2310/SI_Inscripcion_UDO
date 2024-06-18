@@ -1,4 +1,5 @@
 <?php
+session_start();
 $_title = "Panel de Control";
 include ('./../templates/head.php');
 
@@ -8,7 +9,7 @@ include_once ('../../controllers/clases/notificaciones.php');
 include_once ('../../controllers/clases/inscripcion.php');
 
 // Inicio de la sesion
-session_start();
+
 $studentID = $_SESSION['ID'];
 
 // Si no hay estudiante registrado

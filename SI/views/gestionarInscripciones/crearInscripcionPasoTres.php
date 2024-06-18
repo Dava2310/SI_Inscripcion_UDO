@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 $_title = "Solicitar Inscripción";
 include ('./../templates/headFiles.php');
 
@@ -8,7 +8,7 @@ include ('../../controllers/clases/estudiante.php');
 include ('../../controllers/clases/carrera.php');
 
 // Inicio de la sesion
-session_start();
+
 $studentID = $_SESSION['ID'];
 
 // Si no hay estudiante registrado
@@ -61,6 +61,8 @@ try {
         <?php
         include ("./../templates/menus/menuEstudiante.php");
         ?>
+
+        
 
         <main>
             <div class="info-container">

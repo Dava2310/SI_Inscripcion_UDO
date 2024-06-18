@@ -1,14 +1,23 @@
 <?php
-
+session_start();
 $_title = "Solicitar Inscripción - Datos Basicos";
 include ('./../templates/head.php');
 include ('../../controllers/clases/inscripcion.php');
 include ('../../controllers/clases/estudiante.php');
-include ('../../controllers/clases/carrera.php'); // Incluimos la clase de Carrera
+include ('../../controllers/clases/carrera.php');
+include ('../../controllers/clases/periodo.php');
 
 // Inicio de la sesion
-session_start();
 $studentID = $_SESSION['ID'];
+
+$periodObject = new Period();
+$period = $periodObject->getCurrentPeriod();
+
+if (!$period['validity'] && $period['validity'] !== 1) {
+    echo "<script> window.alert('No ha empezado ningun periodo');</script>";
+    echo "<script> window.location='../dashboardEstudiantes/dashboardEstudiantes.php'; </script>";
+    die(); 
+}
 
 // Si no hay estudiante registrado
 if (!(isset($studentID))) {
