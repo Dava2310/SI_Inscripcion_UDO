@@ -7,8 +7,13 @@ include_once("../clases/notificaciones.php");
 
 function crearInscripcionPasoTres()
 {
-    // Verificar si el proceso está permitido para subir la carta
-    $allowedProcesses = [2, 3];
+    // Verificar si el ID del estudiante está en la sesión
+    if (!isset($_SESSION['ID'])) {
+        http_response_code(400);
+        echo json_encode(array('error' => 'ID del estudiante no está en la sesión.'));
+        exit;
+    }
+
     $studentId = $_SESSION['ID'];
     $student = new Student();
     $studentDetails = $student->getStudentByID($studentId);
@@ -37,14 +42,10 @@ function crearInscripcionPasoTres()
 
     // Verificar si todos los archivos requeridos están presentes
     foreach ($requiredFields as $field) {
-        if ($process !== 2 && $process !== 3 && $field === 'letter') {
-            continue;
-        }
-
         if (!isset($_FILES[$field]) || empty($_FILES[$field]['name'])) {
-            if ($field !== 'letter') {
-                $errors[] = 'El campo ' . $field . ' es obligatorio.';
-            }
+            $errors[] = 'El campo ' . $field . ' es obligatorio.';
+        } else {
+            error_log("Archivo '$field' presente: " . $_FILES[$field]['name']);
         }
     }
 
@@ -57,16 +58,14 @@ function crearInscripcionPasoTres()
 
     // Si no hay errores, proceder a subir los archivos
     foreach ($requiredFields as $field) {
-        if ($process !== 2 && $process !== 3 && $field === 'letter') {
-            continue;
-        }
-
         $extension = pathinfo($_FILES[$field]['name'], PATHINFO_EXTENSION);
         $baseName = $studentDetails['ID'] . '-' . $time . '-' . $field . '.' . $extension;
         $archivo_destino = $carpeta_destino . basename($baseName);
 
         if (!move_uploaded_file($_FILES[$field]['tmp_name'], $archivo_destino)) {
             $errors[] = 'Hubo un error al subir el archivo ' . $field . '.';
+        } else {
+            error_log("Archivo '$field' subido exitosamente a '$archivo_destino'");
         }
     }
 
@@ -90,9 +89,7 @@ function crearInscripcionPasoTres()
     http_response_code(200);
     echo json_encode(array('message' => 'Documentos subidos exitosamente'));
 
-
-
-    //Enviar Notificacion
+    // Enviar Notificación
     $idStudent = $_SESSION['ID'];
     $date = new DateTime();
     $strDate = $date->format('d/m/Y H:i:s');

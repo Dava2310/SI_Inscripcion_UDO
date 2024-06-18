@@ -5,7 +5,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const objectElement = document.getElementById('fileContent');
     const modal = document.getElementById("modal");
     const closeButton = document.getElementById('modalClose');
-    const resetButton = document.getElementById('resetButton');
 
     // Mostrar el modal con el archivo
     function showModal(fileUrl) {
