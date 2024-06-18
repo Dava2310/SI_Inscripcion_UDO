@@ -31,7 +31,7 @@ if ($idRole != 1) {
 
         <main>
             <div class="info-container">
-                <h1 style="margin-bottom: 50px;">Crear Periodo</h1>
+                <h1 style="margin-bottom: 50px;">Crear Notificacion</h1>
                 <form id="form" action="../../controllers/gestionarNotificaciones/crearNotificaciones.php" method="post">
                     <div class="form-grid_container_register">
                         <div id="content" class="form-group_control">
