@@ -39,7 +39,7 @@ if ($idRole != 1) {
             <div class="info-container">
                 <h1>Crear Empleado</h1>
 
-                <form id="form" action="">
+                <form id="form" action="../../controllers/gestionarUsuarios/crearUsuarios.php" method="post">
                     <div class="form-grid_container_register_one_column">
 
                         <!-- Nombre -->
@@ -72,7 +72,7 @@ if ($idRole != 1) {
                     </div>
 
                     <div class="group_buttons">
-                        <button type="button" onclick="clearValues()">Limpiar Valores</button>
+                        <button type="button" id="clear">Limpiar Valores</button>
                         <button id="btnGuardar" type="submit">Guardar Empleado</button>      
                     </div>
                 </form>
